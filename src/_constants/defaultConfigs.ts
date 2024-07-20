@@ -24,15 +24,30 @@ export const defaultTheme = {
       },
       green: {
         50: "#F0FDF4",
+
         600: "#16A34A",
         700: "#15803D",
         900: "#14532D",
       },
+      orange: "#FF6400",
       background: {
         paper: "#FFFFFF",
         paperMobile: "#F8FAFC",
       },
       boxShadowColor: "rgba(0, 0, 0, 0.07)",
+      status: {
+        delayed: "#C5A070",
+        active: "#2CC8BA",
+        completed: "#4ED3E5",
+        inProgress: "#08AEEA",
+        onTrack: "#74CB80",
+        inTesting: "#F6A96D",
+        onHold: "#FBC11E",
+        approved: "#A593FF",
+        cancelled: "#F56B62",
+        planning: "#08AEEA",
+        invoiced: "#B99897",
+      },
     },
     text: {
       color: "#101828",
