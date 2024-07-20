@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { StyledAttachButton, StyledAttachContainer, StyledCommentButtonContainer, StyledCommentContainer, StyledCommentWrapper, StyledDateText, StyledTextArea, StyledUserContainer } from './index.styled'
 import { StyledUserIcon } from './StyledComponents'
-import { Col, Form, Input, Row, Space } from 'antd'
+import { Col, Form, Row } from 'antd'
 import ContainerButton from './ContainerButton'
 
 

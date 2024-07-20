@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { GroupPage } from '_lib';
 import ProjectForm from './components/ProjectForm';
 

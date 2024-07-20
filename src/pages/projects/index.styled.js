@@ -3,6 +3,7 @@ import { Col, Progress } from "antd";
 import { MdOutlineMessage } from "react-icons/md";
 import { FaInfoCircle } from "react-icons/fa";
 import { defaultTheme } from "_constants";
+import { GoDotFill } from "react-icons/go";
 
 export const StyledPageCard = styled.main`
   padding: 10px 16px;
@@ -25,14 +26,7 @@ export const StyledComment = styled(MdOutlineMessage).attrs({
 export const StyledInfo = styled(FaInfoCircle).attrs({
   fontSize: 16,
 })``;
-export const StyledTitle = styled.h3`
-  padding: 0;
-  margin: 0;
-`;
-export const PanelTitle = styled.h4`
-  padding: 0;
-  margin: 0;
-`;
+
 export const StyledTitleContainer = styled.article`
   display: flex;
   flex-direction: column;
@@ -57,14 +51,17 @@ export const StyledInfoDivWrapper = styled.section`
   width: 100%;
   justify-content: space-between;
 `;
-export const StyledInfoLabel = styled.h3`
-  padding: 0;
-  margin: 0;
-  font-weight: 500;
-`;
 
 export const StyledUserWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
 `;
+export const StyledStatusWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const StyledStatusDot = styled(GoDotFill).attrs({
+  fontSize: 20,
+  color: defaultTheme.theme.palette.status.active,
+})``;

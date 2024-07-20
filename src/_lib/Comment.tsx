@@ -1,7 +1,7 @@
 import React from 'react'
-import { StyledInfoText, StyledUserIcon } from './StyledComponents'
+import { StyledComment, StyledInfoText, StyledUserIcon } from './StyledComponents'
 
-import { StyledComment, StyledCommentContainer, StyledDateContainer, StyledDateText, StyledEditText, StyledDot, StyledUserContainer } from './index.styled'
+import {  StyledCommentContainer, StyledDateContainer, StyledDateText, StyledEditText, StyledDot, StyledUserContainer } from './index.styled'
 
 const Comment = () => {
   return (

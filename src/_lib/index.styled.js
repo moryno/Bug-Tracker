@@ -44,11 +44,7 @@ export const StyledUserContainer = styled.article`
   flex-direction: column;
   gap: 10px;
 `;
-export const StyledComment = styled.span`
-  font-size: 13px;
-  font-weight: 500;
-  color: ${defaultTheme.theme.palette.gray[400]};
-`;
+
 export const StyledDateContainer = styled.article`
   display: flex;
   align-items: center;
