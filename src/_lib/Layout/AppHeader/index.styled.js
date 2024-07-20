@@ -1,4 +1,4 @@
-import { Input, Layout, Modal } from "antd";
+import { Layout } from "antd";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -8,8 +8,8 @@ import { styled } from "styled-components";
 const { Header } = Layout;
 
 export const StyledAppHeader = styled(Header)`
-  width: 100%;
-  position: fixed;
+  ${"" /* width: 100%; */}
+  position: sticky;
   left: 0;
   top: 0;
   z-index: 9;
@@ -20,7 +20,6 @@ export const StyledAppHeader = styled(Header)`
   padding: 0px 16px;
   border-bottom: 1px solid
     ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
-  margin-bottom: 12px;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.lg}px) {
     left: 0;

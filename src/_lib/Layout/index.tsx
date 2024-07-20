@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import AppHeader from './AppHeader'
+import AppSidebar from './AppSidebar'
+import { StyledAppLayout } from './index.styled'
 
-const Layout = () => {
+const Layout = ({ children } : { children: ReactNode}) => {
   return (
-    <AppHeader />
+    <main>
+      <AppHeader />
+      { children }
+    </main>
   )
 }
 
