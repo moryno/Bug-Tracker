@@ -1,8 +1,5 @@
 import React, { memo, ReactNode } from 'react';
 import { Button, Drawer, Space } from 'antd';
-
-
-
 interface IProps{
     onClose?: () => void;
     open?: boolean;
@@ -10,6 +7,7 @@ interface IProps{
     children?: ReactNode;
     width?: number;
 }
+
 const ContainerDrawer: React.FC<IProps> = ({ onClose, open, title, children, width}) => {
   return (
     <>

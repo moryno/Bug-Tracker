@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Progress } from "antd";
 import { FaInfoCircle } from "react-icons/fa";
 import { defaultTheme } from "_constants";
 import { GoDotFill } from "react-icons/go";
@@ -18,7 +17,6 @@ export const StyledTopContainer = styled.section`
   gap: 20px;
   width: 100%;
 `;
-export const StyledProgress = styled(Progress)``;
 
 export const StyledInfo = styled(FaInfoCircle).attrs({
   fontSize: 16,
@@ -38,3 +36,28 @@ export const StyledStatusDot = styled(GoDotFill).attrs({
   fontSize: 20,
   color: defaultTheme.theme.palette.status.active,
 })``;
+
+export const StyledNameText = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${defaultTheme.theme.palette.gray[500]};
+`;
+export const StyledBugStatusTitle = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0 18px;
+  color: ${defaultTheme.theme.palette.gray[500]};
+`;
+export const StyledBugStatusContainer = styled.article`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+`;
+export const StyledBugStatusText = styled.span`
+  font-size: 14px;
+  font-weight: 400;
+  color: ${defaultTheme.theme.text};
+`;

@@ -1,9 +1,7 @@
-import { defaultTheme } from '_constants';
+import React from 'react';
 import { AppThemeProvider } from '_context';
 import { Layout } from '_lib';
-import { Button } from 'antd';
-import { Bugs, ProjectDetail, Projects } from 'pages';
-import React from 'react';
+import { ProjectDetail } from 'pages';
 
 
 function App() {

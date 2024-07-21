@@ -1,13 +1,11 @@
 import React from "react";
 import {
-  StyledComment,
   StyledInfo,
   StyledProgress,
-  StyledTagContainer,
   StyledTitleContainer,
   StyledTopContainer,
 } from "../index.styled";
-import { StyledPageTitle } from "_lib";
+import { StyledCommentIcon, StyledPageTitle, StyledTagContainer } from "_lib";
 import { Tag } from "antd";
 
 const ProjectDetailHeader = () => {
@@ -22,8 +20,8 @@ const ProjectDetailHeader = () => {
       <StyledTitleContainer>
         <StyledPageTitle>Project 1</StyledPageTitle>
         <StyledTagContainer>
-          <Tag>Completed</Tag> {"|"}
-          <StyledComment /> |
+          <Tag>Completed</Tag> <span>|</span>
+          <StyledCommentIcon /> <span>|</span>
           <StyledInfo />
         </StyledTagContainer>
       </StyledTitleContainer>

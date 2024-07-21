@@ -1,18 +1,19 @@
-import React from 'react'
-import { PanelTitle, StyledComment } from './StyledComponents'
-import { Collapse } from 'antd';
+import React from "react";
+import { PanelTitle, StyledCardWrapper, StyledComment } from "./StyledComponents";
+import { Collapse } from "antd";
 
 const { Panel } = Collapse;
 
-const DescriptionComponent = () => {
+const DescriptionComponent = ({ description }: { description: string }) => {
   return (
-    <Collapse defaultActiveKey={['1']}>
-    <Panel header={<PanelTitle>Description</PanelTitle>} key="1">
-        <StyledComment>A dog is a type of domesticated animal.
-         Known for its loyalty and faithfulness,the world.</StyledComment>
-    </Panel>
-</Collapse>
-  )
-}
+    <StyledCardWrapper>
+      <Collapse defaultActiveKey={["1"]} ghost>
+        <Panel header={<PanelTitle>Description</PanelTitle>} key="1">
+          <StyledComment>{description}</StyledComment>
+        </Panel>
+      </Collapse>
+    </StyledCardWrapper>
+  );
+};
 
-export default DescriptionComponent
+export default DescriptionComponent;

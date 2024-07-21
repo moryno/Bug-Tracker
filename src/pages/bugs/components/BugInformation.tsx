@@ -1,30 +1,32 @@
 import React from "react";
-import { Col, Collapse, Row, Space } from "antd";
+import { Col, Collapse, Row } from "antd";
 import {
-  StyledInfoDivContainer,
-  StyledInfoDivWrapper,
   StyledStatusDot,
   StyledStatusWrapper,
-  StyledUserWrapper,
 } from "../index.styled";
 import {
   PanelTitle,
+  StyledCardWrapper,
+  StyledInfoDivContainer,
+  StyledInfoDivWrapper,
   StyledInfoLabel,
   StyledInfoText,
   StyledUserIcon,
+  StyledUserWrapper,
 } from "_lib";
 
 const { Panel } = Collapse;
 
-const ProjectInformation = () => {
+const BugInformation = () => {
   return (
-    <Collapse defaultActiveKey={["1"]}>
-      <Panel header={<PanelTitle>Project Information</PanelTitle>} key="1">
+    <StyledCardWrapper>
+      <Collapse defaultActiveKey={["1"]} ghost>
+      <Panel header={<PanelTitle>Bug Information</PanelTitle>} key="1">
         <Row gutter={16}>
           <StyledInfoDivContainer span={12}>
             <StyledInfoDivWrapper>
               <Col span={12}>
-                <StyledInfoLabel>Owner</StyledInfoLabel>
+                <StyledInfoLabel>Assignee</StyledInfoLabel>
               </Col>
               <Col span={12}>
                 <StyledUserWrapper>
@@ -42,7 +44,7 @@ const ProjectInformation = () => {
               <Col span={12}>
                 <StyledStatusWrapper>
                   <StyledStatusDot />
-                  <StyledInfoText>Completed</StyledInfoText>
+                  <StyledInfoText>Open</StyledInfoText>
                 </StyledStatusWrapper>
               </Col>
             </StyledInfoDivWrapper>
@@ -52,7 +54,7 @@ const ProjectInformation = () => {
           <StyledInfoDivContainer span={12}>
             <StyledInfoDivWrapper>
               <Col span={12}>
-                <StyledInfoLabel>Start Date</StyledInfoLabel>
+                <StyledInfoLabel>Due Date</StyledInfoLabel>
               </Col>
               <Col span={12}>
                 <StyledInfoText>07-11-2024</StyledInfoText>
@@ -62,17 +64,40 @@ const ProjectInformation = () => {
           <StyledInfoDivContainer span={12}>
             <StyledInfoDivWrapper>
               <Col span={12}>
-                <StyledInfoLabel>End Date</StyledInfoLabel>
+                <StyledInfoLabel>Severity</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>07-31-2024</StyledInfoText>
+                <StyledInfoText>None</StyledInfoText>
+              </Col>
+            </StyledInfoDivWrapper>
+          </StyledInfoDivContainer>
+        </Row>
+        <Row gutter={16}>
+          <StyledInfoDivContainer span={12}>
+            <StyledInfoDivWrapper>
+              <Col span={12}>
+                <StyledInfoLabel>Classification</StyledInfoLabel>
+              </Col>
+              <Col span={12}>
+                <StyledInfoText>Design</StyledInfoText>
+              </Col>
+            </StyledInfoDivWrapper>
+          </StyledInfoDivContainer>
+          <StyledInfoDivContainer span={12}>
+            <StyledInfoDivWrapper>
+              <Col span={12}>
+                <StyledInfoLabel>Severity</StyledInfoLabel>
+              </Col>
+              <Col span={12}>
+                <StyledInfoText>None</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
         </Row>
       </Panel>
     </Collapse>
+    </StyledCardWrapper>
   );
 };
 
-export default ProjectInformation;
+export default BugInformation;

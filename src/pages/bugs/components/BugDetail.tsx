@@ -1,9 +1,9 @@
 import React from "react";
 import { Card, Tabs, TabsProps } from "antd";
-import ProjectInformation from "./ProjectInformation";
-import { Comment, CommentForm, DetailPage } from "_lib";
-import DescriptionComponent from "_lib/DescriptionComponent";
-import ProjectDetailHeader from "./ProjectDetailHeader";
+import { Comment, CommentForm, DetailPage, DescriptionComponent } from "_lib";
+import BugDetailHeader from "./BugDetailHeader";
+import BugInformation from "./BugInformation";
+import BugStatusComponent from "./BugStatusComponent";
 
 const items: TabsProps["items"] = [
   {
@@ -11,8 +11,8 @@ const items: TabsProps["items"] = [
     label: "Comments",
     children: (
       <Card>
-        <CommentForm />
         <Comment />
+        <CommentForm />
       </Card>
     ),
   },
@@ -28,18 +28,19 @@ const items: TabsProps["items"] = [
   },
 ];
 
-const ProjectDetail = () => {
+const BugDetail = () => {
   const onChange = (key: string) => {
     console.log(key);
   };
   return (
     <DetailPage>
-      <ProjectDetailHeader />
-      <DescriptionComponent />
-      <ProjectInformation />
+      <BugDetailHeader />
+      <BugStatusComponent />
+      <DescriptionComponent description="A dog is a type of domesticated animal. Known for its loyalty and faithfulness,the world." />
+      <BugInformation />
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </DetailPage>
   );
 };
 
-export default ProjectDetail;
+export default BugDetail;

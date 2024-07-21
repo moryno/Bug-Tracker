@@ -1,24 +1,26 @@
 import React from "react";
-import { Col, Collapse, Row, Space } from "antd";
+import { Col, Collapse, Row } from "antd";
 import {
-  StyledInfoDivContainer,
-  StyledInfoDivWrapper,
   StyledStatusDot,
   StyledStatusWrapper,
-  StyledUserWrapper,
 } from "../index.styled";
 import {
   PanelTitle,
+  StyledCardWrapper,
+  StyledInfoDivContainer,
+  StyledInfoDivWrapper,
   StyledInfoLabel,
   StyledInfoText,
   StyledUserIcon,
+  StyledUserWrapper,
 } from "_lib";
 
 const { Panel } = Collapse;
 
 const ProjectInformation = () => {
   return (
-    <Collapse defaultActiveKey={["1"]}>
+    <StyledCardWrapper>
+      <Collapse defaultActiveKey={["1"]} ghost>
       <Panel header={<PanelTitle>Project Information</PanelTitle>} key="1">
         <Row gutter={16}>
           <StyledInfoDivContainer span={12}>
@@ -72,6 +74,7 @@ const ProjectInformation = () => {
         </Row>
       </Panel>
     </Collapse>
+    </StyledCardWrapper>
   );
 };
 

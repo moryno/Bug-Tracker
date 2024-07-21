@@ -1,5 +1,5 @@
 import React, { memo, ReactNode } from 'react';
-import { ConfigProvider, theme } from "antd";
+import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from '_constants';
 import { getAntTheme } from '_helpers';

@@ -1,8 +1,7 @@
 import React from "react";
 import { Card, Tabs, TabsProps } from "antd";
 import ProjectInformation from "./ProjectInformation";
-import { Comment, CommentForm, DetailPage } from "_lib";
-import DescriptionComponent from "_lib/DescriptionComponent";
+import { Comment, CommentForm, DetailPage, DescriptionComponent } from "_lib";
 import ProjectDetailHeader from "./ProjectDetailHeader";
 
 const items: TabsProps["items"] = [
@@ -35,7 +34,7 @@ const ProjectDetail = () => {
   return (
     <DetailPage>
       <ProjectDetailHeader />
-      <DescriptionComponent />
+      <DescriptionComponent description="A dog is a type of domesticated animal. Known for its loyalty and faithfulness,the world." />
       <ProjectInformation />
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </DetailPage>
