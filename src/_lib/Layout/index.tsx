@@ -1,14 +1,33 @@
-import React, { ReactNode } from 'react'
+import React, {  useMemo } from 'react'
 import AppHeader from './AppHeader'
 import AppSidebar from './AppSidebar'
-import { StyledAppLayout } from './index.styled'
+import { StyledAppLayout, StyledAppLayoutMain } from './index.styled'
+import { defaultTheme, HOME_ROUTE } from '_constants'
+import { useLocation } from 'react-router-dom'
+import AppContentView from '_lib/AppContentView'
 
-const Layout = ({ children } : { children: ReactNode}) => {
+const Layout = ({ routes }: { routes: any}) => {
+  const { pathname } = useLocation();
+
+  const layoutBackground = useMemo(() => {
+    let background = defaultTheme.theme.palette.background.paper;
+    if (
+      pathname !== HOME_ROUTE
+    ) {
+      background = defaultTheme.theme.palette.background.paperMobile;
+    }
+    return background;
+  }, [pathname]);
+
   return (
-    <main>
+    <StyledAppLayout background={layoutBackground}>
       <AppHeader />
-      { children }
-    </main>
+      
+      <StyledAppLayoutMain background={layoutBackground}>
+        <AppSidebar />
+        <AppContentView routes={routes} />
+      </StyledAppLayoutMain>
+    </StyledAppLayout>
   )
 }
 

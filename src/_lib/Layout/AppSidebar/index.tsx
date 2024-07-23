@@ -1,25 +1,17 @@
-import React from 'react'
-import { 
-  StyledAppSider, 
-  StyledAppSiderContainer, 
-  StyleSidebarLogo, 
-  StyleSidebarLogoContainer } from './index.styled'
-
+import {
+  StyledAppSidebarScrollbar,
+} from "./index.styled";
+import MainSidebar from "./MainSidebar";
+import AppVerticalNav from "../AppVerticalNav";
 
 const AppSidebar = () => {
+
   return (
-    // <StyledAppSiderContainer>
-    //   <StyledAppSider theme="light">
-    //   <StyleSidebarLogoContainer>
-    //     <StyleSidebarLogo>Bug Tracker</StyleSidebarLogo>
-    //   </StyleSidebarLogoContainer>
-    //   </StyledAppSider>
-    // </StyledAppSiderContainer>
-    <main style={{ width: "300px", height: "100vh"}}>
-      <section style={{ width: "100%", height: "100%"}}>
-        <h3>Bug Tracker</h3>
-      </section>
-    </main>
+    <MainSidebar>
+      <StyledAppSidebarScrollbar>
+        <AppVerticalNav />
+      </StyledAppSidebarScrollbar>
+    </MainSidebar>
   )
 }
 

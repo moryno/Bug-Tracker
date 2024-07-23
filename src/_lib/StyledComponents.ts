@@ -34,7 +34,7 @@ export const StyledPageTitle = styled.h3`
   color: ${defaultTheme.theme.palette.gray[600]};
 `;
 export const StyledPageCard = styled.main`
-  padding: 10px 16px;
+  // padding: 10px 16px;
 `;
 export const StyledDetailPageCardWrapper = styled.main`
   display: flex;

@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useMemo } from "react";
-import { useLocation, useRoutes } from "react-router-dom";
+import { useMemo } from "react";
+import { useRoutes } from "react-router-dom";
 import {
     authorizedStructure,
     unAuthorizedStructure,
     anonymousStructure,
     alwaysStructure,
   } from "_core/AppRoutes";
-  import { generateRoutes } from "_helpers";
+import { generateRoutes } from "_helpers";
 import { useAuthUser } from "_hooks";
+import { Layout } from "_lib";
 
 const AppLayout = () => {
-    const { isAuthenticated, user } = useAuthUser();
-    const { pathname } = useLocation();
+    const { isAuthenticated } = useAuthUser();
 
     const generatedRoutes = useMemo(() => {
         return generateRoutes({
@@ -26,7 +26,7 @@ const AppLayout = () => {
       const routes = useRoutes(generatedRoutes);
 
   return (
-    <div>index</div>
+    <Layout routes={routes} />
   )
 }
 
