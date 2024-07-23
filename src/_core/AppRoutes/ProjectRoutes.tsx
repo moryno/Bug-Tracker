@@ -6,5 +6,5 @@ const ProjectDetail = lazy(() => import("pages/projects/components/ProjectDetail
 
 export const projectRoutes = [
     { path: PROJECT_ROUTE, element: <Projects />},
-    { pathe: `${PROJECT_ROUTE}/:id`, element: <ProjectDetail />}
+    { path: `${PROJECT_ROUTE}/:id`, element: <ProjectDetail />}
 ]
