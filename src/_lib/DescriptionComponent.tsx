@@ -1,4 +1,3 @@
-import React from "react";
 import { PanelTitle, StyledCardWrapper, StyledComment } from "./StyledComponents";
 import { Collapse } from "antd";
 

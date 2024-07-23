@@ -2,7 +2,7 @@ import { defaultTheme } from "_constants";
 import styled from "styled-components";
 import { FaBriefcase, FaBug } from "react-icons/fa";
 import { MdOutlineMessage, MdOutlineArrowDropDown } from "react-icons/md";
-import { Card, Col } from "antd";
+import { Card, Col, Table } from "antd";
 
 export const StyledUserIcon = styled.span`
   display: flex;
@@ -95,5 +95,16 @@ export const StyledDropDownIcon = styled(MdOutlineArrowDropDown).attrs({
 export const StyledCardWrapper = styled(Card)`
   .ant-card-body {
     padding: 10px;
+  }
+`;
+export const StyledTableCardWrapper = styled(Card)`
+  .ant-card-body {
+    padding: 0px;
+  }
+`;
+export const StyledTable = styled(Table)`
+  .ant-table-cell {
+    background: transparent !important;
+    padding: 8px 16px !important;
   }
 `;

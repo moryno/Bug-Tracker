@@ -6,8 +6,9 @@ import { Col, Input } from "antd";
 const { TextArea } = Input;
 
 export const StyledPageCard = styled.main`
-  padding: 10px 16px;
+  ${"" /* padding: 10px 16px; */}
 `;
+
 export const StyledTopContainer = styled.section`
   display: flex;
   justify-content: space-between;
