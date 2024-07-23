@@ -2,7 +2,7 @@ import { Layout } from "antd";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { RiMenu3Fill } from "react-icons/ri";
 import { styled } from "styled-components";
 
 const { Header } = Layout;
@@ -34,13 +34,15 @@ export const StyledAppHeader = styled(Header)`
 `;
 
 export const StyledAppHeaderLeft = styled.section`
-  flex: 1;
+  width: 230px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: space-between;
 `;
-export const StyledAppHeaderToggleSidebar = styled(GiHamburgerMenu).attrs({
+export const StyledAppHeaderToggleSidebar = styled(RiMenu3Fill).attrs({
   size: "24px",
+  cursor: "pointer",
+  color: "#98A2B3",
 })``;
 
 export const StyledAppHeaderPage = styled.h2`

@@ -1,8 +1,7 @@
-import React from 'react'
+import { ReactComponent as BugTrackerLogo } from "_assets/images/bug.svg"
 import { 
   StyledAppHeader, 
   StyledAppHeaderLeft, 
-  StyledAppHeaderPage, 
   StyledAppHeaderRight, 
   StyledAppHeaderToggleSidebar,
   StyledAppHeaderAvatar,
@@ -15,8 +14,9 @@ const AppHeader = () => {
   return (
     <StyledAppHeader>
       <StyledAppHeaderLeft>
+        <BugTrackerLogo width={144} height={24} />
         <StyledAppHeaderToggleSidebar />
-        <StyledAppHeaderPage>Home</StyledAppHeaderPage>
+        
       </StyledAppHeaderLeft>
       <StyledAppHeaderRight>
         <StyledAppHeaderAdd />
