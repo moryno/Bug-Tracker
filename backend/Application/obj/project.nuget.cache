@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "wRqYjN+8c9O2A9X75JpdMOP4QTIz/fxDzRi7OdMnlVQU5ph4gzI2AB4yInS/Y4Ka2MVYJ88E9/waMWy3PTQKZQ==",
+  "dgSpecHash": "47u2V0H1P++txg81KZcgzhsE1DP2wo7pRcBxD9B6pJWtHul4h1V1Cd6sbcFVLDszSxqaY0qKaEQHB4YubFOgFQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MAURICE\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\MAURICE\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\MAURICE\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
+    "C:\\Users\\MAURICE\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\MAURICE\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "C:\\Users\\MAURICE\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\MAURICE\\.nuget\\packages\\mediatr\\11.0.0\\mediatr.11.0.0.nupkg.sha512",
     "C:\\Users\\MAURICE\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
