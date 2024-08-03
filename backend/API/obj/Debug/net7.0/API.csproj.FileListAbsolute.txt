@@ -86,3 +86,4 @@ C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.dll
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\Newtonsoft.Json.dll
