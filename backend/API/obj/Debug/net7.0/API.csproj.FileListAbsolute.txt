@@ -83,3 +83,6 @@ C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\MediatR.dll
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\MediatR.Contracts.dll
 C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.dll
+C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.AspNetCore.dll
+C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
