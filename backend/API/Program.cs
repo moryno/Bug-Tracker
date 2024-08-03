@@ -1,6 +1,9 @@
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using static Application.Projects.Create;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,10 @@ builder.Services.AddCors(option =>
     });
 });
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
+// Use the Fluent Validator(Author: Maurice).
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssemblyContaining<CommandValidator>();
 
 var app = builder.Build();
 

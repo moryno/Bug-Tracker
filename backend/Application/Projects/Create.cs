@@ -1,4 +1,5 @@
 ﻿using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 using System;
@@ -28,6 +29,16 @@ namespace Application.Projects
             public bool Private { get; set; }
         }
 
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator() 
+            {
+                RuleFor(x => x.ProjectGroup).NotEmpty().MinimumLength(3);
+                RuleFor(x => x.StartDate).NotEmpty();
+                RuleFor(x => x.Priority).NotEmpty();
+                RuleFor(x => x.Private).NotEmpty();
+            }
+        }
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
