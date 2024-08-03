@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Application.Errors;
 using Domain;
 using MediatR;
 using Persistence;
@@ -28,7 +30,7 @@ namespace Application.Projects
             {
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
-                    throw new Exception("Could not find project");
+                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
 
                 _context.Projects.Remove(project);
 
