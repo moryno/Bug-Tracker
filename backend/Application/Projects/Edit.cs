@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Errors;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Persistence;
+using System.Net;
 
 namespace Application.Projects
 {
@@ -52,7 +50,7 @@ namespace Application.Projects
             {
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
-                    throw new Exception("Could not find project.");
+                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
 
                 project.ProjectName = request.ProjectName ?? project.ProjectName;
                 project.ProjectGroup = request.ProjectGroup ?? project.ProjectGroup;
