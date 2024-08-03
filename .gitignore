@@ -3,6 +3,19 @@
 # dependencies
 /node_modules
 /client/node_modules
+client/node_modules
+backend/bin
+backend/obj
+backend/.vscode
+backend/.DS_Store
+backend/appsettings.json
+backend/*.db
+/backend/bin
+/backend/obj
+/backend/.vscode
+/backend/.DS_Store
+/backend/appsettings.json
+/backend/*.db
 /.pnp
 .pnp.js
 
@@ -22,3 +35,91 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Ignore node_modules in the client folder
+client/node_modules/
+
+# Ignore build artifacts in the client folder
+client/build/
+
+# Ignore environment variables in the client folder
+client/.env
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+
+# Ignore logs in the client folder
+client/logs/
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# Ignore npm package locks
+client/package-lock.json
+client/yarn.lock
+
+# Ignore dependency directories
+client/.pnp
+client/.pnp.js
+
+# Ignore eslint cache
+client/.eslintcache
+
+# Ignore VSCode settings
+client/.vscode/
+
+# Ignore .NET binary and object files
+backend/API/bin/
+backend/API/obj/
+backend/Domain/bin/
+backend/Domain/obj/
+backend/Persistence/bin/
+backend/Persistence/obj/
+backend/Application/bin/
+backend/Application/obj/
+
+# Ignore .NET user-specific files
+backend/**/*.user
+backend/**/*.rsuser
+backend/.vs/
+backend/.vscode/
+backend/**/*.suo
+backend/**/*.userosscache
+backend/**/*.sln.docstates
+
+# Ignore .NET build artifacts
+backend/API/Publish/
+backend/API/TestResults/
+backend/Domain/Publish/
+backend/Domain/TestResults/
+backend/Persistence/Publish/
+backend/Persistence/TestResults/
+backend/Application/Publish/
+backend/Application/TestResults/
+
+# Ignore environment variables in the backend folder
+backend/API/appsettings.json
+backend/API/appsettings.Development.json
+
+# Ignore database files
+backend/**/*.mdf
+backend/**/*.ldf
+
+# Ignore logs in the backend folder
+backend/logs/
+backend/**/*.log
+
+# Ignore Recycle Bin used by IIS
+backend/IISExpress/
+backend/wwwroot/
+backend/uploads/
+backend/node_modules/
+
+# Ignore Rider project files
+backend/.idea/
+backend/*.sln.iml
+
+# Ignore general files to ignore
+*.DS_Store
+*.log
+*.temp
