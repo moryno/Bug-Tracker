@@ -11,6 +11,9 @@ public class DataContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<Project> Projects { get; set; }
+    public DbSet<Bug> Bugs { get; set; }
+    //public DbSet<ProjectComment> ProjectComments { get; set; }
+    //public DbSet<BugComment> BugComments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
