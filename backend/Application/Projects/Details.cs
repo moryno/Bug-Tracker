@@ -1,6 +1,8 @@
-﻿using Domain;
+﻿using Application.Errors;
+using Domain;
 using MediatR;
 using Persistence;
+using System.Net;
 
 namespace Application.Projects
 {
@@ -22,6 +24,9 @@ namespace Application.Projects
             public async Task<Project> Handle(Query request, CancellationToken cancellationToken)
             {
                 var project = await _context.Projects.FindAsync(request.Id);
+                if (project == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+
                 return project;
             }
         }
