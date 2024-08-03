@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
+using FluentValidation;
 using MediatR;
 using Persistence;
 
@@ -25,6 +26,17 @@ namespace Application.Projects
             public string Description { get; set; } = string.Empty;
             public string ProjectGroup { get; set; } = string.Empty;
             public bool Private { get; set; }
+        }
+
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.ProjectName).NotEmpty().MinimumLength(3);
+                RuleFor(x => x.StartDate).NotEmpty();
+                RuleFor(x => x.Priority).NotEmpty();
+                RuleFor(x => x.Private).NotEmpty();
+            }
         }
 
         public class Handler : IRequestHandler<Command>

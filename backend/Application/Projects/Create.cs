@@ -33,7 +33,7 @@ namespace Application.Projects
         {
             public CommandValidator() 
             {
-                RuleFor(x => x.ProjectGroup).NotEmpty().MinimumLength(3);
+                RuleFor(x => x.ProjectName).NotEmpty().MinimumLength(3);
                 RuleFor(x => x.StartDate).NotEmpty();
                 RuleFor(x => x.Priority).NotEmpty();
                 RuleFor(x => x.Private).NotEmpty();
