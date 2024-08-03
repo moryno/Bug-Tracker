@@ -9,7 +9,7 @@ namespace Application.Users
 {
     public class Login
     {
-        public class Query : IRequest<AppUser>
+        public class Query : IRequest<User>
         {
             public string Email { get; set; }
             public string Password { get; set; }    
@@ -22,7 +22,7 @@ namespace Application.Users
                 RuleFor(x => x.Password).NotEmpty();
             }
         }
-        public class Handler : IRequestHandler<Query, AppUser>
+        public class Handler : IRequestHandler<Query, User>
         {
 
             private readonly UserManager<AppUser> _userManager;
@@ -34,7 +34,7 @@ namespace Application.Users
                 _signInManager = signInManager;
             }
 
-            public async Task<AppUser> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<User> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await _userManager.FindByEmailAsync(request.Email);
                 if (user == null)
@@ -43,7 +43,14 @@ namespace Application.Users
                 var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
                 if (result.Succeeded)
                 {
-                    return user;
+                    return new User
+                    {
+                        Email = user.Email,
+                        FullName = user.DisplayName,
+                        UserName = user.UserName,
+                        Image = null,
+                        Token = "THis is a token"
+                    };
                 }
                 
                 throw new RestException(HttpStatusCode.Unauthorized);
