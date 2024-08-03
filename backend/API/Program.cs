@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using static Application.Projects.Create;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +32,8 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CommandValidator>();
 
 var app = builder.Build();
-
+// Use the middleware(Author: Maurice).
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
