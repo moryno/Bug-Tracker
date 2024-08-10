@@ -9,6 +9,8 @@ using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication;
+using Application.Interfaces;
+using Infrastructure.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +21,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 /*****************************  START OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
+
+
+
+
 builder.Services.AddDbContext<DataContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-// add cors policy(Author: Maurice).
+// add cors policy
+
 builder.Services.AddCors(option =>
 {
     option.AddPolicy("CorsPolicy", policy =>
@@ -32,17 +39,24 @@ builder.Services.AddCors(option =>
     });
 });
 //adMediatR
+
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
-// Use the Fluent Validator(Author: Maurice).
+// Use the Fluent Validator
+
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CommandValidator>();
 //Use Identity Core
+
 var identyBld = builder.Services.AddIdentityCore<AppUser>();
 var identityBuilder = new IdentityBuilder(identyBld.UserType, identyBld.Services);
 identityBuilder.AddEntityFrameworkStores<DataContext>();
 builder.Services.TryAddSingleton<ISystemClock, SystemClock>();
 identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
+
+
 
 /*****************************  END OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
 
