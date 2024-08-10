@@ -1,5 +1,6 @@
 ﻿using Application.Users;
 using Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<User>> Get()
         {
             return await Mediator.Send(new CurrentUser.Query());
