@@ -19,5 +19,11 @@ namespace API.Controllers
         {
             return await Mediator.Send(command);    
         }
+
+        [HttpGet]
+        public async Task<ActionResult<User>> Get()
+        {
+            return await Mediator.Send(new CurrentUser.Query());
+        }
     }
 }
