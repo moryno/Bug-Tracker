@@ -75,6 +75,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Scopes
 
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 
 
 
