@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Application.Interfaces;
 using Infrastructure.Security;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +57,23 @@ identityBuilder.AddEntityFrameworkStores<DataContext>();
 builder.Services.TryAddSingleton<ISystemClock, SystemClock>();
 identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
+// Add Authentication
+
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = key,
+            ValidateAudience = false,
+            ValidateIssuer = false
+        };
+    });
+
+// Scopes
+
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 
 
@@ -65,7 +85,8 @@ var app = builder.Build();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
