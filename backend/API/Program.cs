@@ -30,6 +30,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
+    option.UseLazyLoadingProxies();
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 // add cors policy
