@@ -10,9 +10,9 @@ backend/.vscode
 backend/.DS_Store
 backend/appsettings.json
 backend/*.db
-/backend/bin
-/backend/obj
-/backend/.vscode
+/backend/bin/*
+/backend/obj/*
+/backend/.vscode/*
 /backend/.DS_Store
 /backend/appsettings.json
 /backend/*.db
@@ -81,8 +81,8 @@ backend/Application/obj/
 # Ignore .NET user-specific files
 backend/**/*.user
 backend/**/*.rsuser
-backend/.vs/
-backend/.vscode/
+backend/.vs/*
+backend/.vscode/*
 backend/**/*.suo
 backend/**/*.userosscache
 backend/**/*.sln.docstates
