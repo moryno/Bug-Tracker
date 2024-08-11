@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain
+﻿namespace Domain
 {
     public class ProjectComment
     {
-        public string Commentor { get; set; } = string.Empty;
+        public string AppUserId { get; set; } = string.Empty;
+        public AppUser AppUser { get; set; }
+        public Guid ProjectId { get; set; }
+        public Project Project { get; set; }
         public string Description { get; set; } = string.Empty;
+        public DateTime DateCommented { get; set; }
     }
 }
