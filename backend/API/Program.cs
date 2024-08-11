@@ -41,9 +41,11 @@ builder.Services.AddCors(option =>
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
     });
 });
-//adMediatR
+//Add MediatR and AutoMapper
 
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
+builder.Services.AddAutoMapper(typeof(List.Handler));   
+
 // Use the Fluent Validator
 
 builder.Services.AddFluentValidationAutoValidation();
