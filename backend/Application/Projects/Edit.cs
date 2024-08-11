@@ -1,4 +1,5 @@
 using Application.Errors;
+using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -16,7 +17,10 @@ namespace Application.Projects
 
             public DateTime? StartDate { get; set; }
             public DateTime? EndDate { get; set; }
-
+            public DateTime CreatedDate { get; set; }
+            public string CreatedUser { get; set; } = string.Empty;
+            public DateTime UpdatedDate { get; set; }
+            public string? UpdatedUser { get; set; } = string.Empty;
             public string Priority { get; set; } = string.Empty;
 
             public string Owner { get; set; } = string.Empty;
@@ -40,10 +44,12 @@ namespace Application.Projects
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -60,6 +66,10 @@ namespace Application.Projects
                 project.Owner = request.Owner ?? project.Owner;
                 project.Private = request.Private;
                 project.Priority = request.Priority ?? project.Priority;
+                project.CreatedDate = project.CreatedDate;
+                project.UpdatedDate = DateTime.Now;
+                project.CreatedUser = project.CreatedUser;
+                project.UpdatedUser = _userAccessor.GetCurrentUserName();
 
                 var success = await _context.SaveChangesAsync() > 0;
 
