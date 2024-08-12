@@ -1,8 +1,12 @@
-import React from 'react'
+import { StyledAuthContainerMain } from './index.styled'
+import { AuthContainer } from '_lib'
 
 const Login = () => {
+
   return (
-    <div>Login</div>
+    <StyledAuthContainerMain>
+      <AuthContainer />
+    </StyledAuthContainerMain>
   )
 }
 
