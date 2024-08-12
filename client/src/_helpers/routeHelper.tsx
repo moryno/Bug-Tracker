@@ -1,3 +1,4 @@
+import { REGISTER_ROUTE } from "_constants";
 import { Navigate } from "react-router-dom";
 
 type structureType = {
@@ -109,3 +110,7 @@ const generatedRoutes: object[] = [];
   return generatedRoutes;
 
 }
+
+export const getIsRegisterRoute = (pathname : string, search : string) => {
+  return `${pathname}${search}`.includes(REGISTER_ROUTE);
+};
