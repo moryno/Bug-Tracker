@@ -18,7 +18,7 @@ public class Project
     public string Description { get; set; } = string.Empty;
     public string ProjectGroup { get; set; } = string.Empty;
     public bool Private { get; set; }
-    public ICollection<UserProject> UserProjects { get; set; } = new List<UserProject>();
-    public ICollection<ProjectComment> ProjectComments { get; set; } = new List<ProjectComment>();
+    public virtual ICollection<UserProject> UserProjects { get; set; } = new List<UserProject>();
+    public virtual ICollection<ProjectComment> ProjectComments { get; set; } = new List<ProjectComment>();
 
 }
