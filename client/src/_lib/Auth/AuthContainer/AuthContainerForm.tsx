@@ -7,11 +7,13 @@ import { LOGIN_ROUTE, REGISTER_ROUTE } from '_constants';
 interface IProps{
     isRegisterRoute: boolean;
     onRedirect: ( url: string) => void;
+    onFinish: (value: any ) => void;
 }
 
-const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect }) => {
+const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFinish }) => {
   return (
     <StyledAuthContainerForm 
+      onFinish={onFinish}
       name="basic"
       layout="vertical"
     //   initialValues={initialValues}
@@ -88,7 +90,7 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect }) => 
         </Form.Item>
       <Form.Item>
         <ContainerButton
-          title={"Sign In"}
+          title={ isRegisterRoute ? "Sign Up" : "Sign In"}
           type="primary"
           htmlType="submit"
           size="large"
