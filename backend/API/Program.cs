@@ -14,6 +14,7 @@ using Infrastructure.Security;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +63,7 @@ identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
 // Add Authentication
 
+
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -74,6 +76,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false
         };
     });
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("IsProjectOwner", policy =>
+    {
+        policy.Requirements.Add(new IsOwnerRequirement());
+    });
+});
+builder.Services.AddTransient<IAuthorizationHandler, IsOwnerRequirementHandler>();
+
 
 // Scopes
 
@@ -88,7 +99,7 @@ var app = builder.Build();
 // Use the middleware(Author: Maurice).
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseCors("CorsPolicy");
 app.UseAuthorization();
