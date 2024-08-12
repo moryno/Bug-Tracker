@@ -4,9 +4,12 @@ import AuthContainerForm from './AuthContainerForm';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getIsRegisterRoute } from '_helpers';
 import { FaBug } from 'react-icons/fa';
+import { login, register } from '_redux';
+import { useDispatch } from 'react-redux';
 
 const AuthContainer = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { pathname, search } = useLocation();
     const isRegisterRoute = getIsRegisterRoute(pathname, search);
 
@@ -17,6 +20,14 @@ const AuthContainer = () => {
     [navigate]
   );
 
+  const onFinish = useCallback((values: any) => {
+    if(isRegisterRoute){
+      register(dispatch, values)
+    }else{
+      login(dispatch, values)
+    }
+  }, [dispatch, isRegisterRoute]);
+
   return (
     <StyledAuthContainerMain>
         <StyledAuthContainerContent>
@@ -26,6 +37,7 @@ const AuthContainer = () => {
         <AuthContainerForm 
           isRegisterRoute={isRegisterRoute}
           onRedirect={onRedirect}
+          onFinish={onFinish}
         />
     </StyledAuthContainerMain>
   )
