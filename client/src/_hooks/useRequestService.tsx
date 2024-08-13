@@ -1,7 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 
-export const useGetAll= (service : () => void, queryKey : string) => {
-  const response = useQuery({
+export const useGetAll = (service : () => void, queryKey : string) => {
+  const response: UseQueryResult<any> = useQuery({
     queryKey: [queryKey],
     queryFn: () => service(),
   });
@@ -10,7 +10,7 @@ export const useGetAll= (service : () => void, queryKey : string) => {
 };
 
 export const useGetById = (service : (value: any) => void, queryKey : string, id : any) => {
-  const response = useQuery({
+  const response: UseQueryResult<any>  = useQuery({
     queryKey: [`${queryKey}.${id}`, id],
     queryFn: () => service(id),
     enabled: !!id,
