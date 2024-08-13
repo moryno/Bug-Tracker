@@ -19,11 +19,11 @@ export const useGetById = (service : (value: any) => void, queryKey : string, id
   return response;
 };
 
-export const useCreateService = (service : (value: any) => Promise<void>, queryKey : string) => {
+export const useCreateService = (service : any, queryKey : string) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (payload) => {
+    mutationFn: async (payload: any) => {
       return service(payload);
     },
     onSuccess: () => {
