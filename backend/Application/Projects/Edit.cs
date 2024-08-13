@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System.Net;
 
@@ -21,9 +22,9 @@ namespace Application.Projects
             public string CreatedUser { get; set; } = string.Empty;
             public DateTime UpdatedDate { get; set; }
             public string? UpdatedUser { get; set; } = string.Empty;
-            public string Priority { get; set; } = string.Empty;
+            public string? Priority { get; set; } = string.Empty;
 
-            public string Owner { get; set; } = string.Empty;
+            public string? Owner { get; set; } = string.Empty;
 
             public string Description { get; set; } = string.Empty;
             public string ProjectGroup { get; set; } = string.Empty;
@@ -36,8 +37,7 @@ namespace Application.Projects
             {
                 RuleFor(x => x.ProjectName).NotEmpty().MinimumLength(3);
                 RuleFor(x => x.StartDate).NotEmpty();
-                RuleFor(x => x.Priority).NotEmpty();
-                RuleFor(x => x.Private).NotEmpty();
+                RuleFor(x => x.Description).NotEmpty();
             }
         }
 
@@ -57,6 +57,7 @@ namespace Application.Projects
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 project.ProjectName = request.ProjectName ?? project.ProjectName;
                 project.ProjectGroup = request.ProjectGroup ?? project.ProjectGroup;
@@ -69,7 +70,7 @@ namespace Application.Projects
                 project.CreatedDate = project.CreatedDate;
                 project.UpdatedDate = DateTime.Now;
                 project.CreatedUser = project.CreatedUser;
-                project.UpdatedUser = _userAccessor.GetCurrentUserName();
+                project.UpdatedUser = user.DisplayName;
 
                 var success = await _context.SaveChangesAsync() > 0;
 
