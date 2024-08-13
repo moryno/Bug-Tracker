@@ -1,11 +1,11 @@
-import React from 'react'
 import { GroupPage } from '_lib';
 import ProjectForm from './components/ProjectForm';
+import { DomianEnum } from '_constants';
 
 const Projects = () => {
    
   return (
-    <GroupPage title='Project' FormComponent={ProjectForm} />
+    <GroupPage title={DomianEnum.PROJECTS} FormComponent={ProjectForm} />
   )
 }
 
