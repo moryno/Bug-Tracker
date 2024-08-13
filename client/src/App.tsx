@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import { AppThemeProvider } from "_context";
 import { AuthRoutes } from "_lib";
@@ -14,15 +13,15 @@ function App() {
   return (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <AppThemeProvider>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AuthRoutes>
-          <AppLayout />
-        </AuthRoutes>
-      </BrowserRouter>
-    </QueryClientProvider>
-    </AppThemeProvider>
+     <AppThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AuthRoutes>
+            <AppLayout />
+          </AuthRoutes>
+        </BrowserRouter>
+      </QueryClientProvider>
+     </AppThemeProvider>
     </PersistGate>
   </Provider>
   );
