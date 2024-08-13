@@ -7,7 +7,6 @@ import {
   StyledTopContainer,
 } from "./index.styled";
 import ContainerButton from "./ContainerButton";
-import ContainerDrawer from "./ContainerDrawer";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
 import { useGetAll } from "_hooks";
@@ -15,7 +14,7 @@ import { ProjectService } from "_services";
 
 interface Iprops {
   title: string;
-  FormComponent: () => JSX.Element;
+  FormComponent: React.FC<{ open: boolean; onClose: () => void }>;
   columns: any[]
 }
 
@@ -47,16 +46,9 @@ const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
       </StyledTopContainer>
       <StyledBottomContainer>
         <StyledTableCardWrapper>
-          <StyledTable loading={isLoading} dataSource={data?.data || []} columns={columns} />
+          <StyledTable loading={isLoading} dataSource={data?.data || []} columns={columns} rowKey={(record) => record.id} />
         </StyledTableCardWrapper>
-        <ContainerDrawer
-          onClose={onClose}
-          open={open}
-          title={`New ${title}`}
-          width={720}
-        >
-          <FormComponent />
-        </ContainerDrawer>
+          <FormComponent open={open} onClose={onClose} />
       </StyledBottomContainer>
     </StyledPageCard>
   );
