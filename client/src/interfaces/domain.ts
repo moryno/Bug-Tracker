@@ -1,13 +1,15 @@
+import { Moment } from "moment";
+
 export interface IProject {
   id?: string;
   projectName: string;
-  startDate: Date;
-  endDate: Date;
+  startDate?: Moment;
+  endDate?: Moment;
   createdDate?: Date;
   createdUser?: string;
   updatedDate?: Date;
   updatedUser?: string;
-  priority: string;
+  priority?: string;
   owner?: string;
   description: string;
   projectGroup?: string;
