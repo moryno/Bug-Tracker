@@ -1,14 +1,17 @@
 import React, { memo, ReactNode } from 'react';
-import { Button, Drawer, Space } from 'antd';
+import { Drawer, Space } from 'antd';
+import ContainerButton from './ContainerButton';
 interface IProps{
     onClose?: () => void;
     open?: boolean;
     title?: string;
     children?: ReactNode;
     width?: number;
+    onFinish: () => void;
+    loading: boolean
 }
 
-const ContainerDrawer: React.FC<IProps> = ({ onClose, open, title, children, width}) => {
+const ContainerDrawer: React.FC<IProps> = ({ onFinish, onClose, open, title, children, width, loading}) => {
   return (
     <>
       <Drawer
@@ -25,10 +28,8 @@ const ContainerDrawer: React.FC<IProps> = ({ onClose, open, title, children, wid
         
         footer={
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type="primary">
-              Submit
-            </Button>
+            <ContainerButton disabled={loading} onClick={onClose} title="Close" size="middle" />
+            <ContainerButton loading={loading} onClick={onFinish} type="primary" title="Submit" size="middle" />
           </Space>
         }
       >
