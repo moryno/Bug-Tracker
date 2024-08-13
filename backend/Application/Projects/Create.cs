@@ -4,11 +4,6 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Projects
 {
@@ -16,7 +11,6 @@ namespace Application.Projects
     {
         public class Command : IRequest
         {
-            public Guid Id { get; set; }
             public string ProjectName { get; set; } = string.Empty;
 
             public DateTime StartDate { get; set; }
@@ -61,12 +55,11 @@ namespace Application.Projects
 
                 Project project = new()
                 {
-                    Id = request.Id,
                     ProjectName = request.ProjectName,
                     StartDate = request.StartDate,
                     EndDate = request.EndDate,
                     Priority = request.Priority,
-                    Owner = request.Owner ?? _userAccessor.GetCurrentUserName(),
+                    Owner = request.Owner ?? user.UserName,
                     Description = request.Description,
                     ProjectGroup = request.ProjectGroup,
                     Private = request.Private,
