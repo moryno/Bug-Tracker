@@ -1,10 +1,10 @@
-import React from 'react'
 import { GroupPage } from '_lib'
 import BugForm from './components/BugForm'
+import { DomianEnum } from '_constants'
 
 const Bugs = () => {
   return (
-    <GroupPage title='Bug' FormComponent={BugForm} />
+    <GroupPage title={DomianEnum.BUGS} FormComponent={BugForm} columns={[]} />
   )
 }
 
