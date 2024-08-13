@@ -13,45 +13,13 @@ import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
 import { useGetAll } from "_hooks";
 import { ProjectService } from "_services";
 
-const dataSource = [
-  {
-    key: "1",
-    name: "Mike",
-    age: 32,
-    address: "10 Downing Street",
-  },
-  {
-    key: "2",
-    name: "John",
-    age: 42,
-    address: "10 Downing Street",
-  },
-];
-
-const columns = [
-  {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
-  },
-  {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
-  },
-];
-
 interface Iprops {
   title: string;
   FormComponent: () => JSX.Element;
+  columns: any[]
 }
 
-const GroupPage: React.FC<Iprops> = ({ title, FormComponent }) => {
+const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
   const [open, setOpen] = useState(false);
    const { isLoading, error, data } = useGetAll(ProjectService.getProjects, title)
 
@@ -79,7 +47,7 @@ const GroupPage: React.FC<Iprops> = ({ title, FormComponent }) => {
       </StyledTopContainer>
       <StyledBottomContainer>
         <StyledTableCardWrapper>
-          <StyledTable dataSource={dataSource} columns={columns} />
+          <StyledTable loading={isLoading} dataSource={data?.data || []} columns={columns} />
         </StyledTableCardWrapper>
         <ContainerDrawer
           onClose={onClose}
