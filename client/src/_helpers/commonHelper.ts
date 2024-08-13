@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const hardRefreshAndEmptyCache = async () => {
   if ("caches" in window) {
     try {
@@ -22,4 +24,8 @@ export const getTitleCaseSentence = (str: string) => {
     return "";
   }
   return str.toLowerCase().replace(/\b\w/g, (s) => s.toUpperCase());
+};
+
+export const isMomentObject = (value: any) => {
+  return moment.isMoment(value);
 };
