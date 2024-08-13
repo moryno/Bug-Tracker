@@ -7,10 +7,11 @@ import {
   StyledTopContainer,
 } from "./index.styled";
 import ContainerButton from "./ContainerButton";
-import { Card, Table } from "antd";
 import ContainerDrawer from "./ContainerDrawer";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
+import { useGetAll } from "_hooks";
+import { ProjectService } from "_services";
 
 const dataSource = [
   {
@@ -52,6 +53,7 @@ interface Iprops {
 
 const GroupPage: React.FC<Iprops> = ({ title, FormComponent }) => {
   const [open, setOpen] = useState(false);
+   const { isLoading, error, data } = useGetAll(ProjectService.getProjects, title)
 
   const showDrawer = useCallback(() => {
     setOpen(true);
