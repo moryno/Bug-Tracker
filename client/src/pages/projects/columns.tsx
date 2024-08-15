@@ -1,4 +1,5 @@
-import { Tag } from "antd";
+
+import { Tag, Tooltip } from "antd";
 import { IFollowerDto } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
@@ -8,44 +9,34 @@ export const projectColumns = [
       title: 'Project Name',
       dataIndex: 'projectName',
       key: 'projectName',
+      render: (text: string) => <a>{ text }</a>,
+      width: 300,
+      ellipsis: true
     },
     {
-      title: 'Start Date',
-      dataIndex: 'startDate',
-      key: 'startDate',
-      render: (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss'),
-    },
-    {
-      title: 'End Date',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      render: (date: string) => moment(date).format('YYYY-MM-DD HH:mm:ss'),
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: 300,
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (description : string) => (
+        <Tooltip placement="topLeft" title={description}>
+          {description}
+        </Tooltip>
+      ),
     },
     {
       title: 'Priority',
       dataIndex: 'priority',
       key: 'priority',
       render: (priority: string) => {
-        let color = priority === 'High' ? 'red' : 'green';
-        return <Tag color={color}>{priority}</Tag>;
+        let color = priority === 'High' ? 'red' : priority === "Medium" ? "geekblue" : 'green';
+        return <Tag color={color}>{priority.toUpperCase()}</Tag>;
       },
+      width: 100,
     },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-      title: 'Project Group',
-      dataIndex: 'projectGroup',
-      key: 'projectGroup',
-    },
-    // {
-    //   title: 'Private',
-    //   dataIndex: 'private',
-    //   key: 'private',
-    //   render: (isPrivate : boolean) => (isPrivate ? 'Yes' : 'No'),
-    // },
     {
       title: 'Assignee',
       dataIndex: 'Assignee',
@@ -60,28 +51,62 @@ export const projectColumns = [
           ))}
         </>
       ),
+      width: 200
     },
+    {
+      title: 'Start Date',
+      dataIndex: 'startDate',
+      key: 'startDate',
+      render: (date: string) => moment(date).format('YYYY-MM-DD'),
+      width: 150
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'endDate',
+      key: 'endDate',
+      render: (date: string) => moment(date).format('YYYY-MM-DD'),
+      width: 150
+    },
+
+    {
+      title: 'Project Group',
+      dataIndex: 'projectGroup',
+      key: 'projectGroup',
+      width: 150,
+      ellipsis: true,
+    },
+    // {
+    //   title: 'Private',
+    //   dataIndex: 'private',
+    //   key: 'private',
+    //   render: (isPrivate : boolean) => (isPrivate ? 'Yes' : 'No'),
+    // },
+
     {
       title: 'Created By',
       dataIndex: 'createdUser',
       key: 'createdUser',
+      width: 150
     },
     {
       title: 'Created Date',
       dataIndex: 'createdDate',
       key: 'createdDate',
-      render: (date: Date) => moment(date).format('YYYY-MM-DD HH:mm:ss'),
+      render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+      width: 150
     },
     {
       title: 'Updated By',
       dataIndex: 'updatedUser',
       key: 'updatedUser',
+      width: 150
     },
     {
       title: 'Updated Date',
       dataIndex: 'updatedDate',
       key: 'updatedDate',
-      render: (date: Date) => moment(date).format('YYYY-MM-DD HH:mm:ss'),
+      render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+      width: 150
     },
   ];
   
