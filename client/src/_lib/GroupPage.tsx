@@ -41,12 +41,27 @@ const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
             title={`New ${title}`}
             size="middle"
             onClick={showDrawer}
+            type="primary"
           />
         </StyledButtonContainer>
       </StyledTopContainer>
       <StyledBottomContainer>
         <StyledTableCardWrapper>
-          <StyledTable loading={isLoading} dataSource={data?.data || []} columns={columns} rowKey={(record) => record.id} />
+          <StyledTable 
+           loading={isLoading} 
+           dataSource={data?.data || []} 
+           columns={columns} 
+           rowKey={(record) => record.id}
+           scroll={{ x: 1900 }}
+           bordered
+           onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {}, // click row
+              onDoubleClick: (event) => {}, // double click row
+              onContextMenu: (event) => {}, // right button click row
+            };
+           }}
+            />
         </StyledTableCardWrapper>
           <FormComponent open={open} onClose={onClose} />
       </StyledBottomContainer>
