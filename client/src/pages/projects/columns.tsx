@@ -1,15 +1,18 @@
 
 import { Tag, Tooltip } from "antd";
-import { IFollowerDto } from "interfaces";
+import { IFollowerDto, IProject } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
+import { StyledAssigneeContainer, StyledAssigneeImage, StyledAssigneeName } from "./index.styled";
+import { Link } from "react-router-dom";
+import { PROJECT_ROUTE } from "_constants";
 
 export const projectColumns = [
     {
       title: 'Project Name',
       dataIndex: 'projectName',
       key: 'projectName',
-      render: (text: string) => <a>{ text }</a>,
+      render: (text: string, row: IProject) => <StyledLink to={`${PROJECT_ROUTE}/${row.id}`}>{ text }</StyledLink>,
       width: 300,
       ellipsis: true
     },
@@ -44,10 +47,10 @@ export const projectColumns = [
       render: (assignees : IFollowerDto[]) => (
         <>
           {assignees.map((assignee) => (
-            <AssigneeContainer key={assignee.userName}>
-              <AssigneeImage src={assignee.image || "/img/noavatar.jpg"} alt={assignee.fullName} />
-              <AssigneeName>{assignee.fullName}</AssigneeName>
-            </AssigneeContainer>
+            <StyledAssigneeContainer key={assignee.userName}>
+              <StyledAssigneeImage src={assignee.image || "/img/noavatar.jpg"} alt={assignee.fullName} />
+              <StyledAssigneeName>{assignee.fullName}</StyledAssigneeName>
+            </StyledAssigneeContainer>
           ))}
         </>
       ),
@@ -111,21 +114,10 @@ export const projectColumns = [
   ];
   
 
+const StyledLink = styled(Link)`
+  // color: #1890ff !important; 
 
-const AssigneeContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-`;
-
-const AssigneeImage = styled.img`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-const AssigneeName = styled.span`
-  font-size: 14px;
-  color: #333;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
