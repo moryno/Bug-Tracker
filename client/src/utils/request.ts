@@ -44,6 +44,9 @@ const handleErrorResponse = (error: {
       // store.dispatch({ type: LOGOUT });
       description = "Session has expired. Please log in again";
     }
+    if (status === 403) {
+      description = "You are not authorized to perform this action.";
+    }
     if (!userNotFound) {
       notify({
         message: "Error",
