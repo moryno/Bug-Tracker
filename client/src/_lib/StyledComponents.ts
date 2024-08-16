@@ -107,4 +107,10 @@ export const StyledTable = styled(Table)`
     background: transparent !important;
     padding: 8px 16px !important;
   }
+  .ant-table-row {
+    &:hover {
+      background: #f0fdf4 !important;
+      cursor: pointer;
+    }
+  }
 `;

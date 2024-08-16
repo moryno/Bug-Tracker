@@ -29,3 +29,8 @@ export const getTitleCaseSentence = (str: string) => {
 export const isMomentObject = (value: any) => {
   return moment.isMoment(value);
 };
+export const getAbbreviation = (inputString: string) => {
+  const words = inputString.trim().split(/\s+/);
+  const abbreviation = words.map((word) => word[0].toUpperCase()).join("");
+  return abbreviation;
+};

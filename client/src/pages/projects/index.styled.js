@@ -38,3 +38,20 @@ export const StyledStatusDot = styled(GoDotFill).attrs({
   fontSize: 20,
   color: defaultTheme.theme.palette.status.active,
 })``;
+export const StyledAssigneeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
+
+export const StyledAssigneeImage = styled.img`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+export const StyledAssigneeName = styled.span`
+  font-size: 14px;
+  color: #333;
+`;

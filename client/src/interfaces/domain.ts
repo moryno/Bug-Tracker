@@ -14,7 +14,7 @@ export interface IProject {
   description: string;
   projectGroup?: string;
   private?: boolean;
-  assignee?: IFollowerDto[];
+  Assignee?: IFollowerDto[];
 }
 
 export interface IFollowerDto {

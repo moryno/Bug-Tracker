@@ -8,8 +8,18 @@ const createProject = (data: IProject) => {
 const deleteProject = (id: string) => {
   return request.delete(`${PROJECTS_API}/${id}`);
 };
-const editProject = (id: string, data: IProject) => {
-  return request.put(`${PROJECTS_API}/${id}`, data);
+const editProject = (payload: IProject) => {
+  const {
+    id,
+    Assignee,
+    createdDate,
+    createdUser,
+    updatedDate,
+    updatedUser,
+    ...res
+  } = payload;
+
+  return request.put(`${PROJECTS_API}/${id}`, res);
 };
 const getProjects = () => {
   return request.get(PROJECTS_API);
