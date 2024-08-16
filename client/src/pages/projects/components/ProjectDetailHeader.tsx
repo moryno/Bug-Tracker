@@ -1,4 +1,3 @@
-import React from "react";
 import {
   StyledInfo,
   StyledProgress,
@@ -8,7 +7,7 @@ import {
 import { StyledCommentIcon, StyledPageTitle, StyledTagContainer } from "_lib";
 import { Tag } from "antd";
 
-const ProjectDetailHeader = () => {
+const ProjectDetailHeader = ({ title } : { title : string}) => {
   return (
     <StyledTopContainer>
       <StyledProgress
@@ -18,7 +17,7 @@ const ProjectDetailHeader = () => {
         percent={75}
       />
       <StyledTitleContainer>
-        <StyledPageTitle>Project 1</StyledPageTitle>
+        <StyledPageTitle>{ title }</StyledPageTitle>
         <StyledTagContainer>
           <Tag>Completed</Tag> <span>|</span>
           <StyledCommentIcon /> <span>|</span>
