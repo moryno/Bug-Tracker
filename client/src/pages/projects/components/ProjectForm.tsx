@@ -4,9 +4,9 @@ import { useCreateService } from "_hooks";
 import { ContainerDrawer } from "_lib";
 import { ProjectService } from "_services";
 import { Col, DatePicker, Form, Input, message, Row, Select } from "antd";
-import { drawerType, IProject } from "interfaces";
+import { IProject, projectFormType } from "interfaces";
 import moment from "moment";
-import { ChangeEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 const { Option } = Select;
 
 const initialData: IProject = {
@@ -15,19 +15,34 @@ const initialData: IProject = {
   description: ""
 }
 
-const ProjectForm:React.FC<drawerType> = ({ onClose, open }) => {
-  const [formData, setFormData] = useState<IProject>(initialData);
+const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, statusMode }) => {
+  const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
+    {...editedRecord,
+     startDate: moment(editedRecord?.startDate), 
+     endDate: moment(editedRecord?.endDate)
+    });
   const [loading, setLoading] = useState(false);
-  const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS)
+  const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS);
+  const editProject = useCreateService(ProjectService.editProject, DomianEnum.PROJECTS);
+  const [form] = Form.useForm();
 
-  const handleValueChange = useCallback((e: ChangeEvent<HTMLInputElement | HTMLSelectElement>): void => {
+
+  const handleValueChange = useCallback((e: any) => {
     setFormData(prev => (
       { ...prev, ...e }
     ));
   },[]);
 
+  const onClear = useCallback(() => {
+    setLoading(false);
+    onClose();
+    form.resetFields();
+  }, [form, onClose]);
+
   const onFinish = useCallback(async () => {
-    if(!formData.description)
+    if(!formData?.projectName)
+      return message.warning("Project name is required.");
+    if(!formData?.description)
       return message.warning("Project description is required.");
 
    setLoading(true);
@@ -35,8 +50,8 @@ const ProjectForm:React.FC<drawerType> = ({ onClose, open }) => {
     
       const params = {
         ...formData,
-        owner: formData.owner ? formData.owner : null,
-        priority: formData.priority ? formData.priority : null,
+        owner: formData?.owner ? formData?.owner : null,
+        priority: formData?.priority ? formData?.priority : null,
         startDate: formData?.startDate ? isMomentObject(formData?.startDate)
          ? formData?.startDate?.toISOString()
          : moment(formData?.startDate)?.toISOString()
@@ -46,26 +61,30 @@ const ProjectForm:React.FC<drawerType> = ({ onClose, open }) => {
          : moment(formData?.endDate)?.toISOString()
          : null
       }
-      await createProject.mutateAsync(params);
-      setLoading(false);
-      onClose()
+      if(statusMode === "CreateMode"){
+        await createProject.mutateAsync(params);
+      }else{
+        await editProject.mutateAsync(params);
+      }
+      
+      onClear()
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
-  }, [createProject, formData, onClose]);
+  }, [createProject, editProject, formData, onClear, statusMode]);
 
   return (
     <ContainerDrawer 
        onFinish={onFinish} 
-       onClose={onClose} 
+       onClose={onClear} 
        open={open} 
        loading={loading}
        title={"New Project"} 
        width={720}
      >
       <Form 
-        onFinish={onFinish}
+        form={form}
         initialValues={formData}
         onValuesChange={handleValueChange}
         layout="vertical"
