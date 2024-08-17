@@ -55,7 +55,7 @@ namespace Application.Projects
             {
                 Project existingProject = await _context.Projects.SingleOrDefaultAsync(x => x.ProjectName ==  request.ProjectName);
                 if (existingProject != null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Project with the same project name exists." });
+                    throw new RestException(HttpStatusCode.BadRequest, new { error = "Project with the same project name exists." });
 
                 var user =  await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
