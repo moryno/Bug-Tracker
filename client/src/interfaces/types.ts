@@ -1,5 +1,5 @@
 import { MenuProps } from "antd";
-import { IProject } from "./domain";
+import { IBug, IProject } from "./domain";
 
 export type drawerType = {
   onClose: () => void;
@@ -9,6 +9,9 @@ export type drawerType = {
 
 export type projectFormType = drawerType & {
   editedRecord: IProject | null;
+};
+export type bugFormType = drawerType & {
+  editedRecord: IBug | null;
 };
 
 export type MenuPropsType = {
