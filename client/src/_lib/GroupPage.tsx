@@ -13,23 +13,34 @@ import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
 import { useDeleteRecord, useGetAll } from "_hooks";
 import { ProjectService } from "_services";
 import { AnyObject } from "antd/es/_util/type";
-import { IProject } from "interfaces";
+import { IBug, IProject } from "interfaces";
 import ContainerDropDown from "./ContainerDropDown";
 import { actionDropdownItems as items } from "_constants";
+import { AxiosResponse } from "axios";
 
 interface Iprops {
   title: string;
-  FormComponent: React.FC<{ open: boolean; onClose: () => void; editedRecord: IProject | null; statusMode: string}>;
-  columns: any[]
+  FormComponent: React.FC<{ open: boolean; onClose: () => void; editedRecord: any; statusMode: string}>;
+  columns: any[],
+  getAllService: () => Promise<AxiosResponse<any, any>>,
+  getDetailService: (id: string) => Promise<AxiosResponse<any, any>>,
+  deleteService: (id: string) => Promise<AxiosResponse<any, any>>
 }
 
-const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
+const GroupPage: React.FC<Iprops> = ({ 
+  title, 
+  FormComponent, 
+  columns, 
+  getAllService, 
+  getDetailService, 
+  deleteService
+}) => {
   const [open, setOpen] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState<IProject | null>(null);
-  const [selectedRecords, setSelectedRecords] = useState<IProject[] | AnyObject[] | null>(null);
+  const [selectedRecord, setSelectedRecord] = useState<IProject | IBug | null>(null);
+  const [selectedRecords, setSelectedRecords] = useState<IProject[] | IBug[] | AnyObject[] | null>(null);
   const [statusMode, setStatusMode] = useState("CreateMode");
-  const { isLoading, error, data } = useGetAll(ProjectService.getProjects, title);
-  const deleteService = useDeleteRecord(ProjectService.deleteProject, title)
+  const { isLoading, error, data } = useGetAll(getAllService, title);
+  const deleteRecord = useDeleteRecord(deleteService, title)
 
   
   const handleDelete = useCallback(async () => {
@@ -37,11 +48,11 @@ const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
     const recordId  = selectedRecords[0]?.id
     
     try {
-      await deleteService.mutateAsync(recordId)
+      await deleteRecord.mutateAsync(recordId)
     } catch (error) {
       console.log(error);
     }
-  }, [deleteService, selectedRecords]);
+  }, [deleteRecord, selectedRecords]);
 
   const handleMenuClick: MenuProps['onClick'] = useCallback((e: any) => {
     if(e && e.key === "1"){
@@ -66,15 +77,16 @@ const GroupPage: React.FC<Iprops> = ({ title, FormComponent, columns }) => {
 
   const onRowDoubleClick = useCallback(async (record : AnyObject) => {
     try {
-      const { data } = await ProjectService.getProject(record.id);
+      const { data } = await getDetailService(record.id);
       setSelectedRecord(data);
       setStatusMode("EditMode");
       showDrawer();
     } catch (error) {
       console.log(error);
-      setOpen(false)
+      setOpen(false);
+      setStatusMode("CreateMode");
     }
-  }, [showDrawer]);
+  }, [getDetailService, showDrawer]);
 
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: AnyObject[]) => {
