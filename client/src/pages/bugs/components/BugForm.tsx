@@ -1,10 +1,91 @@
-import React from "react";
-import { Col, DatePicker, Form, Input, Row, Select } from "antd";
+import React, { memo, useCallback, useState } from "react";
+import { Col, DatePicker, Form, Input, message, Row, Select } from "antd";
+import { ContainerDrawer } from "_lib";
+import { bugFormType, IBug } from "interfaces";
+import moment from "moment";
+import { useCreateService } from "_hooks";
+import { BugService } from "_services";
+import { DomianEnum } from "_constants";
+import { isMomentObject } from "_helpers";
 const { Option } = Select;
 
-const BugForm = () => {
+const initialData: IBug = {
+  project: "",
+  bugName: "",
+  description: ""
+}
+
+const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode }) => {
+  const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
+    {...editedRecord,
+     dueDate: moment(editedRecord?.dueDate)
+    });
+    const [loading, setLoading] = useState(false);
+    const createBug = useCreateService(BugService.createBug, DomianEnum.BUGS);
+    const editBug = useCreateService(BugService.editBug, DomianEnum.BUGS);
+    const [form] = Form.useForm();
+  
+    const handleValueChange = useCallback((e: any) => {
+      setFormData(prev => (
+        { ...prev, ...e }
+      ));
+    },[]);
+  
+    const onClear = useCallback(() => {
+      setLoading(false);
+      onClose();
+      form.resetFields();
+    }, [form, onClose]);
+  
+    const onFinish = useCallback(async () => {
+      if(!formData?.bugName)
+        return message.warning("Bug name is required.");
+      if(!formData?.project)
+        return message.warning("Project is required.");
+      if(!formData?.description)
+        return message.warning("Project description is required.");
+  
+     setLoading(true);
+      try {
+      
+        const params = {
+          ...formData,
+          severity: formData?.severity ?? null,
+          bugStatus: formData?.bugStatus ?? null,
+          classification: formData?.classification ?? null,
+          dueDate: formData?.dueDate ? isMomentObject(formData?.dueDate)
+           ? formData?.dueDate?.toISOString()
+           : moment(formData?.dueDate)?.toISOString()
+           : null,
+        }
+        if(statusMode === "CreateMode"){
+          await createBug.mutateAsync(params);
+        }else{
+          await editBug.mutateAsync(params);
+        }
+        
+        onClear()
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    }, [createBug, editBug, formData, onClear, statusMode]);
+
   return (
-    <Form layout="vertical">
+  <ContainerDrawer 
+    onFinish={onFinish} 
+    onClose={onClear} 
+    open={open} 
+    loading={loading}
+    title={`${statusMode === "CreateMode" ? "New" : "Edit"} Bug`} 
+    width={720}
+  >
+    <Form 
+      form={form}
+      initialValues={formData}
+      onValuesChange={handleValueChange}
+      layout="vertical"
+    >
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
@@ -118,7 +199,8 @@ const BugForm = () => {
         </Col>
       </Row>
     </Form>
+  </ContainerDrawer>
   );
 };
 
-export default BugForm;
+export default memo(BugForm);
