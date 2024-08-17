@@ -24,20 +24,20 @@ export interface IFollowerDto {
   isOwner: boolean;
 }
 export interface IBug {
-  id: string;
+  id?: string;
   project: string;
   description: string;
   bugName: string;
-  assignee: string;
-  severity: string;
-  classification: string;
-  dueDate: Date;
-  bugStatus: string;
-  createdDate: Date;
-  createdUser: string;
-  updatedDate: Date;
-  updatedUser: string;
-  bugComments: IBugComment[];
+  assignee?: string;
+  severity?: string;
+  classification?: string;
+  dueDate?: Date;
+  bugStatus?: string;
+  createdDate?: Date;
+  createdUser?: string;
+  updatedDate?: Date;
+  updatedUser?: string;
+  bugComments?: IBugComment[];
 }
 export interface IBugComment {
   appUserId: string;
