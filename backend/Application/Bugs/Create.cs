@@ -53,7 +53,7 @@ namespace Application.Bugs
                 //Project project = await _context.Projects.SingleOrDefaultAsync(x => x.Id == request.Project);
                 Bug existingBug = await _context.Bugs.SingleOrDefaultAsync(x => x.BugName == request.BugName);
                 if(existingBug != null)
-                    throw new RestException(HttpStatusCode.NotFound, new { bug = "Bug with the same bug name exists." });
+                    throw new RestException(HttpStatusCode.BadRequest, new { error = "Bug with the same bug name exists." });
 
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
