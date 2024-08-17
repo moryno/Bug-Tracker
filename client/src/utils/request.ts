@@ -34,6 +34,7 @@ const handleErrorResponse = (error: {
   } = error.response;
   if (status >= 400) {
     let description =
+      data?.errors?.error ||
       data?.error?.message ||
       data?.error ||
       data?.message ||
