@@ -6,7 +6,7 @@ import { ProjectService } from "_services";
 import { Col, DatePicker, Form, Input, message, Row, Select } from "antd";
 import { IProject, projectFormType } from "interfaces";
 import moment from "moment";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 const { Option } = Select;
 
 const initialData: IProject = {
@@ -80,7 +80,7 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
        onClose={onClear} 
        open={open} 
        loading={loading}
-       title={"New Project"} 
+       title={`${statusMode === "CreateMode" ? "New" : "Edit"} Project`} 
        width={720}
      >
       <Form 
@@ -178,4 +178,4 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
   );
 };
 
-export default ProjectForm;
+export default memo(ProjectForm);
