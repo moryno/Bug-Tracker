@@ -18,3 +18,7 @@ export type MenuPropsType = {
   items: MenuProps["items"];
   onClick: MenuProps["onClick"];
 };
+export type commentType = {
+  id?: string;
+  description: string;
+};

@@ -1,16 +1,17 @@
 import React, { memo, useCallback, useState } from "react";
 import { Col, DatePicker, Form, Input, message, Row, Select } from "antd";
 import { ContainerDrawer } from "_lib";
-import { bugFormType, IBug } from "interfaces";
+import { bugFormType, IBug, IProject, IUser } from "interfaces";
 import moment from "moment";
-import { useCreateService } from "_hooks";
+import { useCreateService, useGetAll } from "_hooks";
 import { BugService } from "_services";
 import { DomianEnum } from "_constants";
-import { isMomentObject } from "_helpers";
+import { isJSONString, isMomentObject } from "_helpers";
+import { UserService } from "_services";
 const { Option } = Select;
 
 const initialData: IBug = {
-  project: "",
+  projectId: "",
   bugName: "",
   description: ""
 }
@@ -22,6 +23,8 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
     });
     const [loading, setLoading] = useState(false);
     const createBug = useCreateService(BugService.createBug, DomianEnum.BUGS);
+    const { isLoading, data } = useGetAll(BugService.getBugProjects, `${DomianEnum.BUGS}-projects`);
+    const { isLoading: isUserLoading, data: userData } = useGetAll(UserService.getAllUsers, `${DomianEnum.USERS}-bugs`);
     const editBug = useCreateService(BugService.editBug, DomianEnum.BUGS);
     const [form] = Form.useForm();
   
@@ -40,7 +43,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
     const onFinish = useCallback(async () => {
       if(!formData?.bugName)
         return message.warning("Bug name is required.");
-      if(!formData?.project)
+      if(!formData?.projectId)
         return message.warning("Project is required.");
       if(!formData?.description)
         return message.warning("Project description is required.");
@@ -51,6 +54,9 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
         const params = {
           ...formData,
           severity: formData?.severity ?? null,
+          bugAssignees: formData?.bugAssignees ? formData?.bugAssignees.map((assignee:  any) => {
+           return isJSONString(assignee) ? JSON.parse(assignee) : assignee
+          }) : null,
           bugStatus: formData?.bugStatus ?? null,
           classification: formData?.classification ?? null,
           dueDate: formData?.dueDate ? isMomentObject(formData?.dueDate)
@@ -58,6 +64,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
            : moment(formData?.dueDate)?.toISOString()
            : null,
         }
+
         if(statusMode === "CreateMode"){
           await createBug.mutateAsync(params);
         }else{
@@ -89,13 +96,18 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            name="projectName"
+            name="projectId"
             label="Project Name"
             rules={[{ required: true, message: "Please enter project name" }]}
           >
-            <Select placeholder="Please select a project">
-              <Option value="xiao">Xiaoxiao Fu</Option>
-              <Option value="mao">Maomao Zhou</Option>
+            <Select 
+              placeholder="Please select a project"
+              loading={isLoading}
+              >
+                {data?.data && 
+                data?.data?.map( (project: IProject) => (
+                  <Option key={project.id} value={project.id}>{ project.projectName}</Option>
+                ))}
             </Select>
           </Form.Item>
         </Col>
@@ -119,13 +131,13 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
             rules={[
               {
                 required: true,
-                message: "please enter url description",
+                message: "please enter description",
               },
             ]}
           >
             <Input.TextArea
               rows={4}
-              placeholder="please enter url description"
+              placeholder="please enter description"
             />
           </Form.Item>
         </Col>
@@ -133,13 +145,19 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
       <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            name="assignee"
+            name="bugAssignees"
             label="Assignee"
             rules={[{ required: true, message: "Please select assignee" }]}
           >
-            <Select mode="multiple" placeholder="Please select assignee">
-              <Option value="xiao">Xiaoxiao Fu</Option>
-              <Option value="mao">Maomao Zhou</Option>
+            <Select
+             mode="multiple" 
+             placeholder="Please select assignee"
+             loading={isUserLoading}
+             >
+            {userData?.data && 
+                userData?.data?.map( (user: IUser) => (
+                  <Option key={user?.userName} value={JSON.stringify(user)}>{ user?.fullName}</Option>
+                ))}
             </Select>
           </Form.Item>
         </Col>
@@ -149,11 +167,12 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
           <Form.Item
             name="bugStatus"
             label="Bug Status"
-            rules={[{ required: true, message: "Please select status" }]}
+            rules={[{ required: false, message: "Please select status" }]}
           >
             <Select placeholder="Please select status">
-              <Option value="xiao">Xiaoxiao Fu</Option>
-              <Option value="mao">Maomao Zhou</Option>
+              <Option value="Open">Open</Option>
+              <Option value="InProgress">InProgress</Option>
+              <Option value="Closed">Closed</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -161,11 +180,13 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
           <Form.Item
             name="severity"
             label="Severity"
-            rules={[{ required: true, message: "Please select severity" }]}
+            rules={[{ required: false, message: "Please select severity" }]}
           >
             <Select placeholder="Please select severity">
-              <Option value="xiao">Xiaoxiao Fu</Option>
-              <Option value="mao">Maomao Zhou</Option>
+              <Option value="Minor">Minor</Option>
+              <Option value="Major">Major</Option>
+              <Option value="Critical">Critical</Option>
+              <Option value="ShowStopper">Show stopper</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -175,7 +196,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
           <Form.Item
             name="dueDate"
             label="Due Date"
-            rules={[{ required: true, message: "Please choose the due date" }]}
+            rules={[{ required: false, message: "Please choose the due date" }]}
           >
             <DatePicker
               style={{ width: "100%" }}
@@ -188,12 +209,16 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
             name="classification"
             label="Classification"
             rules={[
-              { required: true, message: "Please choose classisication" },
+              { required: false, message: "Please choose classisication" },
             ]}
           >
             <Select placeholder="Please select severity">
-              <Option value="xiao">Xiaoxiao Fu</Option>
-              <Option value="mao">Maomao Zhou</Option>
+              <Option value="None">None</Option>
+              <Option value="Enhancement">Enhancement</Option>
+              <Option value="Security">Security</Option>
+              <Option value="Perfomance">Performance</Option>
+              <Option value="Feature">Feature(new)</Option>
+              <Option value="Other">Other Bug</Option>
             </Select>
           </Form.Item>
         </Col>

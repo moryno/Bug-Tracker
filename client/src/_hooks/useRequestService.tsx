@@ -14,7 +14,7 @@ export const useGetById = (service : (value: any) => void, queryKey : string, id
   const response: UseQueryResult<any>  = useQuery({
     queryKey: [`${queryKey}.${id}`, id],
     queryFn: () => service(id),
-    enabled: !!id,
+    enabled: !!id
   });
 
   return response;

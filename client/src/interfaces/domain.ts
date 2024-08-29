@@ -14,7 +14,8 @@ export interface IProject {
   description: string;
   projectGroup?: string;
   private?: boolean;
-  Assignee?: IFollowerDto[];
+  assignee?: IFollowerDto[];
+  bugs?: IBug[];
 }
 
 export interface IFollowerDto {
@@ -25,10 +26,11 @@ export interface IFollowerDto {
 }
 export interface IBug {
   id?: string;
-  project: string;
+  projectId: string;
+  projectName?: string;
   description: string;
   bugName: string;
-  assignee?: string;
+  bugAssignees?: any;
   severity?: string;
   classification?: string;
   dueDate?: Date;
@@ -37,15 +39,15 @@ export interface IBug {
   createdUser?: string;
   updatedDate?: Date;
   updatedUser?: string;
-  bugComments?: IBugComment[];
+  bugComments?: IComment[];
 }
-export interface IBugComment {
-  appUserId: string;
-  appUser: IUser;
-  bugId: string;
-  bug: IBug;
+export interface IComment {
+  id: string;
   description: string;
-  dateCommented: Date;
+  createdAt?: Date;
+  fullName?: string;
+  image?: string;
+  userName: string;
 }
 export interface IProjectComment {
   appUserId: string;
@@ -57,8 +59,8 @@ export interface IProjectComment {
 }
 export interface IUser {
   fullName: string;
-  email: string;
-  image: string;
-  token: string;
+  email?: string;
+  image?: string;
+  token?: string;
   userName: string;
 }

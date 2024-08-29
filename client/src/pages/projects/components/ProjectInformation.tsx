@@ -35,7 +35,7 @@ const ProjectInformation= ({ project } : { project : IProject}) => {
               </Col>
               <Col span={12}>
                 <StyledUserWrapper>
-                  {project?.Assignee && project?.Assignee?.map(assignee => (
+                  {project?.assignee && project?.assignee?.map(assignee => (
                     assignee.image ?
                     <StyledAssigneeContainer key={assignee?.userName}>
                       <StyledAssigneeImage src={assignee?.image || "/img/noavatar.jpg"} alt={assignee?.fullName} />

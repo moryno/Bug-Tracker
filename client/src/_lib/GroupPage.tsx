@@ -11,7 +11,6 @@ import ContainerButton from "./ContainerButton";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
 import { useDeleteRecord, useGetAll } from "_hooks";
-import { ProjectService } from "_services";
 import { AnyObject } from "antd/es/_util/type";
 import { IBug, IProject } from "interfaces";
 import ContainerDropDown from "./ContainerDropDown";

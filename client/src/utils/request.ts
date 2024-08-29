@@ -13,7 +13,10 @@ const handleSuccessResponse = (response: any) => {
     config: { url, method },
   } = response;
   if (status === 200 || status === 201) {
-    if (successResponseContent[url] && method === "post") {
+    if (
+      successResponseContent[url] &&
+      (method === "post" || method === "put")
+    ) {
       notify({
         success: true,
         ...successResponseContent[url],

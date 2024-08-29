@@ -1,13 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { IUser } from "interfaces";
 // import { logoutFunc } from "../helpers/auth.js";
+
+interface IUserState {
+  currentUser: IUser | null;
+  isFetching: boolean;
+  error: boolean;
+}
+const initialState: IUserState = {
+  currentUser: null,
+  isFetching: false,
+  error: false,
+};
 
 const userSlice = createSlice({
   name: "user",
-  initialState: {
-    currentUser: null,
-    isFetching: false,
-    error: false,
-  },
+  initialState,
   reducers: {
     loginStart: (state) => {
       state.isFetching = true;

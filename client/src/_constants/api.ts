@@ -4,7 +4,7 @@ export const REGISTER_API = "/user/register";
 export const LOGOUT_API = "/logout/logout";
 
 // USERS
-export const USERS_API = "/users";
+export const USER_API = "/user";
 
 // PROJECTS
 export const PROJECTS_API = "/projects";

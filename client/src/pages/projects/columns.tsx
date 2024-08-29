@@ -41,17 +41,15 @@ export const projectColumns = [
       width: 100,
     },
     {
-      title: 'Assignee',
-      dataIndex: 'Assignee',
-      key: 'assignee',
-      render: (assignees : IFollowerDto[]) => (
+      title: 'Owner',
+      key: 'owner',
+      align: "center",
+      render: (assignee : IFollowerDto) => (
         <>
-          {assignees.map((assignee) => (
-            <StyledAssigneeContainer key={assignee.userName}>
+            <StyledAssigneeContainer>
               <StyledAssigneeImage src={assignee.image || "/img/noavatar.jpg"} alt={assignee.fullName} />
               <StyledAssigneeName>{assignee.fullName}</StyledAssigneeName>
             </StyledAssigneeContainer>
-          ))}
         </>
       ),
       width: 200

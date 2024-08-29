@@ -1,4 +1,3 @@
-import React from "react";
 import { Col, Collapse, Row } from "antd";
 import {
   StyledStatusDot,
@@ -14,10 +13,12 @@ import {
   StyledUserIcon,
   StyledUserWrapper,
 } from "_lib";
+import { IBug } from "interfaces";
+import moment from "moment";
 
 const { Panel } = Collapse;
 
-const BugInformation = () => {
+const BugInformation = ({ bug }: { bug: IBug }) => {
   return (
     <StyledCardWrapper>
       <Collapse defaultActiveKey={["1"]} ghost>
@@ -57,7 +58,7 @@ const BugInformation = () => {
                 <StyledInfoLabel>Due Date</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>07-11-2024</StyledInfoText>
+                <StyledInfoText>{moment(bug?.dueDate).format('MMMM Do YYYY, h:mm:ss a')}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
@@ -67,7 +68,7 @@ const BugInformation = () => {
                 <StyledInfoLabel>Severity</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>None</StyledInfoText>
+                <StyledInfoText>{bug?.severity}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
@@ -79,17 +80,17 @@ const BugInformation = () => {
                 <StyledInfoLabel>Classification</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>Design</StyledInfoText>
+                <StyledInfoText>{bug?.classification}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
           <StyledInfoDivContainer span={12}>
             <StyledInfoDivWrapper>
               <Col span={12}>
-                <StyledInfoLabel>Severity</StyledInfoLabel>
+                <StyledInfoLabel>Status</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>None</StyledInfoText>
+                <StyledInfoText>{bug?.bugStatus}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>

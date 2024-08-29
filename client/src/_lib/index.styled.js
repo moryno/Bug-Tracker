@@ -31,6 +31,7 @@ export const StyledBottomContainer = styled.section`
 `;
 // COMMENT COMPONENT
 export const StyledCommentContainer = styled.section`
+  width: 100%;
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
@@ -93,4 +94,5 @@ export const StyledAttachButton = styled(MdAttachFile)`
 `;
 export const StyledTextArea = styled(TextArea)`
   resize: none;
+  width: 100%;
 `;

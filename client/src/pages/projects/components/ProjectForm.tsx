@@ -1,10 +1,10 @@
 import { DomianEnum } from "_constants";
 import { isMomentObject } from "_helpers";
-import { useCreateService } from "_hooks";
+import { useCreateService, useGetAll } from "_hooks";
 import { ContainerDrawer } from "_lib";
-import { ProjectService } from "_services";
+import { ProjectService, UserService } from "_services";
 import { Col, DatePicker, Form, Input, message, Row, Select } from "antd";
-import { IProject, projectFormType } from "interfaces";
+import { IProject, IUser, projectFormType } from "interfaces";
 import moment from "moment";
 import { memo, useCallback, useState } from "react";
 const { Option } = Select;
@@ -24,6 +24,7 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
   const [loading, setLoading] = useState(false);
   const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS);
   const editProject = useCreateService(ProjectService.editProject, DomianEnum.PROJECTS);
+  const { isLoading: isUserLoading, data: userData } = useGetAll(UserService.getAllUsers, `${DomianEnum.USERS}-projects`);
   const [form] = Form.useForm();
 
 
@@ -134,9 +135,14 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
               label="Owner"
               rules={[{ required: false, message: "Please select an owner" }]}
             >
-              <Select placeholder="Please select an owner" allowClear>
-                <Option value="xiao">Xiaoxiao Fu</Option>
-                <Option value="mao">Maomao Zhou</Option>
+              <Select
+               loading={isUserLoading}
+               placeholder="Please select an owner" 
+               allowClear>
+              {userData?.data && 
+                userData?.data?.map( (user: IUser) => (
+                  <Option key={user?.userName} value={user?.userName}>{ user?.fullName}</Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>

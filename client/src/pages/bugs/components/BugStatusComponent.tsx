@@ -1,4 +1,3 @@
-import React from "react";
 import {
     StyledBugStatusContainer,
     StyledBugStatusText,
@@ -12,12 +11,12 @@ import {
 } from "_lib";
 
 
-const BugStatusComponent = () => {
+const BugStatusComponent = ({ status} : { status: string}) => {
   return (
     <StyledCardWrapper>
        <StyledBugStatusContainer>
         <StyledStatusDot />
-        <StyledBugStatusText>Open</StyledBugStatusText>
+        <StyledBugStatusText>{status}</StyledBugStatusText>
         <StyledDropDownIcon />
       </StyledBugStatusContainer>
       <StyledBugStatusTitle>CURRENT STATUS</StyledBugStatusTitle>

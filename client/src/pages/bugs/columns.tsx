@@ -3,7 +3,6 @@ import { Tag, Tooltip } from "antd";
 import { IBug } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
-import { StyledAssigneeContainer, StyledAssigneeImage, StyledAssigneeName } from "./index.styled";
 import { Link } from "react-router-dom";
 import { BUG_ROUTE } from "_constants";
 
@@ -14,7 +13,14 @@ import { BUG_ROUTE } from "_constants";
       dataIndex: 'bugName',
       key: 'bugName',
       render: (text: string, row: IBug) => <StyledLink to={`${BUG_ROUTE}/${row.id}`}>{ text }</StyledLink>,
-      width: 300,
+      width: 200,
+      ellipsis: true
+    },
+    {
+      title: 'Project Name',
+      dataIndex: 'projectName',
+      key: 'projectName',
+      width: 200,
       ellipsis: true
     },
     {
@@ -32,10 +38,29 @@ import { BUG_ROUTE } from "_constants";
       ),
     },
     {
+      title: 'Bug Status',
+      dataIndex: 'bugStatus',
+      key: 'bugStatus',
+      render: (status: any) => {
+        let color = status === 'Open' ? '#2CC8BA' : status === "InProgress" ? "#08AEEA" : '#F56B62';
+        return <Tag color={color}>{status}</Tag>;
+      },
+      width: 100,
+      align: "center",
+    },
+    {
+      title: 'Due Date',
+      dataIndex: 'dueDate',
+      key: 'dueDate',
+      render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+      width: 100,
+    },
+    {
       title: 'Severity',
       dataIndex: 'severity',
       key: 'severity',
       width: 100,
+      align: "center",
       render: (severity: string) => {
         let color;
         switch (severity) {
@@ -60,23 +85,8 @@ import { BUG_ROUTE } from "_constants";
       key: 'classification',
       width: 150,
     },
-    {
-      title: 'Due Date',
-      dataIndex: 'dueDate',
-      key: 'dueDate',
-      render: (date: Date) => moment(date).format('YYYY-MM-DD'),
-      width: 150,
-    },
-    {
-      title: 'Bug Status',
-      dataIndex: 'bugStatus',
-      key: 'bugStatus',
-      render: (status: any) => {
-        let color = status === 'Open' ? '#2CC8BA' : status === "InProgress" ? "#08AEEA" : '#F56B62';
-        return <Tag color={color}>{status}</Tag>;
-      },
-      width: 100,
-    },
+
+
     // {
     //   title: 'Assignee',
     //   dataIndex: 'assignee',
@@ -103,7 +113,7 @@ import { BUG_ROUTE } from "_constants";
       dataIndex: 'createdDate',
       key: 'createdDate',
       render: (date: Date) => moment(date).format('YYYY-MM-DD'),
-      width: 150
+      width: 100
     },
     {
       title: 'Updated By',
@@ -116,7 +126,7 @@ import { BUG_ROUTE } from "_constants";
       dataIndex: 'updatedDate',
       key: 'updatedDate',
       render: (date: Date) => moment(date).format('YYYY-MM-DD'),
-      width: 150
+      width: 100
     },
   ];
   

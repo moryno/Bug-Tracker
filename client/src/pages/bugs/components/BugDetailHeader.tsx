@@ -1,4 +1,3 @@
-import React from "react";
 import {
   StyledInfo,
   StyledNameText,
@@ -6,14 +5,15 @@ import {
   StyledTopContainer,
 } from "../index.styled";
 import {  StyledCommentIcon, StyledPageTitle, StyledProjectIcon, StyledTagContainer } from "_lib";
+import { IBug } from "interfaces";
 
-const BugDetailHeader = () => {
+const BugDetailHeader = ({ bug }: { bug: IBug }) => {
   return (
     <StyledTopContainer>
       <StyledTitleContainer>
-        <StyledPageTitle>Bug 1</StyledPageTitle>
+        <StyledPageTitle>{bug?.bugName}</StyledPageTitle>
         <StyledTagContainer>
-          <StyledNameText>By Maurice Nganga</StyledNameText> <span>|</span>
+          <StyledNameText>By { bug?.createdUser }</StyledNameText> <span>|</span>
           <StyledProjectIcon /> 
           <StyledNameText>Project 1</StyledNameText>
            <span>|</span>

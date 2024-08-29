@@ -37,20 +37,20 @@ const ContainerButton: React.FC<IProps> = ({
 }) => {
   return (
     <StyledButton
-    type={type}
-    size={size}
-    loading={loading}
-    width={fullWidth ? "100%" : `${width}px`}
-    htmlType={htmlType}
-    icon={icon}
-    ref={innerRef}
-    disabled={disabled}
-    danger={danger}
-    primary_background_color={
-      isAccent ? defaultTheme.theme.palette.primary.accentColor : undefined
-    }
-    shape={shape}
-    onClick={onClick}
+      type={type}
+      size={size}
+      loading={loading}
+      width={fullWidth ? "100%" : `${width}px`}
+      htmlType={htmlType}
+      icon={icon}
+      ref={innerRef}
+      disabled={disabled}
+      danger={danger}
+      primary_background_color={
+        isAccent ? defaultTheme.theme.palette.primary.accentColor : undefined
+      }
+      shape={shape}
+      onClick={onClick}
     >
         { title }
     </StyledButton>

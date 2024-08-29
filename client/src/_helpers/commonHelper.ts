@@ -34,3 +34,11 @@ export const getAbbreviation = (inputString: string) => {
   const abbreviation = words.map((word) => word[0].toUpperCase()).join("");
   return abbreviation;
 };
+export const isJSONString = (str: string) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
