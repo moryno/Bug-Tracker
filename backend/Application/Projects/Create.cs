@@ -14,7 +14,6 @@ namespace Application.Projects
         public class Command : IRequest
         {
             public string ProjectName { get; set; } = string.Empty;
-
             public DateTime StartDate { get; set; }
             public DateTime? EndDate { get; set; }
             public DateTime CreatedDate { get; set; }
@@ -56,8 +55,9 @@ namespace Application.Projects
                 Project existingProject = await _context.Projects.SingleOrDefaultAsync(x => x.ProjectName ==  request.ProjectName);
                 if (existingProject != null)
                     throw new RestException(HttpStatusCode.BadRequest, new { error = "Project with the same project name exists." });
+                var user = await _context.Users.SingleOrDefaultAsync(x => 
+                              request.Owner != null ? x.UserName == request.Owner : x.UserName == _userAccessor.GetCurrentUserName());
 
-                var user =  await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 Project project = new()
                 {
@@ -65,7 +65,7 @@ namespace Application.Projects
                     StartDate = request.StartDate,
                     EndDate = request.EndDate ?? request.StartDate.AddDays(90),
                     Priority = request.Priority ?? "High",
-                    Owner = request.Owner ?? user.UserName,
+                    Owner = user,
                     Description = request.Description,
                     ProjectGroup = request.ProjectGroup,
                     Private = request.Private,
@@ -76,16 +76,6 @@ namespace Application.Projects
                 };
 
                 _context.Projects.Add(project);
-
-                UserProject userProjects = new()
-                {
-                    AppUser = user,
-                    Project = project,
-                    IsOwner = true,
-                    DateAssigned = DateTime.Now,
-                };
-
-                _context.UserProjects.Add(userProjects);
 
                 var success = await _context.SaveChangesAsync() > 0;
 

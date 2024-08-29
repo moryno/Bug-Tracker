@@ -57,14 +57,15 @@ namespace Application.Projects
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x =>
+                            request.Owner != null ? x.UserName == request.Owner : x.UserName == _userAccessor.GetCurrentUserName());
 
                 project.ProjectName = request.ProjectName ?? project.ProjectName;
                 project.ProjectGroup = request.ProjectGroup ?? project.ProjectGroup;
                 project.StartDate = request.StartDate ?? project.StartDate;
                 project.EndDate = request.EndDate ?? project.EndDate;
                 project.Description = request.Description ?? project.Description;
-                project.Owner = request.Owner ?? project.Owner;
+                project.Owner = user;
                 project.Private = request.Private;
                 project.Priority = request.Priority ?? project.Priority;
                 project.CreatedDate = project.CreatedDate;

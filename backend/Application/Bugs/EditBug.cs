@@ -14,25 +14,22 @@ namespace Application.Bugs
         public class Command : IRequest
         {
             public Guid Id { get; set; }
-            public Guid Project { get; set; }
+            public Guid ProjectId { get; set; }
             public string Description { get; set; } = string.Empty;
             public string BugName { get; set; } = string.Empty;
-            public string Assignee { get; set; } = string.Empty;
+            public virtual ICollection<BugAssignee> BugAssignees { get; set; } = new List<BugAssignee>();
             public string Severity { get; set; } = string.Empty;
             public string Classification { get; set; } = string.Empty;
             public DateTime? DueDate { get; set; }
             public string BugStatus { get; set; } = string.Empty;
-            public DateTime CreatedDate { get; set; }
-            public string CreatedUser { get; set; } = string.Empty;
-            public DateTime UpdatedDate { get; set; }
-            public string UpdatedUser { get; set; } = string.Empty;
+
         }
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
                 RuleFor(x => x.BugName).NotEmpty().MinimumLength(3);
-                RuleFor(x => x.Project).NotEmpty();
+                RuleFor(x => x.ProjectId).NotEmpty();
                 RuleFor(x => x.Description).NotEmpty();
             }
         }
@@ -53,16 +50,19 @@ namespace Application.Bugs
                 Bug bug = await _context.Bugs.FindAsync(request.Id);
                 if (bug == null)
                     throw new RestException(HttpStatusCode.NotFound, new { bug = "Not found." });
+                Project project = await _context.Projects.FindAsync(request.ProjectId);
+                if (project == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
 
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
-                bug.Project = request.Project;
+                bug.Project = project;
                 bug.BugName = request.BugName ?? bug.BugName;
                 bug.DueDate = request.DueDate ?? bug.DueDate;
                 bug.Severity = request.Severity ?? bug.Severity;
                 bug.Classification = request.Classification ?? bug.Classification;
                 bug.BugStatus = request.BugStatus ?? bug.BugStatus;
-                bug.Assignee = request.Assignee ?? bug.Assignee;
+                bug.BugAssignees = request.BugAssignees ?? bug.BugAssignees;
                 bug.CreatedDate = bug.CreatedDate;
                 bug.UpdatedDate = DateTime.Now;
                 bug.CreatedUser = bug.CreatedUser;

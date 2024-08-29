@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using Application.Errors;
 using Domain;
 using MediatR;
@@ -37,7 +33,7 @@ namespace Application.Projects
                 var success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
-                throw new Exception("Problem saving project");
+                throw new Exception("Problem deleting project");
             }
         }
     }
