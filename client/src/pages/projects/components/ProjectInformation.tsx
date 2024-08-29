@@ -35,20 +35,19 @@ const ProjectInformation= ({ project } : { project : IProject}) => {
               </Col>
               <Col span={12}>
                 <StyledUserWrapper>
-                  {project?.assignee && project?.assignee?.map(assignee => (
-                    assignee.image ?
-                    <StyledAssigneeContainer key={assignee?.userName}>
-                      <StyledAssigneeImage src={assignee?.image || "/img/noavatar.jpg"} alt={assignee?.fullName} />
-                     <StyledAssigneeName>{assignee?.fullName}</StyledAssigneeName>
+                  {
+                    project?.image ?
+                    <StyledAssigneeContainer>
+                      <StyledAssigneeImage src={project?.image || "/img/noavatar.jpg"} alt={project?.fullName} />
+                     <StyledAssigneeName>{project?.fullName}</StyledAssigneeName>
                     </StyledAssigneeContainer>
                     :
                      <>
                     <StyledUserIcon>
-                       {getAbbreviation(assignee?.fullName ?? '')}
+                       {getAbbreviation(project?.fullName ?? '')}
                     </StyledUserIcon>
-                    <StyledInfoText>{assignee?.fullName ?? ''}</StyledInfoText>
+                    <StyledInfoText>{project?.fullName ?? ''}</StyledInfoText>
                     </>
-                  ))
                   }
                 </StyledUserWrapper>
               </Col>
@@ -75,7 +74,7 @@ const ProjectInformation= ({ project } : { project : IProject}) => {
                 <StyledInfoLabel>Start Date</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>{moment(project?.startDate).format('MMMM Do YYYY, h:mm:ss a')}</StyledInfoText>
+                <StyledInfoText>{moment(project?.startDate).format('MMMM Do YYYY h:mm:ss a')}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
@@ -85,7 +84,7 @@ const ProjectInformation= ({ project } : { project : IProject}) => {
                 <StyledInfoLabel>End Date</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>{moment(project?.endDate).format('MMMM Do YYYY, h:mm:ss a')}</StyledInfoText>
+                <StyledInfoText>{moment(project?.endDate).format('MMMM Do YYYY h:mm:ss a')}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>

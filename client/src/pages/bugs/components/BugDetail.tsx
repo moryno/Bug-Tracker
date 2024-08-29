@@ -1,4 +1,4 @@
-import { Card, message, Tabs, TabsProps } from "antd";
+import { Card, Divider, message, Tabs, TabsProps } from "antd";
 import { Comment, CommentForm, DetailPage, DescriptionComponent } from "_lib";
 import BugDetailHeader from "./BugDetailHeader";
 import BugInformation from "./BugInformation";
@@ -79,6 +79,7 @@ const BugDetail = () => {
             queryString={queryString}
             onEditChange={onEditChange}
            />
+           <Divider />
           <CommentForm 
             key={statusMode && editedComment?.id}
             onAddComment={onAddComment}

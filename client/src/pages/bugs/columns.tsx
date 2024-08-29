@@ -1,11 +1,24 @@
 
 import { Tag, Tooltip } from "antd";
-import { IBug } from "interfaces";
+import { IBug, IUser } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 import { BUG_ROUTE } from "_constants";
+import { PopoverComponent } from "_lib";
 
+ export const assigneeColumns = [
+  {
+    title: 'Username',
+    dataIndex: 'userName',
+    key: 'userName',
+  },
+  {
+    title: 'Full Name',
+    dataIndex: 'fullName',
+    key: 'fullName',
+  },
+ ];
 
   export const bugColumns = [
     {
@@ -49,6 +62,16 @@ import { BUG_ROUTE } from "_constants";
       align: "center",
     },
     {
+      title: 'Assignee',
+      dataIndex: 'assignees',
+      key: 'assignees',
+      width: 200,
+      render: (assignees : IUser[]) => {
+        const followers = assignees?.map(assinee => ({ userName: assinee?.userName, fullName: assinee?.fullName}));
+          return <PopoverComponent dataSource={followers} columns={assigneeColumns} />
+    },
+    },
+    {
       title: 'Due Date',
       dataIndex: 'dueDate',
       key: 'dueDate',
@@ -85,23 +108,6 @@ import { BUG_ROUTE } from "_constants";
       key: 'classification',
       width: 150,
     },
-
-
-    // {
-    //   title: 'Assignee',
-    //   dataIndex: 'assignee',
-    //   key: 'assignee',
-    //   render: (assignees : IFollowerDto[]) => (
-    //     <>
-    //       {assignees.map((assignee) => (
-    //         <StyledAssigneeContainer key={assignee.userName}>
-    //           <StyledAssigneeImage src={assignee.image || "/img/noavatar.jpg"} alt={assignee.fullName} />
-    //           <StyledAssigneeName>{assignee.fullName}</StyledAssigneeName>
-    //         </StyledAssigneeContainer>
-    //       ))}
-    //     </>
-    //   ),
-    // },
     {
       title: 'Created By',
       dataIndex: 'createdUser',
@@ -137,3 +143,9 @@ const StyledLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+const StyledDiv = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`

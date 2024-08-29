@@ -10,6 +10,8 @@ export interface IProject {
   updatedDate?: Date;
   updatedUser?: string;
   userName?: string;
+  fullName?: string;
+  image?: string;
   priority?: string;
   owner?: string;
   description: string;

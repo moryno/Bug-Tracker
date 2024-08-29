@@ -1,13 +1,13 @@
 import {
-  StyledInfo,
   StyledProgress,
   StyledTitleContainer,
   StyledTopContainer,
 } from "../index.styled";
-import { StyledCommentIcon, StyledPageTitle, StyledTagContainer } from "_lib";
+import { DetailInfoPopover, StyledCommentIcon, StyledPageTitle, StyledTagContainer } from "_lib";
 import { Tag } from "antd";
+import { IProject } from "interfaces";
 
-const ProjectDetailHeader = ({ title } : { title : string}) => {
+const ProjectDetailHeader = ({ project } : { project : IProject }) => {
   return (
     <StyledTopContainer>
       <StyledProgress
@@ -17,11 +17,11 @@ const ProjectDetailHeader = ({ title } : { title : string}) => {
         percent={75}
       />
       <StyledTitleContainer>
-        <StyledPageTitle>{ title }</StyledPageTitle>
+        <StyledPageTitle>{ project?.projectName }</StyledPageTitle>
         <StyledTagContainer>
           <Tag>Completed</Tag> <span>|</span>
           <StyledCommentIcon /> <span>|</span>
-          <StyledInfo />
+          <DetailInfoPopover info={project} isOwner={true} />
         </StyledTagContainer>
       </StyledTitleContainer>
     </StyledTopContainer>

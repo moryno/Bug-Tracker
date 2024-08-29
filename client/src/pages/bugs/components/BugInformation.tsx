@@ -5,20 +5,22 @@ import {
 } from "../index.styled";
 import {
   PanelTitle,
+  PopoverComponent,
   StyledCardWrapper,
   StyledInfoDivContainer,
   StyledInfoDivWrapper,
   StyledInfoLabel,
-  StyledInfoText,
-  StyledUserIcon,
-  StyledUserWrapper,
+  StyledInfoText
 } from "_lib";
 import { IBug } from "interfaces";
 import moment from "moment";
+import { assigneeColumns } from "../columns";
 
 const { Panel } = Collapse;
 
 const BugInformation = ({ bug }: { bug: IBug }) => {
+  const followers = bug?.assignees?.map(assinee => ({ userName: assinee?.userName, fullName: assinee?.fullName}));
+
   return (
     <StyledCardWrapper>
       <Collapse defaultActiveKey={["1"]} ghost>
@@ -30,10 +32,7 @@ const BugInformation = ({ bug }: { bug: IBug }) => {
                 <StyledInfoLabel>Assignee</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledUserWrapper>
-                  <StyledUserIcon>MN</StyledUserIcon>
-                  <StyledInfoText>Maurice Nganga</StyledInfoText>
-                </StyledUserWrapper>
+                 <PopoverComponent dataSource={followers} columns={assigneeColumns} />
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
@@ -58,7 +57,7 @@ const BugInformation = ({ bug }: { bug: IBug }) => {
                 <StyledInfoLabel>Due Date</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>{moment(bug?.dueDate).format('MMMM Do YYYY, h:mm:ss a')}</StyledInfoText>
+                <StyledInfoText>{moment(bug?.dueDate).format('MMMM Do YYYY h:mm:ss a')}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>

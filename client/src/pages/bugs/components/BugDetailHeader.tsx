@@ -1,10 +1,9 @@
 import {
-  StyledInfo,
   StyledNameText,
   StyledTitleContainer,
   StyledTopContainer,
 } from "../index.styled";
-import {  StyledCommentIcon, StyledPageTitle, StyledProjectIcon, StyledTagContainer } from "_lib";
+import {  DetailInfoPopover, StyledCommentIcon, StyledPageTitle, StyledProjectIcon, StyledTagContainer } from "_lib";
 import { IBug } from "interfaces";
 
 const BugDetailHeader = ({ bug }: { bug: IBug }) => {
@@ -15,10 +14,10 @@ const BugDetailHeader = ({ bug }: { bug: IBug }) => {
         <StyledTagContainer>
           <StyledNameText>By { bug?.createdUser }</StyledNameText> <span>|</span>
           <StyledProjectIcon /> 
-          <StyledNameText>Project 1</StyledNameText>
+          <StyledNameText>{ bug?.projectName }</StyledNameText>
            <span>|</span>
           <StyledCommentIcon /> <span>|</span>
-          <StyledInfo />
+          <DetailInfoPopover info={bug} />
         </StyledTagContainer>
       </StyledTitleContainer>
     </StyledTopContainer>

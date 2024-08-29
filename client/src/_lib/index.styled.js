@@ -3,10 +3,16 @@ import styled from "styled-components";
 import { LuDot } from "react-icons/lu";
 import { MdAttachFile } from "react-icons/md";
 import { Col, Input } from "antd";
+import { FaInfoCircle } from "react-icons/fa";
 const { TextArea } = Input;
 
 export const StyledPageCard = styled.main`
   ${"" /* padding: 10px 16px; */}
+`;
+export const StyledInfo = styled(FaInfoCircle).attrs({
+  fontSize: 16,
+})`
+  cursor: pointer;
 `;
 
 export const StyledTopContainer = styled.section`

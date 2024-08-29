@@ -1,4 +1,4 @@
-import { Card, message, Tabs, TabsProps } from "antd";
+import { Card, Divider, message, Tabs, TabsProps } from "antd";
 import ProjectInformation from "./ProjectInformation";
 import { Comment, CommentForm, DetailPage, DescriptionComponent } from "_lib";
 import ProjectDetailHeader from "./ProjectDetailHeader";
@@ -78,6 +78,7 @@ const ProjectDetail = () => {
             queryString={queryString}
             onEditChange={onEditChange}
            />
+           <Divider />
           <CommentForm 
             key={statusMode && editedComment?.id}
             onAddComment={onAddComment}
@@ -104,7 +105,7 @@ const ProjectDetail = () => {
 
   return (
     <DetailPage>
-      <ProjectDetailHeader title={data?.data?.projectName} />
+      <ProjectDetailHeader project={data?.data} />
       <DescriptionComponent description={data?.data?.description} />
       <ProjectInformation project={data?.data} />
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />

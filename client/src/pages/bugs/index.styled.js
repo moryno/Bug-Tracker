@@ -18,10 +18,6 @@ export const StyledTopContainer = styled.section`
   width: 100%;
 `;
 
-export const StyledInfo = styled(FaInfoCircle).attrs({
-  fontSize: 16,
-})``;
-
 export const StyledTitleContainer = styled.article`
   display: flex;
   flex-direction: column;
@@ -45,7 +41,7 @@ export const StyledNameText = styled.span`
 export const StyledBugStatusTitle = styled.h3`
   padding: 0;
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   padding: 0 18px;
   color: ${defaultTheme.theme.palette.gray[500]};
@@ -57,7 +53,7 @@ export const StyledBugStatusContainer = styled.article`
   padding: 0 16px;
 `;
 export const StyledBugStatusText = styled.span`
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   color: ${defaultTheme.theme.text};
 `;

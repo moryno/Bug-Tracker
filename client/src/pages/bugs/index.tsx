@@ -7,12 +7,12 @@ import { bugColumns } from './columns'
 const Bugs = () => {
   return (
     <GroupPage 
-    title={DomianEnum.BUGS} 
-    FormComponent={BugForm} 
-    columns={bugColumns}
-    getAllService={BugService.getBugs}
-    getDetailService={BugService.getBug}
-    deleteService={BugService.deleteBug}
+      title={DomianEnum.BUGS} 
+      FormComponent={BugForm} 
+      columns={bugColumns}
+      getAllService={BugService.getBugs}
+      getDetailService={BugService.getBug}
+      deleteService={BugService.deleteBug}
      />
   )
 }
