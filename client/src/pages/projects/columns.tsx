@@ -13,14 +13,14 @@ export const projectColumns = [
       dataIndex: 'projectName',
       key: 'projectName',
       render: (text: string, row: IProject) => <StyledLink to={`${PROJECT_ROUTE}/${row.id}`}>{ text }</StyledLink>,
-      width: 300,
+      width: 200,
       ellipsis: true
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      width: 300,
+      width: 200,
       ellipsis: {
         showTitle: false,
       },
