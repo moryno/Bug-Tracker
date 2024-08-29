@@ -32,10 +32,14 @@ namespace Infrastructure.Security
 
                 var project = _context.Projects.FindAsync(projectId).Result;
 
-                var owner = project?.UserProjects.FirstOrDefault(x => x.IsOwner);
-
-                if (owner?.AppUser?.UserName == currentUserName)
+                if (project?.Owner?.UserName == currentUserName)
+                {
                     context.Succeed(requirement);
+                }
+                else
+                {
+                    context.Fail();
+                }
             }
             else
             {

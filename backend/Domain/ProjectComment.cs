@@ -2,11 +2,10 @@
 {
     public class ProjectComment
     {
-        public string AppUserId { get; set; } = string.Empty;
-        public virtual AppUser AppUser { get; set; }
-        public Guid ProjectId { get; set; }
-        public virtual Project Project { get; set; }
+        public Guid Id { get; set; }
+        public virtual AppUser Author { get; set; } = new AppUser();
+        public virtual Project Project { get; set; } = new Project();
         public string Description { get; set; } = string.Empty;
-        public DateTime DateCommented { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }

@@ -2,11 +2,10 @@
 {
     public class BugComment
     {
-        public string AppUserId { get; set; } = string.Empty;
-        public virtual AppUser AppUser { get; set; } = new AppUser();
-        public Guid BugId { get; set; } = Guid.Empty;
+        public Guid Id { get; set; }
+        public virtual AppUser Author { get; set; } = new AppUser();
         public virtual Bug Bug { get; set; } = new Bug();
         public string Description { get; set; } = string.Empty;
-        public DateTime DateCommented { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
