@@ -135,12 +135,15 @@ const GroupPage: React.FC<Iprops> = ({
            }}
             />
         </StyledTableCardWrapper>
+        {open &&
           <FormComponent 
-           key={statusMode && selectedRecord?.id}
-           open={open} 
-           onClose={onClose} 
-           editedRecord={selectedRecord} 
-           statusMode={statusMode} />
+            key={statusMode && selectedRecord?.id}
+            open={open} 
+            onClose={onClose} 
+            editedRecord={selectedRecord} 
+            statusMode={statusMode}
+           />
+         }
       </StyledBottomContainer>
     </StyledPageCard>
   );
