@@ -27,7 +27,7 @@ import { BUG_ROUTE } from "_constants";
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      width: 300,
+      width: 200,
       ellipsis: {
         showTitle: false,
       },
