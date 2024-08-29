@@ -9,6 +9,7 @@ export interface IProject {
   createdUser?: string;
   updatedDate?: Date;
   updatedUser?: string;
+  userName?: string;
   priority?: string;
   owner?: string;
   description: string;
@@ -30,7 +31,8 @@ export interface IBug {
   projectName?: string;
   description: string;
   bugName: string;
-  bugAssignees?: any;
+  bugAssignees?: IUser[];
+  assignees?: IUser[];
   severity?: string;
   classification?: string;
   dueDate?: Date;
