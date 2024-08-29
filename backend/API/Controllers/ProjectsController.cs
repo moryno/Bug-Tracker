@@ -1,3 +1,4 @@
+using Application.Bugs;
 using Application.Projects;
 using Domain;
 using MediatR;
@@ -42,6 +43,24 @@ namespace API.Controllers
         [HttpDelete("{id}")]
        // [Authorize(Policy = "IsProjectOwner")]
         public async Task<ActionResult<Unit>> Delete(Guid id) => await Mediator.Send(new Delete.Command { Id = id });
-      
+        [HttpPost("comment")]
+        [Authorize]
+        public async Task<ActionResult<CommentDto>> CreateComment(CreateProjectComment.Command command) => Ok(await Mediator.Send(command));
+        [HttpGet("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<List<CommentDto>>> GetComments(Guid id)
+        {
+            return await Mediator.Send(new ProjectCommentList.Query { ProjectId = id });
+        }
+        [HttpPut("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<CommentDto>> EdiComment(Guid id, EditProjectComment.Command command)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command));
+        }
+        [HttpDelete("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<Unit>> DeleteComment(Guid id) => Ok(await Mediator.Send(new DeleteProjectComment.Command { Id = id }));
     }
 }

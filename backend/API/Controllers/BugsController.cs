@@ -10,21 +10,21 @@ namespace API.Controllers
     {
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Unit>> Create(Create.Command command)
+        public async Task<ActionResult<Unit>> Create(CreateBug.Command command)
         {
             return Ok(await Mediator.Send(command));
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<Bug>>> GetAll()
+        public async Task<ActionResult<List<BugDto>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAll.Query()));
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Bug>> Get(Guid id)
+        public async Task<ActionResult<BugDto>> Get(Guid id)
         {
             return Ok(await Mediator.Send(new GetDetails.Query { Id = id }));
         }
@@ -40,6 +40,30 @@ namespace API.Controllers
             command.Id = id;
             return Ok(await Mediator.Send(command));
         }
-
+        [HttpGet("projects")]
+        [Authorize]
+        public async Task<ActionResult<List<BugProjectDto>>> GetProjects()
+        {
+            return await Mediator.Send(new GetProjects.Query());
+        }
+        [HttpPost("comment")]
+        [Authorize]
+        public async Task<ActionResult<CommentDto>> CreateComment(CreateBugComment.Command command) => Ok(await Mediator.Send(command));
+        [HttpGet("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<List<CommentDto>>> GetComments(Guid id)
+        {
+            return await Mediator.Send(new BugCommentList.Query { BugId = id });
+        }
+        [HttpPut("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<CommentDto>> EdiComment(Guid id, EditBugComment.Command command)
+        {
+            command.Id = id;
+            return Ok(await Mediator.Send(command));
+        }
+        [HttpDelete("{id}/comment")]
+        [Authorize]
+        public async Task<ActionResult<Unit>> DeleteComment(Guid id) => Ok(await Mediator.Send(new DeleteBugComment.Command { Id = id }));
     }
 }
