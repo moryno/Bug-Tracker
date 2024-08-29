@@ -19,6 +19,7 @@ const initialData: IBug = {
 const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode }) => {
   const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
     {...editedRecord,
+      // bugAssignees: editedRecord?.assignees?.map((assignee:IUser) => assignee.userName),
      dueDate: moment(editedRecord?.dueDate)
     });
     const [loading, setLoading] = useState(false);
@@ -27,7 +28,8 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
     const { isLoading: isUserLoading, data: userData } = useGetAll(UserService.getAllUsers, `${DomianEnum.USERS}-bugs`);
     const editBug = useCreateService(BugService.editBug, DomianEnum.BUGS);
     const [form] = Form.useForm();
-  
+  console.log(editedRecord)
+  console.log(formData)
     const handleValueChange = useCallback((e: any) => {
       setFormData(prev => (
         { ...prev, ...e }
