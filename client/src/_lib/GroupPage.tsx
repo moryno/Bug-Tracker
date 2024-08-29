@@ -122,7 +122,7 @@ const GroupPage: React.FC<Iprops> = ({
            dataSource={data?.data || []} 
            columns={columns} 
            rowKey={(record) => record.id}
-           scroll={{ x: 1900 }}
+           scroll={{ x: 2000 }}
            rowSelection={{
             type: "radio",
             ...rowSelection,
