@@ -18,6 +18,7 @@ const initialData: IProject = {
 const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, statusMode }) => {
   const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
     {...editedRecord,
+      owner: editedRecord?.userName,
      startDate: moment(editedRecord?.startDate), 
      endDate: moment(editedRecord?.endDate)
     });
