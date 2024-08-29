@@ -58,7 +58,9 @@ export const StyledAppHeaderRight = styled.section`
 `;
 export const StyledAppHeaderAdd = styled(MdOutlineAddBox).attrs({
   size: "22px",
-})``;
+})`
+  cursor: pointer;
+`;
 
 export const StyledAppHeaderSearch = styled(CiSearch).attrs({
   size: "22px",
