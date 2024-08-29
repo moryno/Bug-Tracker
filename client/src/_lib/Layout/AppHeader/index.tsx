@@ -9,9 +9,21 @@ import {
   StyledAppHeaderSearch,
   StyledAppHeaderNotification
  } from './index.styled'
+import { useCallback, useState } from "react";
+import BugForm from "pages/bugs/components/BugForm";
 
 const AppHeader = () => {
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = useCallback(() => {
+    setOpen(prev => !prev);
+  }, []);
+  const onClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+
   return (
+    <>
     <StyledAppHeader>
       <StyledAppHeaderLeft>
         <BugTrackerLogo width={144} height={24} />
@@ -19,12 +31,22 @@ const AppHeader = () => {
         
       </StyledAppHeaderLeft>
       <StyledAppHeaderRight>
-        <StyledAppHeaderAdd />
+        <StyledAppHeaderAdd onClick={showDrawer} />
         <StyledAppHeaderSearch />
         <StyledAppHeaderNotification />
         <StyledAppHeaderAvatar src={"/img/noavatar.jpg"} />
       </StyledAppHeaderRight>
     </StyledAppHeader>
+    {open &&
+      <BugForm 
+       key={"CreateMode"}
+       open={open} 
+       onClose={onClose} 
+       statusMode={"CreateMode"}
+       editedRecord={null}
+      />
+    }
+    </>
   )
 }
 
