@@ -28,8 +28,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
     const { isLoading: isUserLoading, data: userData } = useGetAll(UserService.getAllUsers, `${DomianEnum.USERS}-bugs`);
     const editBug = useCreateService(BugService.editBug, DomianEnum.BUGS);
     const [form] = Form.useForm();
-  console.log(editedRecord)
-  console.log(formData)
+
     const handleValueChange = useCallback((e: any) => {
       setFormData(prev => (
         { ...prev, ...e }
