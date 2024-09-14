@@ -11,6 +11,7 @@ export const StyledPageCard = styled.main`
 `;
 export const StyledInfo = styled(FaInfoCircle).attrs({
   fontSize: 16,
+  color: "#12CC1B",
 })`
   cursor: pointer;
 `;
