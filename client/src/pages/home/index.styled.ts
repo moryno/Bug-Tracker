@@ -66,9 +66,6 @@ export const StyledHomeCard = styled.section<StyledHomeCardProps>`
   min-width: 19%;
   cursor: pointer;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
   background-color: ${({ bg }) =>
     bg === dashCardType.activeProjects
       ? "#08AEEA"
@@ -89,7 +86,7 @@ export const StyledHomeCardDiv = styled.div`
   justify-content: space-between;
 `;
 export const StyledHomeCardCount = styled.span`
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
 `;
 export const StyledHomeCardTitle = styled.span`
@@ -97,8 +94,8 @@ export const StyledHomeCardTitle = styled.span`
   font-weight: 500;
 `;
 export const StyledCardIcon = styled.img`
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   object-fit: cover;
 `;

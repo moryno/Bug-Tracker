@@ -45,6 +45,7 @@ export const defaultTheme = {
         onHold: "#FBC11E",
         approved: "#A593FF",
         cancelled: "#F56B62",
+        team: "#EF476F",
         planning: "#08AEEA",
         invoiced: "#B99897",
       },
