@@ -1,9 +1,7 @@
-import { StyledProjectIcon } from "_lib"
 import { StyledCardIcon, StyledHomeCard, StyledHomeCardCount, StyledHomeCardDiv, StyledHomeCardTitle } from "../index.styled"
 import { useCallback } from "react";
-import { dashCardType, DomianEnum } from "_constants";
-import { FaBriefcase, FaUsers } from "react-icons/fa";
-import { MdCases } from "react-icons/md";
+import { dashCardType } from "_constants";
+
 
 const Card = ({ title, count } : { title: string, count: number }) => {
     
@@ -26,7 +24,7 @@ const Card = ({ title, count } : { title: string, count: number }) => {
   return (
     <StyledHomeCard bg={title}>
         <StyledHomeCardDiv>
-            <StyledHomeCardCount>1</StyledHomeCardCount>
+            <StyledHomeCardCount>{ count }</StyledHomeCardCount>
             <StyledCardIcon src={dashCardIcons(title)} />
         </StyledHomeCardDiv>
         <StyledHomeCardDiv>
