@@ -6,6 +6,8 @@ import TicketByPriorityChart from './components/TicketByPriorityChart'
 import WorkItemsComponent from './components/WorkItemsComponent'
 import TopProjectsComponent from './components/TopProjectsComponent'
 import { TeamMembersComponent } from './components/TeamMembersComponent'
+import ResolvedBugsComponent from './components/ResolvedBugsComponent'
+import NotificationComponent from './components/NotificationComponent'
 
 const Home = () => {
   return (
@@ -47,7 +49,14 @@ const Home = () => {
           <TeamMembersComponent />
         </StyledHomeChartLeftSections>
       </StyledHomeChartSections>
-      <StyledHomeChartSections>Bottom Bottom</StyledHomeChartSections>
+      <StyledHomeChartSections>
+        <StyledHomeChartRightSections>
+          <ResolvedBugsComponent />
+        </StyledHomeChartRightSections>
+        <StyledHomeChartLeftSections>
+          <NotificationComponent />
+        </StyledHomeChartLeftSections>
+      </StyledHomeChartSections>
       </StyledHomeBottomContainer>
     </StyledHomeContainer>
   )
