@@ -1,6 +1,7 @@
 import { dashCardType } from '_constants'
 import Card from './components/Card'
-import { StyledHomeTopContainer, StyledHomeBottomContainer, StyledHandWave, StyledHomeContainer, StyledUserAvatar, StyledHomeHeaderContainer, StyledHomeHeaderInfoContainer, StyledHomeHeaderInfoWrapper, StyledHomeHeaderInfoTitle, StyledHomeHeaderWelcomeText, StyledHomeChartSections, StyledHomeCardContainers } from './index.styled'
+import { StyledHomeTopContainer, StyledHomeBottomContainer, StyledHandWave, StyledHomeContainer, StyledUserAvatar, StyledHomeHeaderContainer, StyledHomeHeaderInfoContainer, StyledHomeHeaderInfoWrapper, StyledHomeHeaderInfoTitle, StyledHomeHeaderWelcomeText, StyledHomeChartSections, StyledHomeCardContainers, StyledHomeChartRightSections, StyledHomeChartLeftSections } from './index.styled'
+import DoughnutComponent from './components/DoughnutComponent'
 
 const Home = () => {
   return (
@@ -18,7 +19,6 @@ const Home = () => {
         </StyledHomeHeaderContainer>
       </StyledHomeTopContainer>
       <StyledHomeBottomContainer>
-      <StyledHomeChartSections>
         <StyledHomeCardContainers>
           <Card title={dashCardType.activeProjects} count={10} />
           <Card title={dashCardType.completedProjects} count={10} />
@@ -26,8 +26,13 @@ const Home = () => {
           <Card title={dashCardType.unassignedTickets} count={10} />
           <Card title={dashCardType.teamMembers} count={10} />
         </StyledHomeCardContainers>
+      <StyledHomeChartSections>
+        <StyledHomeChartRightSections>
+          <DoughnutComponent />
+          <DoughnutComponent />
+        </StyledHomeChartRightSections>
+        <StyledHomeChartLeftSections>Left</StyledHomeChartLeftSections>
       </StyledHomeChartSections>
-      <StyledHomeChartSections>Middle</StyledHomeChartSections>
       <StyledHomeChartSections>Bottom</StyledHomeChartSections>
       <StyledHomeChartSections>Bottom Bottom</StyledHomeChartSections>
       </StyledHomeBottomContainer>
