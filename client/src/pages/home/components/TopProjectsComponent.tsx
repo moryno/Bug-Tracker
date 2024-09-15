@@ -1,5 +1,5 @@
 import { StyledTable } from '_lib';
-import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledChartCardWrapper } from '../index.styled';
+import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledMiddleChartCardWrapper } from '../index.styled';
 import { useGetAll } from '_hooks';
 import { ProjectService } from '_services';
 import { DomianEnum } from '_constants';
@@ -9,7 +9,7 @@ const TopProjectsComponent = () => {
     const { isLoading, error, data } = useGetAll(ProjectService.getProjects, DomianEnum.PROJECTS);
 
   return (
-    <StyledChartCardWrapper>
+    <StyledMiddleChartCardWrapper>
      <StyledChartCardHeaderWrapper className='mb-2'>
       <StyledChartCardHeaderTitle>Projects</StyledChartCardHeaderTitle>
        <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
@@ -29,7 +29,7 @@ const TopProjectsComponent = () => {
            }}
           />
       {/* </StyledTableCardWrapper> */}
-    </StyledChartCardWrapper>
+    </StyledMiddleChartCardWrapper>
   )
 }
 

@@ -3,7 +3,7 @@ import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHe
 const WorkItemsComponent = () => {
   return (
     <StyledChartCardWrapper className='scrollbar-hide'>
-    <StyledChartCardHeaderWrapper>
+    <StyledChartCardHeaderWrapper  className='mb-2'>
      <StyledChartCardHeaderTitle>My Work Items Due Today</StyledChartCardHeaderTitle>
      <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
    </StyledChartCardHeaderWrapper> 
