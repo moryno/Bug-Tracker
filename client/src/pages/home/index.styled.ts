@@ -21,6 +21,7 @@ export const StyledHandWave = styled(FaHandsClapping).attrs({
 `;
 export const StyledHomeContainer = styled.main`
   position: relative;
+  padding-bottom: 60px;
 `;
 export const StyledHomeTopContainer = styled.section`
   background-color: #121927;
@@ -60,6 +61,7 @@ export const StyledHomeChartSections = styled.section`
   display: flex;
   align-items: center;
   gap: 20px;
+  padding: 0 20px;
 `;
 export const StyledHomeChartRightSections = styled.section`
   flex: 3;
@@ -210,3 +212,41 @@ export const StyledWorkItemProfileIcon = styled(BsPersonCircle).attrs({
   fontSize: 22,
   color: defaultTheme.theme.palette.status.active,
 })``;
+export const StyledNotificationContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+export const StyledNotificationWrapper = styled.div<StyledHomeCardProps>`
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  background-color: ${({ bg }) =>
+    bg === "blue"
+      ? "#edf9fd"
+      : bg === "green"
+      ? "#f1f0ff"
+      : bg === "greenLight"
+      ? "#fefce8"
+      : "#F0FDF4"};
+`;
+export const StyledNotificationHeaderDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+export const StyledNotificationHeaderTitle = styled.div`
+  font-weight: 500;
+`;
+export const StyledNotificationHeaderDate = styled.div`
+  font-size: 12px;
+  color: ${defaultTheme.theme.palette.gray[400]};
+  background-color: white;
+  border-radius: 8px;
+  padding: 4px;
+`;
+export const StyledNotificationDescription = styled.p`
+  font-size: 12px;
+  color: ${defaultTheme.theme.palette.gray[400]};
+  margin-top: 4px;
+`;
