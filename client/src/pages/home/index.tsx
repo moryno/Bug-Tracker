@@ -4,6 +4,8 @@ import { StyledHomeTopContainer, StyledHomeBottomContainer, StyledHandWave, Styl
 import ProjectStatusComponent from './components/ProjectStatusComponent'
 import TicketByPriorityChart from './components/TicketByPriorityChart'
 import WorkItemsComponent from './components/WorkItemsComponent'
+import TopProjectsComponent from './components/TopProjectsComponent'
+import { TeamMembersComponent } from './components/TeamMembersComponent'
 
 const Home = () => {
   return (
@@ -37,7 +39,14 @@ const Home = () => {
           <WorkItemsComponent />
         </StyledHomeChartLeftSections>
       </StyledHomeChartSections>
-      <StyledHomeChartSections>Bottom</StyledHomeChartSections>
+      <StyledHomeChartSections>
+      <StyledHomeChartRightSections>
+          <TopProjectsComponent />
+        </StyledHomeChartRightSections>
+        <StyledHomeChartLeftSections>
+          <TeamMembersComponent />
+        </StyledHomeChartLeftSections>
+      </StyledHomeChartSections>
       <StyledHomeChartSections>Bottom Bottom</StyledHomeChartSections>
       </StyledHomeBottomContainer>
     </StyledHomeContainer>
