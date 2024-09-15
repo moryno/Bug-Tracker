@@ -5,7 +5,7 @@ export const TeamMembersComponent = () => {
   return (
     <StyledMiddleChartCardWrapper className='scrollbar-hide'>
     <StyledChartCardHeaderWrapper className='mb-2'>
-     <StyledChartCardHeaderTitle>Projects</StyledChartCardHeaderTitle>
+     <StyledChartCardHeaderTitle>Team</StyledChartCardHeaderTitle>
       <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
     </StyledChartCardHeaderWrapper> 
     <StyledWorkItemWrapper>
