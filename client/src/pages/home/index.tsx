@@ -1,7 +1,9 @@
 import { dashCardType } from '_constants'
 import Card from './components/Card'
 import { StyledHomeTopContainer, StyledHomeBottomContainer, StyledHandWave, StyledHomeContainer, StyledUserAvatar, StyledHomeHeaderContainer, StyledHomeHeaderInfoContainer, StyledHomeHeaderInfoWrapper, StyledHomeHeaderInfoTitle, StyledHomeHeaderWelcomeText, StyledHomeChartSections, StyledHomeCardContainers, StyledHomeChartRightSections, StyledHomeChartLeftSections } from './index.styled'
-import DoughnutComponent from './components/DoughnutComponent'
+import ProjectStatusComponent from './components/ProjectStatusComponent'
+import TicketByPriorityChart from './components/TicketByPriorityChart'
+import WorkItemsComponent from './components/WorkItemsComponent'
 
 const Home = () => {
   return (
@@ -28,10 +30,12 @@ const Home = () => {
         </StyledHomeCardContainers>
       <StyledHomeChartSections>
         <StyledHomeChartRightSections>
-          <DoughnutComponent />
-          <DoughnutComponent />
+          <ProjectStatusComponent />
+          <TicketByPriorityChart />
         </StyledHomeChartRightSections>
-        <StyledHomeChartLeftSections>Left</StyledHomeChartLeftSections>
+        <StyledHomeChartLeftSections>
+          <WorkItemsComponent />
+        </StyledHomeChartLeftSections>
       </StyledHomeChartSections>
       <StyledHomeChartSections>Bottom</StyledHomeChartSections>
       <StyledHomeChartSections>Bottom Bottom</StyledHomeChartSections>
