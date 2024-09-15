@@ -1,13 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { StyledDonughtCardHeaderImg, StyledDonughtCardHeaderTitle, StyledDonughtCardHeaderWrapper, StyledDonughtCardWrapper } from '../index.styled';
+import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledChartCardWrapper } from '../index.styled';
 
 const TicketByPriorityChart = () => {
   return (
-    <StyledDonughtCardWrapper>
-    <StyledDonughtCardHeaderWrapper>
-     <StyledDonughtCardHeaderTitle>Tickets By Priority</StyledDonughtCardHeaderTitle>
-     <StyledDonughtCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
-   </StyledDonughtCardHeaderWrapper> 
+    <StyledChartCardWrapper>
+    <StyledChartCardHeaderWrapper>
+     <StyledChartCardHeaderTitle>Tickets By Priority</StyledChartCardHeaderTitle>
+     <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
+   </StyledChartCardHeaderWrapper> 
    <ResponsiveContainer height="90%">
      <PieChart>
        <Pie
@@ -33,7 +33,7 @@ const TicketByPriorityChart = () => {
        />
      </PieChart>
    </ResponsiveContainer>
- </StyledDonughtCardWrapper>
+ </StyledChartCardWrapper>
   )
 }
 const data = [

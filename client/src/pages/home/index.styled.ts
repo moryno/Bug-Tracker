@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { FaHandsClapping } from "react-icons/fa6";
 import { dashCardType, defaultTheme } from "_constants";
+import { FaBug } from "react-icons/fa";
 interface StyledHomeCardProps {
   bg: string;
 }
@@ -59,14 +60,18 @@ export const StyledHomeChartSections = styled.section`
   gap: 20px;
 `;
 export const StyledHomeChartRightSections = styled.section`
-  flex: 2;
+  flex: 3;
   display: flex;
   align-items: center;
   gap: 20px;
 `;
-export const StyledDonughtCardWrapper = styled.article`
+export const StyledHomeChartLeftSections = styled.section`
+  flex: 2;
+`;
+export const StyledChartCardWrapper = styled.article`
   flex: 1;
   height: 320px;
+  overflow-y: auto;
   background-color: white;
   padding: 16px;
   position: relative;
@@ -75,24 +80,26 @@ export const StyledDonughtCardWrapper = styled.article`
     0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 `;
 
-export const StyledDonughtCardHeaderWrapper = styled.div`
+export const StyledChartCardHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  // position: sticky;
+  // top: 0;
+  // left: 0;
 `;
-export const StyledDonughtCardHeaderTitle = styled.h1`
+export const StyledChartCardHeaderTitle = styled.h1`
   font-size: 16px;
   margin: 0;
   padding: 0;
+  color: ${defaultTheme.theme.palette.gray[900]};
 `;
-export const StyledDonughtCardHeaderImg = styled.img`
+export const StyledChartCardHeaderImg = styled.img`
   height: 16px;
   width: 16px;
   cursor: pointer;
 `;
-export const StyledHomeChartLeftSections = styled.section`
-  flex: 1;
-`;
+
 export const StyledHomeCardContainers = styled.section`
   display: flex;
   align-items: center;
@@ -138,3 +145,38 @@ export const StyledCardIcon = styled.img`
   border-radius: 50%;
   object-fit: cover;
 `;
+export const StyledWorkItemWrapper = styled.article`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid
+    ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
+  }
+`;
+export const StyledWorkItemLeftDiv = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+export const StyledWorkItemInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+export const StyledWorkItemInfoTitle = styled.span`
+  font-size: 13px;
+  font-weight: 600;
+`;
+export const StyledWorkItemInfoDesc = styled.span`
+  font-size: 13px;
+  font-weight: 500;
+`;
+export const StyledWorkItemDueDate = styled.span`
+  font-size: 13px;
+`;
+export const StyledWorkItemBugIcon = styled(FaBug).attrs({
+  fontSize: 14,
+  color: defaultTheme.theme.palette.status.completed,
+})``;

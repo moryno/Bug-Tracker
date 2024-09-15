@@ -1,13 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { StyledDonughtCardHeaderImg, StyledDonughtCardHeaderTitle, StyledDonughtCardHeaderWrapper, StyledDonughtCardWrapper } from '../index.styled';
+import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledChartCardWrapper } from '../index.styled';
 
 const ProjectStatusComponent = () => {
   return (
-    <StyledDonughtCardWrapper>
-       <StyledDonughtCardHeaderWrapper>
-        <StyledDonughtCardHeaderTitle>Project Status</StyledDonughtCardHeaderTitle>
-        <StyledDonughtCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
-      </StyledDonughtCardHeaderWrapper> 
+    <StyledChartCardWrapper>
+       <StyledChartCardHeaderWrapper>
+        <StyledChartCardHeaderTitle>Project Status</StyledChartCardHeaderTitle>
+        <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
+      </StyledChartCardHeaderWrapper> 
       <ResponsiveContainer height="90%">
         <PieChart>
           <Pie
@@ -33,7 +33,7 @@ const ProjectStatusComponent = () => {
           />
         </PieChart>
       </ResponsiveContainer>
-    </StyledDonughtCardWrapper>
+    </StyledChartCardWrapper>
   )
 }
 const data = [
