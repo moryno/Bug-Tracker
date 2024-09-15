@@ -133,7 +133,7 @@ const GroupPage: React.FC<Iprops> = ({
               onContextMenu: (event) => {},
             };
            }}
-            />
+          />
         </StyledTableCardWrapper>
         {open &&
           <FormComponent 

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { FaHandsClapping } from "react-icons/fa6";
+import { BsPersonCircle } from "react-icons/bs";
+import { CiMail } from "react-icons/ci";
 import { dashCardType, defaultTheme } from "_constants";
 import { FaBug } from "react-icons/fa";
 interface StyledHomeCardProps {
@@ -79,6 +81,17 @@ export const StyledChartCardWrapper = styled.article`
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
     0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 `;
+export const StyledMiddleChartCardWrapper = styled.article`
+  flex: 1;
+  height: 400px;
+  overflow-y: auto;
+  background-color: white;
+  padding: 16px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+`;
 
 export const StyledChartCardHeaderWrapper = styled.div`
   display: flex;
@@ -148,16 +161,24 @@ export const StyledCardIcon = styled.img`
 export const StyledWorkItemWrapper = styled.article`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 3px;
   cursor: pointer;
   border-bottom: 1px solid
     ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
   &:hover {
     background-color: ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
   }
+  &:nth-child(odd) {
+    background-color: ${({ theme }) => theme.palette.grey["Cool Grey"][100]};
+  }
 `;
 export const StyledWorkItemLeftDiv = styled.div`
   display: flex;
+  gap: 10px;
+`;
+export const StyledWorkItemRightDiv = styled.div`
+  display: flex;
+  align-items: center;
   gap: 10px;
 `;
 export const StyledWorkItemInfoWrapper = styled.div`
@@ -172,6 +193,7 @@ export const StyledWorkItemInfoTitle = styled.span`
 export const StyledWorkItemInfoDesc = styled.span`
   font-size: 13px;
   font-weight: 500;
+  color: ${defaultTheme.theme.palette.gray[500]};
 `;
 export const StyledWorkItemDueDate = styled.span`
   font-size: 13px;
@@ -179,4 +201,12 @@ export const StyledWorkItemDueDate = styled.span`
 export const StyledWorkItemBugIcon = styled(FaBug).attrs({
   fontSize: 14,
   color: defaultTheme.theme.palette.status.completed,
+})``;
+export const StyledWorkItemMailIcon = styled(CiMail).attrs({
+  fontSize: 22,
+  color: defaultTheme.theme.palette.status.approved,
+})``;
+export const StyledWorkItemProfileIcon = styled(BsPersonCircle).attrs({
+  fontSize: 22,
+  color: defaultTheme.theme.palette.status.active,
 })``;

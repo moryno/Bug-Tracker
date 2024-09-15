@@ -21,3 +21,11 @@ code {
 .scrollbar-hide{
   scrollbar-width: none;
 }
+
+.mb-5{
+  margin-bottom: 20px;
+}
+
+.mb-2{
+  margin-bottom: 10px;
+}
