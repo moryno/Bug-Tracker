@@ -88,10 +88,10 @@ const GroupPage: React.FC<Iprops> = ({
   }, [getDetailService, showDrawer]);
 
   const rowSelection = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: AnyObject[]) => {
-      setSelectedRecords(selectedRows)
+    onChange: (selectedRowKeys: React.Key[], selectedRows: unknown[]) => {
+      setSelectedRecords(selectedRows as AnyObject[])
     },
-    getCheckboxProps: (record: AnyObject) => ({
+    getCheckboxProps: (record: unknown) => ({
       // disabled: record.name === 'Disabled User', // Column configuration not to be checked
       // name: record.name,
     }),
@@ -121,13 +121,13 @@ const GroupPage: React.FC<Iprops> = ({
            loading={isLoading} 
            dataSource={data?.data || []} 
            columns={columns} 
-           rowKey={(record) => record.id}
+           rowKey={(record: any) => record?.id}
            scroll={{ x: 2000 }}
            rowSelection={{
             type: "radio",
             ...rowSelection,
           }}
-           onRow={(record, rowIndex) => {
+           onRow={(record: any, rowIndex) => {
             return {
               onDoubleClick: (event) => onRowDoubleClick(record),
               onContextMenu: (event) => {},

@@ -53,7 +53,46 @@ export const StyledHomeBottomContainer = styled.section`
   flex-direction: column;
   width: 100%;
 `;
-export const StyledHomeChartSections = styled.section``;
+export const StyledHomeChartSections = styled.section`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+export const StyledHomeChartRightSections = styled.section`
+  flex: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+export const StyledDonughtCardWrapper = styled.article`
+  flex: 1;
+  height: 320px;
+  background-color: white;
+  padding: 16px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+`;
+
+export const StyledDonughtCardHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const StyledDonughtCardHeaderTitle = styled.h1`
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+`;
+export const StyledDonughtCardHeaderImg = styled.img`
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+`;
+export const StyledHomeChartLeftSections = styled.section`
+  flex: 1;
+`;
 export const StyledHomeCardContainers = styled.section`
   display: flex;
   align-items: center;

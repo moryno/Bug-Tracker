@@ -22,7 +22,7 @@ function App() {
             <AppLayout />
           </AuthRoutes>
         </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
      </AppThemeProvider>
     </PersistGate>
