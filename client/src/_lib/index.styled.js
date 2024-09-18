@@ -103,3 +103,26 @@ export const StyledTextArea = styled(TextArea)`
   resize: none;
   width: 100%;
 `;
+export const StyledGroupTitleWrapper = styled.section``;
+export const StyledGroupTitle = styled.h2`
+  margin: 0;
+  padding: 0;
+  color: ${defaultTheme.theme.palette.gray[900]};
+`;
+export const StyledGroupSubTitle = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  color: ${defaultTheme.theme.palette.gray[500]};
+`;
+export const StyledGroupFilterWrapper = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const StyledGroupFilterLeftWrapper = styled.article``;
+export const StyledGroupTableTitle = styled.h3`
+  margin: 0;
+  padding: 0;
+  color: ${defaultTheme.theme.palette.gray[900]};
+`;
+export const StyledGroupFilterRightWrapper = styled.article``;

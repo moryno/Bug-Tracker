@@ -4,6 +4,13 @@ import {
   StyledBottomContainer,
   StyledButtonContainer,
   StyledFilterContainer,
+  StyledGroupFilterLeftWrapper,
+  StyledGroupFilterRightWrapper,
+  StyledGroupFilterWrapper,
+  StyledGroupSubTitle,
+  StyledGroupTableTitle,
+  StyledGroupTitle,
+  StyledGroupTitleWrapper,
   StyledPageCard,
   StyledTopContainer,
 } from "./index.styled";
@@ -16,6 +23,8 @@ import { IBug, IProject } from "interfaces";
 import ContainerDropDown from "./ContainerDropDown";
 import { actionDropdownItems as items } from "_constants";
 import { AxiosResponse } from "axios";
+import { StyledAppHeaderSearch } from "./Layout/AppHeader/index.styled";
+import { FaPlus } from "react-icons/fa6";
 
 interface Iprops {
   title: string;
@@ -99,22 +108,28 @@ const GroupPage: React.FC<Iprops> = ({
 
   return (
     <StyledPageCard>
-      <StyledTopContainer>
-        <StyledFilterContainer>
-          All Projects <MdOutlineArrowDropDown />
-        </StyledFilterContainer>
-        <StyledButtonContainer>
-          <Space wrap>
+        <StyledGroupTitleWrapper>
+          <StyledGroupTitle>Team management</StyledGroupTitle>
+          <StyledGroupSubTitle>Manage your team members and their account permissions and roles here.</StyledGroupSubTitle>
+        </StyledGroupTitleWrapper>
+        <StyledGroupFilterWrapper>
+        <StyledGroupFilterLeftWrapper>
+          <StyledGroupTableTitle>All users 44</StyledGroupTableTitle>
+        </StyledGroupFilterLeftWrapper>
+        <StyledGroupFilterRightWrapper>
+        <Space wrap>
+           <StyledAppHeaderSearch />
            <ContainerDropDown menuProps={menuProps} />
            <ContainerButton
-            title={`New ${title}`}
+            title={`Add ${title}`}
             size="middle"
+            icon={<FaPlus size={16} /> }
             onClick={showDrawer}
             type="primary"
            />
-         </Space>
-        </StyledButtonContainer>
-      </StyledTopContainer>
+        </Space>
+        </StyledGroupFilterRightWrapper>
+      </StyledGroupFilterWrapper>
       <StyledBottomContainer>
         <StyledTableCardWrapper>
           <StyledTable 

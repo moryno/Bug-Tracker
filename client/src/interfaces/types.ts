@@ -22,3 +22,11 @@ export type commentType = {
   id?: string;
   description: string;
 };
+export type InviteUserType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  userName: string;
+  role: string;
+  message: string;
+};
