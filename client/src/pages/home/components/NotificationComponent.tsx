@@ -1,10 +1,21 @@
-import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledMiddleChartCardWrapper, StyledNotificationContainer, StyledNotificationDescription, StyledNotificationHeaderDate, StyledNotificationHeaderDiv, StyledNotificationHeaderTitle, StyledNotificationWrapper } from '../index.styled';
+import { 
+    StyledChartCardHeaderImg, 
+    StyledChartCardHeaderTitle, 
+    StyledChartCardHeaderWrapper, 
+    StyledMiddleChartCardWrapper, 
+    StyledNotificationContainer, 
+    StyledNotificationDescription, 
+    StyledNotificationHeaderDate, 
+    StyledNotificationHeaderDiv, 
+    StyledNotificationHeaderTitle,
+    StyledNotificationWrapper
+     } from '../index.styled';
 
 const NotificationComponent = () => {
   return (
     <StyledMiddleChartCardWrapper className='scrollbar-hide'>
      <StyledChartCardHeaderWrapper className='mb-5'>
-        <StyledChartCardHeaderTitle>Submitted vs Resolved Bugs</StyledChartCardHeaderTitle>
+        <StyledChartCardHeaderTitle>Notifications</StyledChartCardHeaderTitle>
         <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
     </StyledChartCardHeaderWrapper> 
     <StyledNotificationContainer>

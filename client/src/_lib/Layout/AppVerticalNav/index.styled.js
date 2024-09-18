@@ -17,11 +17,11 @@ export const StyledVerticalNav = styled(Menu)`
   }
   .ant-menu-sub .ant-menu-item {
     padding: 8px 16px !important;
-    margin-left: 16px;
+    ${"" /* margin-left: 16px; */}
     margin-bottom: 8px;
     height: 42px;
-    width: fit-content;
-    border-radius: 50px;
+    ${"" /* width: fit-content; */}
+    ${"" /* border-radius: 50px; */}
     color: ${({ theme }) => theme.palette.gray[900]};
     background: ${({ theme }) => theme.palette.white};
     border: 1px solid ${({ theme }) => theme.palette.grey["Cool Grey"][200]};

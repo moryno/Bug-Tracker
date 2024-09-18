@@ -5,13 +5,17 @@ import { bugRoutes } from "./BugRoutes";
 import { authRoutes } from "./AuthRoutes";
 import { homeRoutes } from "./HomeRoutes";
 import { landingPageRoutes } from "./LandingPageRoutes";
+import { userRoutes } from "./UserRoutes";
+import { profileRoutes } from "./ProfileRoute";
 
 const authorizedStructure = {
     fallbackPath: LOGIN_ROUTE,
     routes: [
         ...homeRoutes,
         ...projectRoutes,
-        ...bugRoutes
+        ...bugRoutes,
+        ...userRoutes,
+        ...profileRoutes
     ]
 };
 
