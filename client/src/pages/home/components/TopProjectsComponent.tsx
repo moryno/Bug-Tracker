@@ -14,7 +14,6 @@ const TopProjectsComponent = () => {
       <StyledChartCardHeaderTitle>Projects</StyledChartCardHeaderTitle>
        <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
      </StyledChartCardHeaderWrapper> 
-      {/* <StyledTableCardWrapper> */}
           <StyledTable 
            loading={isLoading} 
            pagination={false}
@@ -28,7 +27,6 @@ const TopProjectsComponent = () => {
             };
            }}
           />
-      {/* </StyledTableCardWrapper> */}
     </StyledMiddleChartCardWrapper>
   )
 }
