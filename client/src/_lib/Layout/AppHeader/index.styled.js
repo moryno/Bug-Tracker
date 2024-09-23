@@ -1,9 +1,10 @@
-import { Layout } from "antd";
+import { Layout, Menu } from "antd";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CiSearch } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { RiMenu3Fill } from "react-icons/ri";
 import { styled } from "styled-components";
+import { defaultTheme } from "_constants";
 
 const { Header } = Layout;
 
@@ -77,4 +78,22 @@ export const StyledAppHeaderAvatar = styled.img`
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+`;
+
+export const StyledMenu = styled(Menu)``;
+export const StyledMenuItem = styled(Menu.Item)`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+`;
+export const StyledMenuItemAction = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+`;
+export const StyledMenuItemLabel = styled.span`
+  color: ${defaultTheme.theme.palette.gray[500]};
+  font-size: 13px;
+  font-weight: 500;
 `;
