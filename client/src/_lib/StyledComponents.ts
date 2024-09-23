@@ -1,6 +1,6 @@
 import { defaultTheme } from "_constants";
 import styled from "styled-components";
-import { FaBriefcase, FaBug } from "react-icons/fa";
+import { FaBriefcase, FaBug, FaRegEdit } from "react-icons/fa";
 import { MdOutlineMessage, MdOutlineArrowDropDown } from "react-icons/md";
 import { Card, Col, Table } from "antd";
 
@@ -113,4 +113,10 @@ export const StyledTable = styled(Table)`
       cursor: pointer;
     }
   }
+`;
+export const StyledEditIcon = styled(FaRegEdit).attrs({
+  fontSize: 22,
+  color: defaultTheme.theme.palette.status.onHold,
+})`
+  cursor: pointer;
 `;
