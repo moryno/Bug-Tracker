@@ -14,6 +14,8 @@ public class Project
     public string Description { get; set; } = string.Empty;
     public string ProjectGroup { get; set; } = string.Empty;
     public bool Private { get; set; }
+    public Guid CompanyId { get; set; }
+    public virtual Company Company { get; set; }
     public virtual ICollection<Bug> Bugs { get; set; }  = new List<Bug>();
     public virtual ICollection<ProjectComment> ProjectComments { get; set; } = new List<ProjectComment>();
 

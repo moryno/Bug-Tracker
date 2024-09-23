@@ -16,6 +16,8 @@ namespace Domain
         public string CreatedUser { get; set; } = string.Empty;
         public DateTime UpdatedDate { get; set; }
         public string UpdatedUser { get; set; } = string.Empty;
+        public Guid CompanyId { get; set; }
+        public virtual Company Company { get; set; }
         public virtual ICollection<BugComment> BugComments { get; set; } = new List<BugComment>();
         public virtual ICollection<BugAssignee> BugAssignees { get; set; } = new List<BugAssignee>();
     }
