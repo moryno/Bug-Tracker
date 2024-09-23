@@ -207,7 +207,9 @@ export const StyledWorkItemBugIcon = styled(FaBug).attrs({
 export const StyledWorkItemMailIcon = styled(CiMail).attrs({
   fontSize: 22,
   color: defaultTheme.theme.palette.status.approved,
-})``;
+})`
+  cursor: pointer;
+`;
 export const StyledWorkItemProfileIcon = styled(BsPersonCircle).attrs({
   fontSize: 22,
   color: defaultTheme.theme.palette.status.active,

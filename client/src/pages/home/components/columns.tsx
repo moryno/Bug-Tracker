@@ -1,10 +1,8 @@
 
-import { Tag, Tooltip } from "antd";
-import { IFollowerDto, IProject } from "interfaces";
+import { Tag } from "antd";
 import moment from "moment";
-import styled from 'styled-components';
-import { Link } from "react-router-dom";
-import { PROJECT_ROUTE } from "_constants";
+
+import { IFollowerDto, IProject } from "interfaces";
 import { StyledAssigneeContainer, StyledAssigneeImage, StyledAssigneeName } from "pages/projects/index.styled";
 import { StyledWorkItemInfoDesc, StyledWorkItemInfoTitle, StyledWorkItemInfoWrapper } from "../index.styled";
 
