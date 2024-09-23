@@ -32,7 +32,7 @@ export const routeConfig = [
     },
     {
         id: "users",
-        title: "Users",
+        title: "User Management",
         messageId: "sidebar.users",
         icon: <FaUsersGear  size={18} />,
         type: "collapse",
@@ -53,6 +53,14 @@ export const routeConfig = [
                 mobileOnly: true,
                 path: PROFILE_ROUTE,
             },
+            // {
+            //     id: "users.role",
+            //     title: "Roles",
+            //     messageId: "sidebar.users.role",
+            //     icon: <FaRegUserCircle  size={18} />,
+            //     mobileOnly: true,
+            //     path: PROFILE_ROUTE,
+            // },
         ]
         // mobileOnly: true,
         // path: USER_ROUTE,
