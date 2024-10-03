@@ -11,8 +11,10 @@ import {
  } from './index.styled'
 import { useCallback, useState } from "react";
 import BugForm from "pages/bugs/components/BugForm";
+import { useAuthUser } from "_hooks";
 
 const AppHeader = () => {
+  const { user } = useAuthUser();
   const [open, setOpen] = useState(false);
 
   const showDrawer = useCallback(() => {
@@ -34,7 +36,7 @@ const AppHeader = () => {
         <StyledAppHeaderAdd onClick={showDrawer} />
         <StyledAppHeaderSearch />
         <StyledAppHeaderNotification />
-        <StyledAppHeaderAvatar src={"/img/noavatar.jpg"} />
+        <StyledAppHeaderAvatar src={ user?.image || "/img/noavatar.jpg"} />
       </StyledAppHeaderRight>
     </StyledAppHeader>
     {open &&
