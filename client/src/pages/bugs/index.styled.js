@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { FaInfoCircle } from "react-icons/fa";
 import { defaultTheme } from "_constants";
 import { GoDotFill } from "react-icons/go";
 
