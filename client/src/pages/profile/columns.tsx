@@ -2,48 +2,74 @@
 import { Tag } from "antd";
 import moment from "moment";
 
-import { IProject } from "interfaces";
-import { StyledAssigneeImage } from "pages/projects/index.styled";
-import { StyledWorkItemInfoDesc, StyledWorkItemInfoTitle, StyledWorkItemInfoWrapper } from "pages/home/index.styled";
-import { StyledAssigneeContainer } from "pages/bugs/index.styled";
+import { IBug } from "interfaces";
+import { 
+  StyledWorkItemInfoDesc,
+   StyledWorkItemInfoTitle, 
+   StyledWorkItemInfoWrapper 
+  } from "pages/home/index.styled";
 
-export const profileProjectColumns = [
+
+export const profileBugColumns = [
     {
-      title: 'Project Name',
-      key: 'projectName',
-      ellipsis: true,
-      render: (project : IProject) => (
-        <StyledAssigneeContainer>
-            <StyledAssigneeImage src={"/img/noavatar.jpg"} />
-            <StyledWorkItemInfoWrapper>
-              <StyledWorkItemInfoTitle>{ project.projectName }</StyledWorkItemInfoTitle>
-              <StyledWorkItemInfoDesc>{ project.description }</StyledWorkItemInfoDesc>
-            </StyledWorkItemInfoWrapper>
-        </StyledAssigneeContainer>
+      title: 'Name',
+      key: 'bugName',
+      render: (bug : IBug) => (
+
+        <StyledWorkItemInfoWrapper>
+          <StyledWorkItemInfoTitle>{ bug.bugName }</StyledWorkItemInfoTitle>
+          <StyledWorkItemInfoDesc>{ bug.description }</StyledWorkItemInfoDesc>
+         </StyledWorkItemInfoWrapper>
       ),
+      width: "40%",
     },
     {
-      title: 'Priority',
-      dataIndex: 'priority',
-      key: 'priority',
-      render: (priority: string) => {
-        let color = priority === 'High' ? 'red' : priority === "Medium" ? "geekblue" : 'green';
-        return <Tag color={color}>{priority.toUpperCase()}</Tag>;
+      title: 'Bug Status',
+      dataIndex: 'bugStatus',
+      key: 'bugStatus',
+      render: (status: string) => {
+        let color = status === 'Open' ? '#2CC8BA' : status === "InProgress" ? "#08AEEA" : '#F56B62';
+        return <Tag color={color}>{status}</Tag>;
       },
-      width: 100,
+      width: "15%",
+      align: "center" as const,
     },
     {
-      title: 'End Date',
-      dataIndex: 'endDate',
-      key: 'endDate',
-      render: (date: string) => moment(date).format('YYYY-MM-DD'),
-      width: 100
+      title: 'Due Date',
+      dataIndex: 'dueDate',
+      key: 'dueDate',
+      render: (date: Date) => moment(date).format('YYYY-MM-DD'),
+      width: "15%",
+    },
+    {
+      title: 'Severity',
+      dataIndex: 'severity',
+      key: 'severity',
+      width: "15%",
+      align: "center" as const,
+      render: (severity: string) => {
+        let color;
+        switch (severity) {
+          case 'Minor':
+            color = '#4ED3E5';
+            break;
+          case 'Major':
+            color = '#F6A96D';
+            break;
+          case 'Critical':
+            color = '#F56B62';
+            break;
+          default:
+            color = '#08AEEA';
+        }
+        return <Tag color={color}>{severity}</Tag>;
+      },
     },
     {
         title: 'Created By',
         dataIndex: 'createdUser',
         key: 'createdUser',
-        width: 150
+        width: "15%",
       },
   ];
   
