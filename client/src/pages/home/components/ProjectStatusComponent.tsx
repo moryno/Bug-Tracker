@@ -1,7 +1,13 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledChartCardWrapper } from '../index.styled';
 
-const ProjectStatusComponent = () => {
+const ProjectStatusComponent = ({ projectStatus } : { projectStatus : any[]}) => {
+
+  const formattedStatusCount = projectStatus.map((item) => {
+    const [name, value] = Object.entries(item)[0]; 
+    return { name, value };
+  });
+
   return (
     <StyledChartCardWrapper>
        <StyledChartCardHeaderWrapper>
@@ -11,7 +17,7 @@ const ProjectStatusComponent = () => {
       <ResponsiveContainer height="90%">
         <PieChart>
           <Pie
-            data={data}
+            data={formattedStatusCount}
             cx={"50%"}
             cy={"50%"}
             innerRadius={"50%"}
@@ -19,7 +25,7 @@ const ProjectStatusComponent = () => {
             fill="#8884d8"
             dataKey="value"
           > 
-          {data.map((entry, index) => (
+          {formattedStatusCount.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
           </Pie>
@@ -36,10 +42,7 @@ const ProjectStatusComponent = () => {
     </StyledChartCardWrapper>
   )
 }
-const data = [
-    { name: 'Active', value: 400 },
-    { name: 'InActive', value: 300 },
-  ];
+
   const COLORS = ['#00C49F', '#FFBB28'];
 
 export default ProjectStatusComponent
