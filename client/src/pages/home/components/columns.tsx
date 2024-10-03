@@ -2,7 +2,7 @@
 import { Tag } from "antd";
 import moment from "moment";
 
-import { IFollowerDto, IProject } from "interfaces";
+import { IProject } from "interfaces";
 import { StyledAssigneeContainer, StyledAssigneeImage, StyledAssigneeName } from "pages/projects/index.styled";
 import { StyledWorkItemInfoDesc, StyledWorkItemInfoTitle, StyledWorkItemInfoWrapper } from "../index.styled";
 
@@ -23,11 +23,11 @@ export const topProjectColumns = [
     {
       title: 'Owner',
       key: 'owner',
-      render: (assignee : IFollowerDto) => (
+      render: (assignee : any) => (
         <>
             <StyledAssigneeContainer>
-              <StyledAssigneeImage src={assignee.image || "/img/noavatar.jpg"} alt={assignee.fullName} />
-              <StyledAssigneeName>{assignee.fullName}</StyledAssigneeName>
+              <StyledAssigneeImage src={assignee?.projectOwnerImage || "/img/noavatar.jpg"} alt={assignee?.projectOwnerFullName} />
+              <StyledAssigneeName>{assignee?.projectOwnerFullName}</StyledAssigneeName>
             </StyledAssigneeContainer>
         </>
       ),
@@ -39,6 +39,16 @@ export const topProjectColumns = [
       render: (priority: string) => {
         let color = priority === 'High' ? 'red' : priority === "Medium" ? "geekblue" : 'green';
         return <Tag color={color}>{priority.toUpperCase()}</Tag>;
+      },
+      width: 100,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'projectStatus',
+      key: 'projectStatus',
+      render: (projectStatus: number) => {
+        let color = projectStatus <= 50 ? 'red' : projectStatus > 50 && projectStatus <= 70 ? "geekblue" : 'green';
+        return <Tag color={color}>{Math.round(projectStatus).toFixed(1)}%</Tag>;
       },
       width: 100,
     },
