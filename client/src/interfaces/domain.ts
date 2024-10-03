@@ -13,6 +13,7 @@ export interface IProject {
   fullName?: string;
   image?: string;
   priority?: string;
+  projectStatus?: number;
   owner?: string;
   description: string;
   projectGroup?: string;
@@ -44,6 +45,7 @@ export interface IBug {
   updatedDate?: Date;
   updatedUser?: string;
   bugComments?: IComment[];
+  comments?: any;
 }
 export interface IComment {
   id: string;
@@ -67,4 +69,14 @@ export interface IUser {
   image?: string;
   token?: string;
   userName: string;
+}
+export interface IRole {
+  name: string;
+  description: string;
+  id?: string;
+  companyId?: string;
+  createdDate?: Date;
+  createdUser?: string;
+  updatedDate?: Date;
+  updatedUser?: string;
 }
