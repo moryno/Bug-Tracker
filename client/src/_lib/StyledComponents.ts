@@ -1,8 +1,9 @@
 import { defaultTheme } from "_constants";
 import styled from "styled-components";
-import { FaBriefcase, FaBug, FaRegEdit } from "react-icons/fa";
+import { FaBriefcase, FaBug, FaCheck, FaRegEdit } from "react-icons/fa";
 import { MdOutlineMessage, MdOutlineArrowDropDown } from "react-icons/md";
-import { Card, Col, Table } from "antd";
+import { Button, Card, Col, Modal, Table } from "antd";
+import { IoClose } from "react-icons/io5";
 
 export const StyledUserIcon = styled.span`
   display: flex;
@@ -48,6 +49,7 @@ export const StyledInfoLabel = styled.h3`
   font-size: 15px;
   color: ${defaultTheme.theme.palette.gray[500]};
 `;
+
 export const StyledInfoText = styled.p`
   padding: 0;
   margin: 0;
@@ -92,6 +94,16 @@ export const StyledCommentIcon = styled(MdOutlineMessage).attrs({
 export const StyledDropDownIcon = styled(MdOutlineArrowDropDown).attrs({
   fontSize: 20,
 })``;
+export const StyledCheckedIcon = styled(FaCheck).attrs({
+  fontSize: 20,
+})``;
+export const StyledButtonGroup = styled(Button.Group)`
+  width: 100%;
+  margin-top: 10px;
+`;
+export const StyledCloseIcon = styled(IoClose).attrs({
+  fontSize: 20,
+})``;
 export const StyledCardWrapper = styled(Card)`
   .ant-card-body {
     padding: 10px;
@@ -119,4 +131,31 @@ export const StyledEditIcon = styled(FaRegEdit).attrs({
   color: defaultTheme.theme.palette.status.onHold,
 })`
   cursor: pointer;
+`;
+export const StyledModal = styled(Modal)`
+  .ant-modal-header {
+    // padding: 10px 24px;
+    // border-radius: 10px 10px 0px 0px;
+    display: none;
+  }
+  .ant-modal-close {
+    // display: none;
+  }
+  .ant-modal-footer {
+    border: none;
+  }
+
+  .ant-modal-body {
+    padding: 0px 20px;
+  }
+  .ant-modal-content {
+    border-radius: 10px !important;
+  }
+`;
+export const StyledPhotoStepLabel = styled.h2`
+  padding: 0;
+  margin: 0 0 20px;
+  font-weight: 500;
+  font-size: 17px;
+  color: ${defaultTheme.theme.palette.status.completed};
 `;
