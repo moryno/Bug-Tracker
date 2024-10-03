@@ -42,3 +42,22 @@ export const isJSONString = (str: string) => {
     return false;
   }
 };
+
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+export const getMonthName = (monthNumber: number) => {
+  return monthNames[monthNumber - 1]; // Adjust because array index starts at 0, but months start at 1
+};
