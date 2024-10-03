@@ -9,6 +9,7 @@ export { default as CommentForm } from "./CommentForm";
 export { default as AuthRoutes } from "./AuthRoutes";
 export { default as PopoverComponent } from "./PopoverComponent";
 export { default as DetailInfoPopover } from "./DetailInfoPopover";
-export * from "./Auth";
 
+export * from "./Auth";
+export * from "./PhotoComponent";
 export * from "./StyledComponents";
