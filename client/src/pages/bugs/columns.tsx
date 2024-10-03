@@ -68,7 +68,7 @@ import { PopoverComponent } from "_lib";
       width: 200,
       render: (assignees : IUser[]) => {
         const followers = assignees?.map(assinee => ({ userName: assinee?.userName, fullName: assinee?.fullName}));
-          return <PopoverComponent dataSource={followers} columns={assigneeColumns} />
+          return assignees.length > 0 ? <PopoverComponent dataSource={followers} columns={assigneeColumns} /> : null
     },
     },
     {
