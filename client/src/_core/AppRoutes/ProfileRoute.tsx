@@ -3,4 +3,4 @@ import { lazy } from "react"
 
 const ProfilePage =  lazy(() => import("pages/profile"));
 
-export const profileRoutes = [{ path: PROFILE_ROUTE, element: <ProfilePage />}]
+export const profileRoutes = [{ path: `${PROFILE_ROUTE}/:username`, element: <ProfilePage />}]
