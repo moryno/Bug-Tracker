@@ -29,9 +29,9 @@ const PopoverComponent = ({ dataSource, columns}: any) => {
         `}
     </style>
     <StyledDiv>
-      <StyledAssigneeContainer key={dataSource[0].userName}>
-        <StyledAssigneeImage src={dataSource[0].image || "/img/noavatar.jpg"} alt={dataSource[0].fullName} />
-        <StyledAssigneeName>{dataSource[0].fullName}</StyledAssigneeName>
+      <StyledAssigneeContainer key={dataSource[0]?.userName}>
+        <StyledAssigneeImage src={dataSource[0]?.image || "/img/noavatar.jpg"} alt={dataSource[0]?.fullName} />
+        <StyledAssigneeName>{dataSource[0]?.fullName}</StyledAssigneeName>
        </StyledAssigneeContainer>
     <Badge
       title=''
