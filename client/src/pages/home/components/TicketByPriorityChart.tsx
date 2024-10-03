@@ -1,7 +1,12 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledChartCardWrapper } from '../index.styled';
 
-const TicketByPriorityChart = () => {
+const TicketByPriorityChart = ({ bugSeverityCounts } : { bugSeverityCounts : any[]}) => {
+
+  const formattedStatusCount = bugSeverityCounts?.map((item) => {
+    const [name, value] = Object.entries(item)[0]; 
+    return { name, value };
+  });
   return (
     <StyledChartCardWrapper>
     <StyledChartCardHeaderWrapper>
@@ -11,7 +16,7 @@ const TicketByPriorityChart = () => {
    <ResponsiveContainer height="90%">
      <PieChart>
        <Pie
-         data={data}
+         data={formattedStatusCount}
          cx={"50%"}
          cy={"50%"}
          labelLine={false}
@@ -19,7 +24,7 @@ const TicketByPriorityChart = () => {
          fill="#8884d8"
          dataKey="value"
        > 
-       {data.map((entry, index) => (
+       {formattedStatusCount.map((entry, index) => (
          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
        ))}
        </Pie>
@@ -36,12 +41,7 @@ const TicketByPriorityChart = () => {
  </StyledChartCardWrapper>
   )
 }
-const data = [
-    { name: 'Minor', value: 400 },
-    { name: 'Major', value: 300 },
-    { name: 'Critical', value: 200 },
-    { name: 'Show Stopper', value: 100 },
-  ];
+
 
   const COLORS = [ '#2CC8BA', '#08AEEA','#FFBB28', '#EF476F'];
 export default TicketByPriorityChart
