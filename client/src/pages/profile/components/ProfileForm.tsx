@@ -1,34 +1,43 @@
 import { useCallback, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { drawerType, InviteUserType } from "interfaces"
+import {  ProfileType, profileType } from "interfaces"
 import { DomianEnum } from "_constants";
-import { useCreateService } from "_hooks";
-import { ContainerButton, ContainerDrawer } from "_lib";
-import { ProjectService } from "_services";
+import { useCreateService, useGetAll } from "_hooks";
+import { ContainerButton, ContainerDrawer, PhotoComponent } from "_lib";
+import { ProjectService, RoleService } from "_services";
 import { Col, Divider, Form, Input, Row, Select } from "antd";
 import { StyledHomeHeaderInfoContainer } from "pages/home/index.styled";
-import { StyledProfileAvatar, StyledProfileDangerText, StyledProfileHeaderInfoTitle, StyledProfileHeaderInfoWrapper, StyledProfileInfoContainer, StyledProfileRoleText } from "../index.styled";
+import { StyledProfileAvatar, StyledProfileDangerText, StyledProfileHeaderInfoTitle, StyledProfileInfoContainer, StyledProfileRoleText } from "../index.styled";
 
 const { Option } = Select
-const initialData: InviteUserType = {
-  firstName: "",
-  lastName: "",
-  message: "",
+const initialData: ProfileType = {
+  fullName: "",
   email: "",
-  role: "",
-  userName: ""
+  userName: "",
 }
 
-const ProfileForm:React.FC<drawerType>= ({ onClose, open, statusMode }) => {
-    const [formData, setFormData] = useState(initialData);
+const ProfileForm:React.FC<profileType>= ({ onClose, open, profile=null }) => {
+    const [formData, setFormData] = useState(profile ? profile : initialData);
+    const [openModal, setOpenModal] = useState(false);
+    const { isLoading: isRolesLoading, data: rolesData } = useGetAll(RoleService.getRoles, `${DomianEnum.ROLES}-profile`);
+    
     const [loading, setLoading] = useState(false);
     const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS);
     const [form] = Form.useForm();
   
     const handleValueChange = useCallback((e: any) => {
+ 
       setFormData(prev => (
         { ...prev, ...e }
       ));
+    },[]);
+
+    const showPhotoModal = useCallback(() => {
+      setOpenModal(true)
+    },[]);
+  
+    const closePhotoModal = useCallback(() => {
+      setOpenModal(false)
     },[]);
   
     const onClear = useCallback(() => {
@@ -58,6 +67,10 @@ const ProfileForm:React.FC<drawerType>= ({ onClose, open, statusMode }) => {
       }
     }, [createProject, formData, onClear]);
   return (
+    <>
+    {openModal &&
+      <PhotoComponent visible={openModal} onCancel={closePhotoModal} />
+    }
     <ContainerDrawer 
        onFinish={onFinish} 
        onClose={onClear} 
@@ -74,7 +87,7 @@ const ProfileForm:React.FC<drawerType>= ({ onClose, open, statusMode }) => {
       >
        <Row>
         <StyledHomeHeaderInfoContainer>
-         <StyledProfileAvatar src={"/img/noavatar.jpg"} />
+           <StyledProfileAvatar src={profile?.image || "/img/noavatar.jpg"} />
          <StyledProfileInfoContainer>
             <StyledProfileHeaderInfoTitle>Profile picture</StyledProfileHeaderInfoTitle>
             <StyledProfileRoleText>We support PNGs, JPEGs and Gifs under 5mb.</StyledProfileRoleText>
@@ -82,30 +95,21 @@ const ProfileForm:React.FC<drawerType>= ({ onClose, open, statusMode }) => {
               title={`Upload image`}
               size="middle"
               icon={<IoCloudUploadOutline size={16} /> }
-              // onClick={showDrawer}
+              onClick={showPhotoModal}
               type="primary"
            />
         </StyledProfileInfoContainer>
         </StyledHomeHeaderInfoContainer>
        </Row>
          <Divider />
-        <Row gutter={16}>
-          <Col span={12}>
+        <Row>
+          <Col span={24}>
             <Form.Item
-              name="firstName"
-              label="First Name"
-              rules={[{ required: true, message: "Please enter first name" }]}
+              name="fullName"
+              label="Full Name"
+              rules={[{ required: true, message: "Please enter full name" }]}
             >
-              <Input placeholder="Please enter first name" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="lastName"
-              label="Last Name"
-              rules={[{ required: true, message: "Please enter last name" }]}
-            >
-              <Input placeholder="Please enter last name" />
+              <Input placeholder="Please enter full name" />
             </Form.Item>
           </Col>
         </Row>
@@ -154,6 +158,7 @@ const ProfileForm:React.FC<drawerType>= ({ onClose, open, statusMode }) => {
         </StyledProfileInfoContainer>
       </Form>
     </ContainerDrawer>
+    </>
   )
 }
 
