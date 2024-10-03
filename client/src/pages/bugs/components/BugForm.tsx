@@ -6,7 +6,7 @@ import moment from "moment";
 import { useCreateService, useGetAll } from "_hooks";
 import { BugService } from "_services";
 import { DomianEnum } from "_constants";
-import { isJSONString, isMomentObject } from "_helpers";
+import { isMomentObject } from "_helpers";
 import { UserService } from "_services";
 const { Option } = Select;
 
@@ -19,7 +19,7 @@ const initialData: IBug = {
 const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode }) => {
   const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
     {...editedRecord,
-      // bugAssignees: editedRecord?.assignees?.map((assignee:IUser) => assignee.userName),
+      bugAssignees: editedRecord?.assignees?.map((user: any) => user.userName),
      dueDate: moment(editedRecord?.dueDate)
     });
     const [loading, setLoading] = useState(false);
@@ -52,12 +52,15 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
      setLoading(true);
       try {
       
+        const assignees = userData?.data?.filter(
+          (user: IUser) => formData?.bugAssignees?.some(
+            (username : string) => user.userName === username)
+          );
+
         const params = {
           ...formData,
           severity: formData?.severity ?? null,
-          bugAssignees: formData?.bugAssignees ? formData?.bugAssignees.map((assignee:  any) => {
-           return isJSONString(assignee) ? JSON.parse(assignee) : assignee
-          }) : null,
+          bugAssignees: assignees || null,
           bugStatus: formData?.bugStatus ?? null,
           classification: formData?.classification ?? null,
           dueDate: formData?.dueDate ? isMomentObject(formData?.dueDate)
@@ -77,7 +80,8 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
         console.log(error);
         setLoading(false);
       }
-    }, [createBug, editBug, formData, onClear, statusMode]);
+    }, [createBug, editBug, formData, onClear, statusMode, userData?.data]);
+
 
   return (
   <ContainerDrawer 
@@ -157,8 +161,8 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
              >
             {userData?.data && 
                 userData?.data?.map( (user: IUser) => (
-                  <Option key={user?.userName} value={JSON.stringify(user)}>{ user?.fullName}</Option>
-                ))}
+                  <Option key={user?.userName} value={user?.userName}>{ user?.fullName}</Option>
+            ))}
             </Select>
           </Form.Item>
         </Col>
@@ -173,7 +177,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
             <Select placeholder="Please select status">
               <Option value="Open">Open</Option>
               <Option value="InProgress">InProgress</Option>
-              <Option value="Closed">Closed</Option>
+              <Option value="Closed">Completed</Option>
             </Select>
           </Form.Item>
         </Col>
