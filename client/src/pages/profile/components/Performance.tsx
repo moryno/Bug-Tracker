@@ -2,17 +2,23 @@ import { StyledChartCardWrapper } from 'pages/home/index.styled';
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import { Circle, PercentageText, ProgressDetailContainer, ProgressDetailWrapper, RatingDescription, RatingValue, StyledPerfomanceChartDetails, StyledProfileChartTitle } from '../index.styled';
 
-const Performance = () => {
+const Performance = ({ performance, fullName} : { performance: any[], fullName: string },) => {
+  const progressCount = performance?.map((item, i) => {
+    const fills = ["#00C49F", "#FFBB28"]
+    const [name, value] = Object.entries(item)[0]; 
+    return { name, value: value as number, fill: fills[i] };
+  });
+
   return (
     <StyledChartCardWrapper className='scrollbar-hide'>
-         <StyledProfileChartTitle>Amelia's Progress</StyledProfileChartTitle>
+         <StyledProfileChartTitle>{`${fullName}'s Progress`}</StyledProfileChartTitle>
          <ResponsiveContainer width="100%" height="100%">
             <PieChart>
             <Pie
                 dataKey="value"
                 startAngle={180}
                 endAngle={0}
-                data={data}
+                data={progressCount}
                 cx="50%"
                 cy="50%"
                 innerRadius={70}
@@ -21,24 +27,21 @@ const Performance = () => {
             </PieChart>
       </ResponsiveContainer>
       <StyledPerfomanceChartDetails>
-        <RatingValue>9.2</RatingValue>
-        <RatingDescription>of 10 STS</RatingDescription>
+        <RatingValue>{progressCount?.length > 0 && progressCount[0].value}</RatingValue>
+        <RatingDescription>of {progressCount?.length > 0 && progressCount[0].value + progressCount[0].value} ATS</RatingDescription>
       </StyledPerfomanceChartDetails>
       <ProgressDetailContainer>
         <ProgressDetailWrapper>
-            <Circle color='green' />
+            <Circle color='#00C49F' />
             <PercentageText>Completed</PercentageText>
         </ProgressDetailWrapper>
         <ProgressDetailWrapper>
-            <Circle color='yellow' />
+            <Circle color='#FFBB28' />
             <PercentageText>InComplete</PercentageText>
         </ProgressDetailWrapper>
       </ProgressDetailContainer>
     </StyledChartCardWrapper>
   )
 }
-const data = [
-    { name: 'Completed', value: 92, fill: "#00C49F" },
-    { name: 'InComplete', value: 8, fill: "#FFBB28" },
-  ];
+
 export default Performance
