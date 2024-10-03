@@ -1,9 +1,9 @@
 import { GoHomeFill } from "react-icons/go";
-import { FaBriefcase, FaBug, FaRegUserCircle  } from "react-icons/fa";
+import { FaBriefcase, FaBug, FaRegUserCircle, FaUserCog  } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
 import { MdPeople } from "react-icons/md";
 
-import { HOME_ROUTE, PROJECT_ROUTE, BUG_ROUTE, USER_ROUTE, PROFILE_ROUTE } from "_constants";
+import { HOME_ROUTE, PROJECT_ROUTE, BUG_ROUTE, USER_ROUTE, PROFILE_ROUTE, ROLES_ROUTE } from "_constants";
 
 export const routeConfig = [
     {
@@ -53,14 +53,14 @@ export const routeConfig = [
                 mobileOnly: true,
                 path: PROFILE_ROUTE,
             },
-            // {
-            //     id: "users.role",
-            //     title: "Roles",
-            //     messageId: "sidebar.users.role",
-            //     icon: <FaRegUserCircle  size={18} />,
-            //     mobileOnly: true,
-            //     path: PROFILE_ROUTE,
-            // },
+            {
+                id: "users.role",
+                title: "Roles",
+                messageId: "sidebar.users.role",
+                icon: <FaUserCog   size={18} />,
+                mobileOnly: true,
+                path: ROLES_ROUTE,
+            },
         ]
         // mobileOnly: true,
         // path: USER_ROUTE,

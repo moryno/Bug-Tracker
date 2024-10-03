@@ -7,6 +7,7 @@ import { homeRoutes } from "./HomeRoutes";
 import { landingPageRoutes } from "./LandingPageRoutes";
 import { userRoutes } from "./UserRoutes";
 import { profileRoutes } from "./ProfileRoute";
+import { roleRoutes } from "./RoleRoutes";
 
 const authorizedStructure = {
     fallbackPath: LOGIN_ROUTE,
@@ -15,7 +16,8 @@ const authorizedStructure = {
         ...projectRoutes,
         ...bugRoutes,
         ...userRoutes,
-        ...profileRoutes
+        ...profileRoutes,
+        ...roleRoutes
     ]
 };
 
