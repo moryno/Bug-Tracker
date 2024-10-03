@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
+import { dashboardService } from "_services";
 import { message } from "antd";
 
 export const useGetAll = (service : () => void, queryKey : string) => {
@@ -19,6 +20,19 @@ export const useGetById = (service : (value: any) => void, queryKey : string, id
 
   return response;
 };
+
+export const useGetDashboardStats = () => {
+  const fetchDashboardStats = () => {
+    return Promise.all([dashboardService.getDashboardCountStats(), dashboardService.getDashboardGridStats()])
+  }
+  const response: UseQueryResult<any> = useQuery({
+    queryKey: ["DashboardStats"],
+    queryFn: () => fetchDashboardStats(),
+  });
+
+  return response;
+};
+
 
 export const useCreateService = (service : any, queryKey : string) => {
   const queryClient = useQueryClient();
