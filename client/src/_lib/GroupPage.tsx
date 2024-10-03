@@ -2,8 +2,6 @@ import React, { useCallback, useMemo, useState } from "react";
 import { MenuProps, message, Space } from 'antd';
 import {
   StyledBottomContainer,
-  StyledButtonContainer,
-  StyledFilterContainer,
   StyledGroupFilterLeftWrapper,
   StyledGroupFilterRightWrapper,
   StyledGroupFilterWrapper,
@@ -12,10 +10,8 @@ import {
   StyledGroupTitle,
   StyledGroupTitleWrapper,
   StyledPageCard,
-  StyledTopContainer,
 } from "./index.styled";
 import ContainerButton from "./ContainerButton";
-import { MdOutlineArrowDropDown } from "react-icons/md";
 import { StyledTable, StyledTableCardWrapper } from "./StyledComponents";
 import { useDeleteRecord, useGetAll } from "_hooks";
 import { AnyObject } from "antd/es/_util/type";
@@ -32,7 +28,8 @@ interface Iprops {
   columns: any[],
   getAllService: () => Promise<AxiosResponse<any, any>>,
   getDetailService: (id: string) => Promise<AxiosResponse<any, any>>,
-  deleteService: (id: string) => Promise<AxiosResponse<any, any>>
+  deleteService?: (id: string) => Promise<AxiosResponse<any, any>>,
+  width?: number | string
 }
 
 const GroupPage: React.FC<Iprops> = ({ 
@@ -41,7 +38,8 @@ const GroupPage: React.FC<Iprops> = ({
   columns, 
   getAllService, 
   getDetailService, 
-  deleteService
+  deleteService,
+  width
 }) => {
   const [open, setOpen] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<IProject | IBug | null>(null);
@@ -137,7 +135,7 @@ const GroupPage: React.FC<Iprops> = ({
            dataSource={data?.data || []} 
            columns={columns} 
            rowKey={(record: any) => record?.id}
-           scroll={{ x: 2000 }}
+           scroll={{ x: width ? width : 2000 }}
            rowSelection={{
             type: "radio",
             ...rowSelection,
