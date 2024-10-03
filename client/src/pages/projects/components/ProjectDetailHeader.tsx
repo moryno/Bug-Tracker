@@ -14,7 +14,7 @@ const ProjectDetailHeader = ({ project } : { project : IProject }) => {
         size="small"
         type="circle"
         strokeColor={"#12CC1B"}
-        percent={75}
+        percent={Math.round(project.projectStatus!)}
       />
       <StyledTitleContainer>
         <StyledPageTitle>{ project?.projectName }</StyledPageTitle>
