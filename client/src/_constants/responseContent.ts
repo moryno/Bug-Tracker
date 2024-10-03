@@ -1,6 +1,7 @@
 import {
   BUG_COMMENTS_API,
   BUGS_API,
+  PHOTO_API,
   PROJECT_COMMENTS_API,
   PROJECTS_API,
   REGISTER_API,
@@ -31,5 +32,9 @@ export const successResponseContent: SuccessResponseContent = {
   [BUG_COMMENTS_API]: {
     message: "Success",
     description: "Saving comment was successful",
+  },
+  [PHOTO_API]: {
+    message: "Success",
+    description: "Saving photo was successful",
   },
 };
