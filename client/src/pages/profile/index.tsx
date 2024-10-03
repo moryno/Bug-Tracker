@@ -16,16 +16,21 @@ import {
   StyledProfileTitleContainer, 
   StyledTableTitle 
 } from "./index.styled";
-import { useGetAll } from "_hooks";
-import { ProjectService } from "_services";
+import { useGetAll, useGetById } from "_hooks";
+import { ProjectService, RoleService, UserService } from "_services";
 import { DomianEnum } from "_constants";
-import { profileProjectColumns } from "./columns";
 import Performance from "./components/Performance";
 import { Space } from "antd";
 import { useCallback, useState } from "react";
 import ProfileForm from "./components/ProfileForm";
+import { useParams } from "react-router-dom";
+import { topProjectColumns } from "pages/home/components/columns";
+import { profileBugColumns } from "./columns";
 
 const ProfilePage = () => {
+  const { username } = useParams();
+  const { isLoading: loadingProfile, data: profileData } = useGetById(UserService.getProfile, DomianEnum.PROFILE, username);
+  const { isLoading: isUserRoleLoading, data: userRolesData } = useGetById(RoleService.getUserRole, `${DomianEnum.ROLES}-user-role`, username);
   const [open, setOpen] = useState(false);
   const { isLoading, error, data } = useGetAll(ProjectService.getProjects, DomianEnum.PROJECTS);
 
@@ -38,7 +43,11 @@ const ProfilePage = () => {
     // setSelectedRecord(null);
   }, []);
 
+  if (loadingProfile) {
+    return <div>Hello...</div>;
+  }
 
+  const { profile, projects, bugs, progress} = profileData?.data
   return (
     <StyledProfileContainer>
       <>
@@ -46,62 +55,57 @@ const ProfilePage = () => {
           <StyledGroupTitle>Member Profile</StyledGroupTitle>
         </StyledProfileTitleContainer>
         <StyledHomeHeaderInfoContainer>
-          <StyledProfileAvatar src={"/img/noavatar.jpg"} />
+          <StyledProfileAvatar src={ profile?.image || "/img/noavatar.jpg" } />
           <StyledProfileInfoContainer>
             <StyledProfileHeaderInfoWrapper>
-            <StyledProfileHeaderInfoTitle>Amelia Wilson</StyledProfileHeaderInfoTitle>
+            <StyledProfileHeaderInfoTitle>{ profile?.fullName }</StyledProfileHeaderInfoTitle>
             <Space wrap>
               <StyledEditIcon onClick={showDrawer} />
               <StyledWorkItemMailIcon />
             </Space>
             </StyledProfileHeaderInfoWrapper>
-            <StyledProfileRoleText>Project Manager</StyledProfileRoleText>
-            <StyledProfileEmailText>amelia.wilson@democorp.com</StyledProfileEmailText>
+            <StyledProfileRoleText>{ userRolesData?.data?.map((role: any) => role.name).join(", ") }</StyledProfileRoleText>
+            <StyledProfileEmailText>{ profile?.email }</StyledProfileEmailText>
           </StyledProfileInfoContainer>
         </StyledHomeHeaderInfoContainer>
       </>
       <StyledProfileMiddleContainer>
         <StyledProfileMiddleLeftContainer>
           <StyledChartCardWrapper>
-            <StyledProfileChartTitle>Amelia's Projects</StyledProfileChartTitle>
+            <StyledProfileChartTitle>{`${profile?.fullName}'s Projects`}</StyledProfileChartTitle>
             <StyledTable 
-            style={{ marginTop: 10}}
-            loading={isLoading} 
-            pagination={false}
-            dataSource={data?.data || []} 
-            columns={profileProjectColumns} 
-            rowKey={(record: any) => record?.id}
-            onRow={(record: any, rowIndex) => {
-              return {
-              //   onDoubleClick: (event) => onRowDoubleClick(record),
-                onContextMenu: (event) => {},
-              };
-            }}
+              style={{ marginTop: 10}}
+              loading={loadingProfile} 
+              pagination={false}
+              dataSource={projects || []} 
+              columns={topProjectColumns} 
+              rowKey={(record: any) => record?.id}
+              onRow={(record: any, rowIndex) => {
+                return {
+                //   onDoubleClick: (event) => onRowDoubleClick(record),
+                  onContextMenu: (event) => {},
+                };
+              }}
             />
           </StyledChartCardWrapper>
         </StyledProfileMiddleLeftContainer>
         <StyledProfileMiddleRightContainer>
-          <Performance />
+          <Performance fullName={profile?.fullName} performance={progress?.progressCount} />
         </StyledProfileMiddleRightContainer>
       </StyledProfileMiddleContainer>
       <StyledTableCardWrapper>
-        <StyledTableTitle>Amelia's Tickets</StyledTableTitle>
+        <StyledTableTitle>{`${profile?.fullName}'s Bugs`}</StyledTableTitle>
           <StyledTable 
-          //  loading={isLoading} 
-          //  dataSource={data?.data || []} 
-          //  columns={columns} 
-          //  rowKey={(record: any) => record?.id}
-          //  scroll={{ x: 2000 }}
-          //  rowSelection={{
-          //   type: "radio",
-          //   ...rowSelection,
-          // }}
-          //  onRow={(record: any, rowIndex) => {
-          //   return {
-          //     onDoubleClick: (event) => onRowDoubleClick(record),
-          //     onContextMenu: (event) => {},
-          //   };
-          //  }}
+           loading={loadingProfile} 
+           dataSource={bugs || []} 
+           columns={profileBugColumns} 
+           rowKey={(record: any) => record?.id}
+           onRow={(record: any, rowIndex) => {
+            return {
+              // onDoubleClick: (event) => onRowDoubleClick(record),
+              onContextMenu: (event) => {},
+            };
+           }}
           />
         </StyledTableCardWrapper>
         {open &&
@@ -109,8 +113,7 @@ const ProfilePage = () => {
             // key={statusMode && selectedRecord?.id}
             open={open} 
             onClose={onClose} 
-            // editedRecord={selectedRecord} 
-            statusMode={"statusMode"}
+            profile={profile} 
            />
          }
     </StyledProfileContainer>
