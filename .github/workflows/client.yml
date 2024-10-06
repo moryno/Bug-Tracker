@@ -21,7 +21,7 @@ jobs:
       - run: npm run build
 
       - uses: shinyinc/action-aws-cli@v1.2 #GIVE PROGRAMATIC ACCESS TO AWS CLI
-      - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/client/latest #SYNC THE DIST THAT WAS CREATED BY npm run build TO AWS BUCKET
+      - run: aws s3 sync build s3://${{ secrets.AWS_S3_BUCKET_NAME }}/client #SYNC THE DIST THAT WAS CREATED BY npm run build TO AWS BUCKET
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
