@@ -23,10 +23,10 @@ const initialData:commentType = {
 }
 
 const CommentForm:React.FC<IProps> = ({ onAddComment, loading, editedComment, statusMode }) => {
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
     const [description, setDescription] = useState<commentType | null>(statusMode === "CreateMode" ? initialData : editedComment);
     const onFocus = useCallback(() => {
-        setOpen(prev => !prev)
+        // setOpen(prev => !prev)
     }, []);
 
     const handleValueChange = useCallback((e: any) => {

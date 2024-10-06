@@ -16,8 +16,8 @@ import {
   StyledProfileTitleContainer, 
   StyledTableTitle 
 } from "./index.styled";
-import { useGetAll, useGetById } from "_hooks";
-import { ProjectService, RoleService, UserService } from "_services";
+import { useGetById } from "_hooks";
+import {RoleService, UserService } from "_services";
 import { DomianEnum } from "_constants";
 import Performance from "./components/Performance";
 import { Space } from "antd";
@@ -30,9 +30,9 @@ import { profileBugColumns } from "./columns";
 const ProfilePage = () => {
   const { username } = useParams();
   const { isLoading: loadingProfile, data: profileData } = useGetById(UserService.getProfile, DomianEnum.PROFILE, username);
-  const { isLoading: isUserRoleLoading, data: userRolesData } = useGetById(RoleService.getUserRole, `${DomianEnum.ROLES}-user-role`, username);
+  const { data: userRolesData } = useGetById(RoleService.getUserRole, `${DomianEnum.ROLES}-user-role`, username);
   const [open, setOpen] = useState(false);
-  const { isLoading, error, data } = useGetAll(ProjectService.getProjects, DomianEnum.PROJECTS);
+  // const { isLoading, error, data } = useGetAll(ProjectService.getProjects, DomianEnum.PROJECTS);
 
   const showDrawer = useCallback(() => {
     setOpen(true);

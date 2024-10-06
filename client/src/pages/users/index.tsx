@@ -38,7 +38,7 @@ const Users = () => {
   const [selectedRecord, setSelectedRecord] = useState<IProject | IBug | null>(null);
   const [selectedUsername, setUsername] = useState<string | null>(null);
   const [statusMode, setStatusMode] = useState("CreateMode");
-  const { isLoading, error, data } = useGetAll(UserService.getTeamMembers, DomianEnum.TEAM);
+  const { isLoading, data } = useGetAll(UserService.getTeamMembers, DomianEnum.TEAM);
   const navigate = useNavigate()
   // const deleteRecord = useDeleteRecord(deleteService, title)
 

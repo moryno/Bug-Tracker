@@ -2,9 +2,9 @@ import { useCallback, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import {  ProfileType, profileType } from "interfaces"
 import { DomianEnum } from "_constants";
-import { useCreateService, useGetAll } from "_hooks";
+import { useCreateService } from "_hooks";
 import { ContainerButton, ContainerDrawer, PhotoComponent } from "_lib";
-import { ProjectService, RoleService } from "_services";
+import { ProjectService } from "_services";
 import { Col, Divider, Form, Input, Row, Select } from "antd";
 import { StyledHomeHeaderInfoContainer } from "pages/home/index.styled";
 import { StyledProfileAvatar, StyledProfileDangerText, StyledProfileHeaderInfoTitle, StyledProfileInfoContainer, StyledProfileRoleText } from "../index.styled";
@@ -19,7 +19,7 @@ const initialData: ProfileType = {
 const ProfileForm:React.FC<profileType>= ({ onClose, open, profile=null }) => {
     const [formData, setFormData] = useState(profile ? profile : initialData);
     const [openModal, setOpenModal] = useState(false);
-    const { isLoading: isRolesLoading, data: rolesData } = useGetAll(RoleService.getRoles, `${DomianEnum.ROLES}-profile`);
+
     
     const [loading, setLoading] = useState(false);
     const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS);

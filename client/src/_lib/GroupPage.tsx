@@ -45,7 +45,7 @@ const GroupPage: React.FC<Iprops> = ({
   const [selectedRecord, setSelectedRecord] = useState<IProject | IBug | null>(null);
   const [selectedRecords, setSelectedRecords] = useState<IProject[] | IBug[] | AnyObject[] | null>(null);
   const [statusMode, setStatusMode] = useState("CreateMode");
-  const { isLoading, error, data } = useGetAll(getAllService, title);
+  const { isLoading, data } = useGetAll(getAllService, title);
   const deleteRecord = useDeleteRecord(deleteService, title)
 
   

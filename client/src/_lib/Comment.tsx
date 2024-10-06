@@ -16,7 +16,7 @@ interface IProps{
 const Comment = ({ comments, deleteService, queryString, onEditChange } : IProps) => {
   const deleteComment = useDeleteRecord(deleteService, queryString);
   const { user } = useAuthUser();
-  console.log(comments)
+
   const onDelete = useCallback(async (id: string) => {
     if(id){
       try {
