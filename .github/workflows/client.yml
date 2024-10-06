@@ -1,0 +1,28 @@
+name: deploy-client
+
+on:
+  push:
+    branches:
+      - main #BRANCH AFFECTED
+    paths:
+      - "client/**" #DIRECTORY TO LOOK OUT FOR CHANGES
+
+defaults:
+  run:
+    working-directory: client
+
+jobs:
+  build:
+    runs-on: ubuntu-latest #USES OS ENV IN GITHUB
+
+    steps:
+      - uses: actions/checkout@v2 #CHECKOUT THE CODE FROM CLIENT
+      - run: npm install
+      - run: npm run build
+
+      - uses: shinyinc/action-aws-cli@v1.2 #GIVE PROGRAMATIC ACCESS TO AWS CLI
+      - run: aws s3 sync dist s3://{{ secrets.AWS_S3_BUCKET_NAME }}/client #SYNC THE DIST THAT WAS CREATED BY npm run build TO AWS BUCKET
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-north-1

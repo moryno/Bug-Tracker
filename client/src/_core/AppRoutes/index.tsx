@@ -8,6 +8,8 @@ import { landingPageRoutes } from "./LandingPageRoutes";
 import { userRoutes } from "./UserRoutes";
 import { profileRoutes } from "./ProfileRoute";
 import { roleRoutes } from "./RoleRoutes";
+import { registerSuccessPageRoutes } from "./RegisterSuccessRoute";
+import { verifyPageRoutes } from "./VerifyEmailRoute";
 
 const authorizedStructure = {
     fallbackPath: LOGIN_ROUTE,
@@ -37,7 +39,9 @@ const anonymousStructure = {
 
 const alwaysStructure = {
     routes: [
-      ...landingPageRoutes
+      ...landingPageRoutes,
+      ...registerSuccessPageRoutes,
+      ...verifyPageRoutes
     ],
   };
 

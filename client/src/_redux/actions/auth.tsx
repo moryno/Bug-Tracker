@@ -1,7 +1,9 @@
 import { Dispatch } from "@reduxjs/toolkit";
+import { REGISTER_SUCCESS_ROUTE } from "_constants";
 import { setAccessToken } from "_helpers";
-import { loginStart, loginSuccess } from "_redux/slices/userSlice";
+import { loginFailure, loginStart, loginStop, loginSuccess } from "_redux/slices/userSlice";
 import { authService } from "_services";
+import { useNavigate } from "react-router-dom";
 
 type registerType = {
     email: string;
@@ -23,19 +25,18 @@ export const login = async (dispatch: Dispatch, user: loginType) => {
     setAccessToken(data?.token);
     dispatch(loginSuccess(data));
   } catch (error) {
-    dispatch(loginStart())
+    dispatch(loginFailure())
     console.log(error);
   }
 };
-export const register = async (dispatch: Dispatch, user: registerType) => {
-
+export const register = async (dispatch: Dispatch, user: registerType, navigate: ReturnType<typeof useNavigate>) => {
   try {
-    dispatch(loginStart())
-    const { data } = await authService.register(user);
-    setAccessToken(data?.token);
-    dispatch(loginSuccess(data));
+     dispatch(loginStart())
+     await authService.register(user);
+     navigate(`${REGISTER_SUCCESS_ROUTE}?email=${user.email}`);
+     dispatch(loginStop())
   } catch (error) {
-    dispatch(loginStart())
     console.log(error);
+    dispatch(loginFailure())
   }
 };

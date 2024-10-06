@@ -3,6 +3,8 @@ import {  Form, Input } from "antd";
 import { StyledAuthContainerForm, StyledRedirectButton } from './index.style'
 import ContainerButton from '_lib/ContainerButton';
 import { LOGIN_ROUTE, REGISTER_ROUTE } from '_constants';
+import { useSelector } from 'react-redux';
+import { RootState } from '_redux';
 
 interface IProps{
     isRegisterRoute: boolean;
@@ -11,6 +13,8 @@ interface IProps{
 }
 
 const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFinish }) => {
+  const isLoading = useSelector((store: RootState) => store.user?.isFetching);
+
   return (
     <StyledAuthContainerForm 
       onFinish={onFinish}
@@ -54,6 +58,22 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
             placeholder="Username"
           />
         </Form.Item>
+        <Form.Item
+          label="Company Name"
+          name="companyName"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your company name",
+            },
+          ]}
+        >
+          <Input
+            // disabled={loading || disablePhoneNumber}
+            size="large"
+            placeholder="Company name"
+          />
+        </Form.Item>
         </>
         }
         <Form.Item
@@ -94,6 +114,7 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           type="primary"
           htmlType="submit"
           size="large"
+          loading={isLoading}
           fullWidth
         //   loading={loading}
         />

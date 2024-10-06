@@ -1,7 +1,9 @@
 // AUTH
-export const LOGIN_API = "/user/login";
-export const REGISTER_API = "/user/register";
-export const LOGOUT_API = "/logout/logout";
+export const LOGIN_API = "/auth/login";
+export const REGISTER_API = "/auth/register";
+export const CONFIRM_EMAIL_API = "/auth/resendEmailConfirmationLink";
+export const VERIFY_EMAIL_API = "/auth/verifyEmail";
+export const LOGOUT_API = "/auth/logout";
 
 // DASHBOARD
 export const DASHBOARD_API = "/dashboard";

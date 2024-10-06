@@ -22,11 +22,11 @@ const AuthContainer = () => {
 
   const onFinish = useCallback((values: any) => {
     if(isRegisterRoute){
-      register(dispatch, values)
+      register(dispatch, values, navigate)
     }else{
       login(dispatch, values)
     }
-  }, [dispatch, isRegisterRoute]);
+  }, [dispatch, isRegisterRoute, navigate]);
 
   return (
     <StyledAuthContainerMain>
