@@ -19,6 +19,9 @@ jobs:
       - uses: actions/checkout@v2 #CHECKOUT THE CODE FROM CLIENT
       - run: npm install
       - run: npm run build
+        env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+          REACT_APP_API_VERSION: ${{ secrets.REACT_APP_API_VERSION }}
 
       - uses: shinyinc/action-aws-cli@v1.2 #GIVE PROGRAMATIC ACCESS TO AWS CLI
       - run: aws s3 sync build s3://${{ secrets.AWS_S3_BUCKET_NAME }} #SYNC THE DIST THAT WAS CREATED BY npm run build TO AWS BUCKET
