@@ -23,6 +23,7 @@ using Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 var environment = builder.Environment.EnvironmentName.ToLower();
 builder.Configuration.AddSystemsManager($"/{environment}/Bugtracker");
 
