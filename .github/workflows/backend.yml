@@ -30,7 +30,7 @@ jobs:
         run: dotnet build --no-restore $PROJECT_LOCATION
       - name: Pack
         run: |
-          dotnet publish $PROJECT_LOCATION -c Release --output "${{ github.workspace }}/${{github.run_id}}"
+          dotnet publish $PROJECT_LOCATION -c Release --self-contained --runtime linux-x64 --output "${{ github.workspace }}/${{github.run_id}}"
           cd ${{github.run_id}}
           zip -r ../${{github.run_id}}.zip .
       - name: Upload Artifacts
