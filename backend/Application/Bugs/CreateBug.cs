@@ -16,7 +16,7 @@ namespace Application.Bugs
             public Guid ProjectId { get; set; }
             public string Description { get; set; } = string.Empty;
             public string BugName { get; set; } = string.Empty;
-            public ICollection<BugAssignee>? BugAssignees { get; set; } = new List<BugAssignee>();
+            public ICollection<BugAssignee>? BugAssignees { get; set; }
             public string? Severity { get; set; } = string.Empty;
             public string? Classification { get; set; } = string.Empty;
             public DateTime DueDate { get; set; }
@@ -30,6 +30,7 @@ namespace Application.Bugs
                 RuleFor(x => x.BugName).NotEmpty().MinimumLength(3);
                 RuleFor(x => x.ProjectId).NotEmpty();
                 RuleFor(x => x.Description).NotEmpty();
+                RuleFor(x => x.Severity).NotEmpty();
             }
         }
 
@@ -46,15 +47,19 @@ namespace Application.Bugs
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Project project = await _context.Projects.FindAsync(request.ProjectId);
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                if (user == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
+                var company = await _context.Companies.FindAsync(user.CompanyId);
+                if (company == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Company not found." });
+                Project project = await _context.Projects.SingleOrDefaultAsync(x => x.Id == request.ProjectId && x.CompanyId == user.CompanyId);
                 if (project == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Project Not found." });
 
-                Bug existingBug = await _context.Bugs.SingleOrDefaultAsync(x => x.BugName == request.BugName);
+                Bug existingBug = await _context.Bugs.SingleOrDefaultAsync(x => x.BugName == request.BugName && x.CompanyId == user.CompanyId);
                 if(existingBug != null)
                     throw new RestException(HttpStatusCode.BadRequest, new { error = "Bug with the same bug name exists." });
-
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 Bug bug = new()
                 {
@@ -70,7 +75,26 @@ namespace Application.Bugs
                     CreatedUser = user.DisplayName,
                     UpdatedDate = DateTime.Now,
                     UpdatedUser = user.DisplayName,
+                    CompanyId = company.Id
                 };
+
+                if (request.BugStatus == "Completed")
+                {
+                    // Recalculate the project status (percentage of completed bugs)
+                    int totalBugs = project.Bugs.Count;
+                    int completedBugs = project.Bugs.Count(b => b.BugStatus == "Completed");
+
+                    // Calculate project status as percentage
+                    double projectStatus = totalBugs > 0 ? (double)completedBugs / totalBugs * 100 : 0;
+
+                    // Update project status
+                    project.ProjectStatus = projectStatus;
+                    project.UpdatedDate = DateTime.Now;
+                    project.UpdatedUser = user.DisplayName;
+                    bug.CompletedDate = DateTime.Now;
+                    // Mark project as updated
+                    _context.Projects.Update(project);
+                }
 
                 _context.Bugs.Add(bug);
 

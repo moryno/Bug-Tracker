@@ -2,11 +2,6 @@
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Users
 {
@@ -17,14 +12,12 @@ namespace Application.Users
         public class Handler : IRequestHandler<Query, User>
         {
             private readonly UserManager<AppUser> _userManager;
-            private readonly SignInManager<AppUser> _signInManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IJwtGenerator _jwtGenerator;
 
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IUserAccessor userAccessor, IJwtGenerator jwtGenerator)
+            public Handler(UserManager<AppUser> userManager, IUserAccessor userAccessor, IJwtGenerator jwtGenerator)
             {
                 _userManager = userManager;
-                _signInManager = signInManager;
                 _userAccessor = userAccessor;
                 _jwtGenerator = jwtGenerator;
             }
@@ -38,8 +31,8 @@ namespace Application.Users
                     Email = user.Email,
                     FullName = user.DisplayName,
                     UserName = user.UserName,
-                    Token = _jwtGenerator.CreateToken(user),
-                    Image = null
+                    Token = await _jwtGenerator.CreateToken(user),
+                    Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                 };
             }
         }

@@ -23,6 +23,7 @@ namespace Application.Roles
                                         .Select(role => new Role
                                         {
                                             Name = role.Name,
+                                            Description = role.Description,
                                             Id = role.Id,
                                             CompanyId = role.CompanyId,
                                             CreatedUser = role.CreatedUser,

@@ -13,6 +13,7 @@ namespace Application.Bugs
         public string Severity { get; set; } = string.Empty;
         public string Classification { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
+        public DateTime CompletedDate { get; set; }
         public string BugStatus { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
         public string CreatedUser { get; set; } = string.Empty;

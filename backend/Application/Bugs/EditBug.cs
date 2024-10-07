@@ -17,7 +17,7 @@ namespace Application.Bugs
             public Guid ProjectId { get; set; }
             public string Description { get; set; } = string.Empty;
             public string BugName { get; set; } = string.Empty;
-            public virtual ICollection<BugAssignee> BugAssignees { get; set; } = new List<BugAssignee>();
+            public virtual ICollection<BugAssignee> BugAssignees { get; set; }
             public string Severity { get; set; } = string.Empty;
             public string Classification { get; set; } = string.Empty;
             public DateTime? DueDate { get; set; }
@@ -67,6 +67,24 @@ namespace Application.Bugs
                 bug.UpdatedDate = DateTime.Now;
                 bug.CreatedUser = bug.CreatedUser;
                 bug.UpdatedUser = user.DisplayName;
+
+                if (request.BugStatus == "Completed")
+                {
+                    // Recalculate the project status (percentage of completed bugs)
+                    int totalBugs = project.Bugs.Count;
+                    int completedBugs = project.Bugs.Count(b => b.BugStatus == "Completed");
+
+                    // Calculate project status as percentage
+                    double projectStatus = totalBugs > 0 ? (double)completedBugs / totalBugs * 100 : 0;
+
+                    // Update project status
+                    project.ProjectStatus = projectStatus;
+                    project.UpdatedDate = DateTime.Now;
+                    project.UpdatedUser = user.DisplayName;
+                    bug.CompletedDate = DateTime.Now;
+                    // Mark project as updated
+                    _context.Projects.Update(project);
+                }
 
                 var success = await _context.SaveChangesAsync() > 0;
                 if (success) return Unit.Value;

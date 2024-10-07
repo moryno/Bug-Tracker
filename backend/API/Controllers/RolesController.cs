@@ -25,6 +25,12 @@ namespace API.Controllers
         public async Task<ActionResult<List<Role>>> Get()
         {
             return Ok(await Mediator.Send(new GetRoles.Query()));
+        }   
+        [HttpGet("{userName}")]
+        [Authorize]
+        public async Task<ActionResult<List<UserRole>>> GetUserRoles(string userName)
+        {
+            return Ok(await Mediator.Send(new GetUserRoles.Query { UserName = userName }));
         }
     }
 }

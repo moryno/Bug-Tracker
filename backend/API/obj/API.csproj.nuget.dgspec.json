@@ -35,6 +35,9 @@
             "projectReferences": {
               "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Application\\Application.csproj": {
                 "projectPath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Application\\Application.csproj"
+              },
+              "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -49,6 +52,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Amazon.Extensions.Configuration.SystemsManager": {
+              "target": "Package",
+              "version": "[6.2.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.5, )"
@@ -137,6 +148,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[11.3.0, )"
@@ -232,6 +247,84 @@
         }
       }
     },
+    "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\Infrastructure.csproj",
+        "projectName": "Infrastructure",
+        "projectPath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\MAURICE\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\MAURICE\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Application\\Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.26.2, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.8.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\MAURICE\\Documents\\Web Development\\bug-tracker\\backend\\Persistence\\Persistence.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -282,6 +375,10 @@
               "version": "[7.0.20, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[7.0.20, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
               "target": "Package",
               "version": "[7.0.20, )"
             },

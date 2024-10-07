@@ -15,10 +15,17 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Infrastructure.Photos;
+using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var environment = builder.Environment.EnvironmentName.ToLower();
+builder.Configuration.AddSystemsManager($"/{environment}/Bugtracker");
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -55,15 +62,32 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<CommandValidator>();
 //Use Identity Core
 
-var identyBld = builder.Services.AddIdentityCore<AppUser>();
-var identityBuilder = new IdentityBuilder(identyBld.UserType, identyBld.Services);
-identityBuilder.AddEntityFrameworkStores<DataContext>();
-builder.Services.TryAddSingleton<ISystemClock, SystemClock>();
-identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+//var identityBld = builder.Services.AddIdentityCore<AppUser>();
+//var identityBuilder = new IdentityBuilder(identityBld.UserType, identityBld.Services);
+//identityBuilder.AddEntityFrameworkStores<DataContext>();
+//identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+//builder.Services.TryAddSingleton<ISystemClock, SystemClock>();
+// Register Identity Core with support for roles and user management
+var identityBuilder = builder.Services.AddIdentityCore<AppUser>(options =>
+{
+    // Configure identity options here if needed (e.g., password policies, lockout options, etc.)
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.SignIn.RequireConfirmedEmail = true;
+    options.Password.RequiredLength = 6;
+})
+.AddRoles<AppRole>() // This adds support for roles
+.AddEntityFrameworkStores<DataContext>() // Add Entity Framework for user/role management
+.AddDefaultTokenProviders() //Used to add token authorization for change passwords, email, phone number, 2 factor auth confirmation
+.AddSignInManager<SignInManager<AppUser>>(); // Add SignInManager to manage sign-in functionalities
+identityBuilder.AddRoleManager<RoleManager<AppRole>>(); // Add the role manager for managing roles
+identityBuilder.AddUserManager<UserManager<AppUser>>();
+builder.Services.TryAddSingleton<ISystemClock, SystemClock>(); // Add ISystemClock singleton for token and lockout functionality
+
 
 // Add Authentication
-
-
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -73,7 +97,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = key,
             ValidateAudience = false,
-            ValidateIssuer = false
+            ValidateIssuer = false,
+            RoleClaimType = ClaimTypes.Role
         };
     });
 builder.Services.AddAuthorization(opt =>
@@ -90,7 +115,9 @@ builder.Services.AddTransient<IAuthorizationHandler, IsOwnerRequirementHandler>(
 
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
-
+builder.Services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
 
 
 /*****************************  END OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
@@ -101,8 +128,8 @@ app.UseMiddleware<ErrorHandlingMiddleware>();
 
 //app.UseHttpsRedirection();
 app.UseAuthentication();
-app.UseCors("CorsPolicy");
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 

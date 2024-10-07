@@ -26,7 +26,7 @@ namespace Application.Projects
             {
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Not found." });
 
                 _context.Projects.Remove(project);
 

@@ -25,7 +25,8 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
         builder.Entity<Bug> ()
             .HasMany(u => u.BugAssignees)
             .WithOne(b => b.Bug)
-            .HasForeignKey(u => u.BugId);     
+            .HasForeignKey(u => u.BugId)
+            .OnDelete(DeleteBehavior.Cascade);
         builder.Entity<Bug> ()
             .HasOne(u => u.Company)
             .WithMany(b => b.Bugs)

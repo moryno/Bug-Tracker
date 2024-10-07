@@ -15,11 +15,17 @@ namespace API.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpGet]
-        [Authorize]
+        [HttpGet("GetAll")]
+        [Authorize(Roles = "Admin, Project Manager")]
         public async Task<ActionResult<List<BugDto>>> GetAll()
         {
             return Ok(await Mediator.Send(new GetAll.Query()));
+        }
+        [HttpGet]
+        [Authorize]
+        public async Task<ActionResult<List<BugDto>>> GetUserBugs()
+        {
+            return Ok(await Mediator.Send(new GetUserBugs.Query()));
         }
 
         [HttpGet("{id}")]

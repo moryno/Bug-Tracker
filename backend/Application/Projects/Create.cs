@@ -52,11 +52,20 @@ namespace Application.Projects
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Project existingProject = await _context.Projects.SingleOrDefaultAsync(x => x.ProjectName ==  request.ProjectName);
+                var user = await _context.Users.SingleOrDefaultAsync(x =>
+                             request.Owner != null ? x.UserName == request.Owner : x.UserName == _userAccessor.GetCurrentUserName());
+                if (user == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
+                var company = await _context.Companies.FindAsync(user.CompanyId);
+                if (company == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Company not found." });
+
+                Project existingProject = await _context.Projects
+                                         .SingleOrDefaultAsync(x => x.ProjectName == request.ProjectName && x.CompanyId == company.Id);
+
                 if (existingProject != null)
                     throw new RestException(HttpStatusCode.BadRequest, new { error = "Project with the same project name exists." });
-                var user = await _context.Users.SingleOrDefaultAsync(x => 
-                              request.Owner != null ? x.UserName == request.Owner : x.UserName == _userAccessor.GetCurrentUserName());
+
 
 
                 Project project = new()
@@ -73,6 +82,8 @@ namespace Application.Projects
                     CreatedUser = user.DisplayName,
                     UpdatedDate = DateTime.Now,
                     UpdatedUser = user.DisplayName,
+                    CompanyId = company.Id,
+                    ProjectStatus = 0
                 };
 
                 _context.Projects.Add(project);

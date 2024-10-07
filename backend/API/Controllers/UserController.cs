@@ -8,19 +8,8 @@ namespace API.Controllers
 
     public class UserController : BaseController
     {
-        [HttpPost("login")]
-        public async Task<ActionResult<User>> Login(Login.Query query)
-        {
-            return Ok(await Mediator.Send(query));
-        }
-
-        [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(Register.Command command)
-        {
-            return Ok(await Mediator.Send(command));    
-        }
-
-        [HttpGet]
+     
+        [HttpGet("currentUser")]
         [Authorize]
         public async Task<ActionResult<User>> Get()
         {
@@ -28,9 +17,15 @@ namespace API.Controllers
         }
         [HttpGet("GetAll")]
         [Authorize]
-        public async Task<ActionResult<List<UserDto>>> GetAll()
+        public async Task<ActionResult<List<Application.Users.UserDto>>> GetAll()
         {
             return await Mediator.Send(new GetAll.Query());
+        }       
+        [HttpGet()]
+        [Authorize]
+        public async Task<ActionResult<List<Domain.UserDto>>> GetTeamMembers()
+        {
+            return await Mediator.Send(new GetTeamMembers.Query());
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Application.Roles
         public class Command : IRequest 
         {
             public string Name { get; set; } = string.Empty;
+            public string? Description { get; set; } = string.Empty;
         }
         public class Handler : IRequestHandler<Command>
         {
@@ -49,6 +50,7 @@ namespace Application.Roles
                 var newRole = new AppRole
                 {
                     Name = request.Name,
+                    Description = request.Description,
                     NormalizedName = uniqueRoleName.ToUpper(),
                     CompanyId = user.CompanyId,
                     CreatedDate = DateTime.Now,

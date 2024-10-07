@@ -56,7 +56,7 @@ namespace Application.Projects
             {
                 Project project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Not found." });
                 var user = await _context.Users.SingleOrDefaultAsync(x =>
                             request.Owner != null ? x.UserName == request.Owner : x.UserName == _userAccessor.GetCurrentUserName());
 
@@ -72,6 +72,8 @@ namespace Application.Projects
                 project.UpdatedDate = DateTime.Now;
                 project.CreatedUser = project.CreatedUser;
                 project.UpdatedUser = user.DisplayName;
+                project.CompanyId = project.CompanyId;
+                project.ProjectStatus = project.ProjectStatus;
 
                 var success = await _context.SaveChangesAsync() > 0;
 
