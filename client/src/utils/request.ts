@@ -5,7 +5,7 @@ import axios from "axios";
 
 const request = axios.create({
   baseURL:
-    "https://bug-tracker-api-ebs-env.eba-4nd8dq6a.eu-north-1.elasticbeanstalk.com/api",
+    process.env.DOTNET_PRODUCTION_DOMAIN + process.env.REACT_APP_API_VERSION,
 });
 
 const handleSuccessResponse = (response: any) => {
