@@ -4,8 +4,7 @@ import { getAccessToken, notify } from "_helpers";
 import axios from "axios";
 
 const request = axios.create({
-  baseURL:
-    process.env.DOTNET_PRODUCTION_DOMAIN + process.env.REACT_APP_API_VERSION,
+  baseURL: process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION,
 });
 
 const handleSuccessResponse = (response: any) => {
