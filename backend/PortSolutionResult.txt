@@ -1,0 +1,109 @@
+==========
+References
+==========
+API.Controllers
+Microsoft.AspNetCore.Mvc
+Domain
+Application.Users
+MediatR
+Microsoft.Extensions.DependencyInjection
+Microsoft.AspNetCore.Authorization
+Application.Bugs
+System
+Application.Dashboard
+Application.Photos
+Application.Projects
+<global namespace>
+Application.Roles
+API.Middleware
+Microsoft.AspNetCore.Http
+System.Threading.Tasks
+Application.Errors
+Microsoft.Extensions.Logging
+System.Net
+Newtonsoft.Json
+System.Reflection
+global::Microsoft.AspNetCore.Builder
+global::Microsoft.AspNetCore.Hosting
+global::Microsoft.AspNetCore.Http
+global::Microsoft.AspNetCore.Routing
+global::Microsoft.Extensions.Configuration
+global::Microsoft.Extensions.DependencyInjection
+global::Microsoft.Extensions.Hosting
+global::Microsoft.Extensions.Logging
+global::System
+global::System.Collections.Generic
+global::System.IO
+global::System.Linq
+global::System.Net.Http
+global::System.Net.Http.Json
+global::System.Threading
+global::System.Threading.Tasks
+FluentValidation.AspNetCore
+FluentValidation
+Microsoft.EntityFrameworkCore
+Persistence
+Application.Projects.Create
+Microsoft.AspNetCore.Identity
+Microsoft.Extensions.DependencyInjection.Extensions
+Microsoft.AspNetCore.Authentication
+Application.Interfaces
+Infrastructure.Security
+Microsoft.IdentityModel.Tokens
+System.Text
+Microsoft.AspNetCore.Authentication.JwtBearer
+Infrastructure.Photos
+System.Security.Claims
+Infrastructure
+project.all
+
+===============
+DownloadedFiles
+===============
+project.all.json
+
+==============
+ProjectResults
+==============
+----------------------
+Showing results for: C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\API.csproj
+----------------------
+---------------------------
+Target Versions:
+---------------------------
+net7.0
+---------------------------
+Source Versions:
+---------------------------
+net48
+---------------------------
+Upgrade packages:
+---------------------------
+---------------------------
+Action packages:
+---------------------------
+
+----------------------
+Showing results for: C:\Users\MAURICE\Documents\Web Development\bug-tracker\backend\API\API.csproj
+----------------------
+---------------------------
+Target Versions:
+---------------------------
+net7.0
+---------------------------
+Source Versions:
+---------------------------
+net48
+---------------------------
+Upgrade packages:
+---------------------------
+---------------------------
+Action packages:
+---------------------------
+
+
+===========
+BuildErrors
+===========
+
+

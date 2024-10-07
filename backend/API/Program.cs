@@ -31,9 +31,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 /*****************************  START OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
-
-
-
+//var token = builder.Configuration["AppSettings:Token"];
+//Console.WriteLine($"Token: {token}"); 
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
