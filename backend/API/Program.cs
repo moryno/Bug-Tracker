@@ -46,7 +46,8 @@ builder.Services.AddCors(option =>
 {
     option.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(
+            environment == "production" ? builder.Configuration["Client:URL"]! : "http://localhost:3000");
     });
 });
 //Add MediatR and AutoMapper
