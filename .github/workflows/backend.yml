@@ -50,4 +50,10 @@ jobs:
         with:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-north-1
+          AWS_REGION: eu-north-1
+      - name: Deploy
+        run: |
+          aws s3 cp "${{github.run_id}}.zip" s3://elasticbeanstalk-eu-north-1-${{ secrets.AWS_ACCOUNT_ID }}/artifact/${{github.run_id}}.zip
+          aws elasticbeanstalk create-application-version --application-name $ELASTIC_BEANSTALK_NAME --version-label ${{github.run_id}} --description "Deployment of GitHub run ${{github.run_id}}" --source-bundle S3Bucket="elasticbeanstalk-eu-north-1-${{ secrets.AWS_ACCOUNT_ID }}",S3Key="artifact/${{github.run_id}}.zip"
+          aws elasticbeanstalk update-environment --application-name $ELASTIC_BEANSTALK_NAME --environment-name $ELASTIC_BEANSTALK_ENV_NAME --version-label ${{github.run_id}}
+          aws elasticbeanstalk wait environment-updated --application-name $ELASTIC_BEANSTALK_NAME --environment-name $ELASTIC_BEANSTALK_ENV_NAME
