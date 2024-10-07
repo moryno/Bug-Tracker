@@ -31,13 +31,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 /*****************************  START OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
-//var token = builder.Configuration["AppSettings:Token"];
+//var token = builder.Configuration["ConnectionStrings:DefaultConnection"];
 //Console.WriteLine($"Token: {token}"); 
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
     option.UseLazyLoadingProxies();
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    option.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]);
 });
 // add cors policy
 
