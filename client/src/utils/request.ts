@@ -4,7 +4,8 @@ import { getAccessToken, notify } from "_helpers";
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: process.env.DOTNET_PRODUCTION_DOMAIN + "/api",
+  baseURL:
+    "https://bug-tracker-api-ebs-env.eba-4nd8dq6a.eu-north-1.elasticbeanstalk.com/api",
 });
 
 const handleSuccessResponse = (response: any) => {
