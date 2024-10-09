@@ -17,6 +17,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2 #CHECKOUT THE CODE FROM CLIENT
+
+      - name: NodeJs Setup
+        uses: actions/setup-node@v2
+        with:
+          node-version: $${{ secrets.NODE_VERSION }}
+
       - run: npm install
       - run: npm run build
         env:

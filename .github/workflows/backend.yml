@@ -13,17 +13,21 @@ env:
   PROJECT_LOCATION: backend/API/API.csproj
   ELASTIC_BEANSTALK_NAME: ${{ secrets.AWS_BEANSTALK_APPLICATION_NAME }}
   ELASTIC_BEANSTALK_ENV_NAME: ${{ secrets.AWS_BEANSTALK_ENV_NAME }}
+  DOTNET_VERSION: "8.0.x"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: $DOTNET_VERSION
+
       - name: Restore dependencies
         run: dotnet restore $PROJECT_LOCATION
       - name: Build

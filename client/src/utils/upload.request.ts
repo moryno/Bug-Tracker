@@ -4,7 +4,7 @@ import axios from "axios";
 
 const uploadRequest = axios.create({
   baseURL:
-    "https://bug-tracker-api-ebs-env.eba-4nd8dq6a.eu-north-1.elasticbeanstalk.com/api",
+    "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
 });
 
 const handleSuccessResponse = (response: any) => {
