@@ -5,7 +5,8 @@ import axios from "axios";
 
 const request = axios.create({
   baseURL:
-    "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
+    // "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
+    "http://localhost:5000/api",
 });
 
 const handleSuccessResponse = (response: any) => {
