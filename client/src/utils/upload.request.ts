@@ -46,7 +46,7 @@ const handleErrorResponse = (error: {
     const userNotFound = status === 404 && url === LOGIN_API;
     if (status === 401) {
       // store.dispatch({ type: LOGOUT });
-      description = "Session has expired. Please log in again";
+      description = "Session has expired. Please log in again.";
     }
     if (status === 403) {
       description = "You are not authorized to perform this action.";
