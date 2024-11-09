@@ -2,10 +2,10 @@
 
 namespace Domain
 {
-    public class Bug
+    public class Bug : IEntity
     {
         public Guid Id { get; set; }
-        public virtual Project Project { get; set; }
+        public virtual Project? Project { get; set; }
         public string Description { get; set; } = string.Empty;
         public string BugName { get; set; } = string.Empty;
         public string Severity { get; set; } = string.Empty;
@@ -18,8 +18,8 @@ namespace Domain
         public DateTime UpdatedDate { get; set; }
         public string UpdatedUser { get; set; } = string.Empty;
         public Guid CompanyId { get; set; }
-        public virtual Company Company { get; set; }
-        public virtual ICollection<BugComment> BugComments { get; set; }
-        public virtual ICollection<BugAssignee> BugAssignees { get; set; } 
+        public virtual Company? Company { get; set; }
+        public virtual ICollection<BugComment>? BugComments { get; set; }
+        public virtual ICollection<BugAssignee>? BugAssignees { get; set; } 
     }
 }
