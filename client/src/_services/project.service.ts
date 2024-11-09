@@ -1,4 +1,5 @@
 import { PROJECTS_API } from "_constants";
+import { PaginationResult } from "_lib";
 import { commentType, IProject } from "interfaces";
 import { request } from "utils";
 
@@ -14,13 +15,16 @@ const editProject = (payload: IProject) => {
 
   return request.put(`${PROJECTS_API}/${id}`, res);
 };
-const getProjects = () => {
-  return request.get(PROJECTS_API);
+const getProjects = (params?: object) => {
+  return request.get<PaginationResult<IProject[]>>(PROJECTS_API, { params });
 };
 const getProject = (id: string) => {
   return request.get(`${PROJECTS_API}/${id}`);
 };
-const createProjectComment = (data: IProject) => {
+const getProjectBugs = (id: string) => {
+  return request.get(`${PROJECTS_API}/${id}/bugs`);
+};
+const createProjectComment = (data: commentType) => {
   return request.post(`${PROJECTS_API}/comment`, data);
 };
 const getProjectComments = (id: string) => {
@@ -44,4 +48,5 @@ export const ProjectService = {
   getProjectComments,
   deleteProjectComment,
   editProjectComment,
+  getProjectBugs,
 };
