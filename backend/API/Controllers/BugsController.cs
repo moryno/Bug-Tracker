@@ -1,4 +1,5 @@
 ﻿using Application.Bugs;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -16,10 +17,22 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAll")]
-        [Authorize(Roles = "Admin, Project Manager")]
-        public async Task<ActionResult<List<BugDto>>> GetAll()
+        [Authorize]
+        public async Task<ActionResult<PagedList<BugDto>>> GetAll([FromQuery] BugParams param)
         {
-            return Ok(await Mediator.Send(new GetAll.Query()));
+            return HandlePagedResult(await Mediator.Send(new GetAll.Query { Params = param }));
+        }
+        [HttpGet("search")]
+        [Authorize]
+        public async Task<ActionResult<PagedList<BugSearchDto>>> SearchBugs([FromQuery] BugParams param)
+        {
+            return HandlePagedResult(await Mediator.Send(new GetSearchBugs.Query { Params = param }));
+        }
+        [HttpGet("status")]
+        [Authorize]
+        public async Task<ActionResult<PagedList<BugDto>>> GetAllBugStatus()
+        {
+            return Ok(await Mediator.Send(new GetAllBugStatus.Query()));
         }
         [HttpGet]
         [Authorize]
@@ -71,5 +84,12 @@ namespace API.Controllers
         [HttpDelete("{id}/comment")]
         [Authorize]
         public async Task<ActionResult<Unit>> DeleteComment(Guid id) => Ok(await Mediator.Send(new DeleteBugComment.Command { Id = id }));
+
+        [HttpGet("{id}/assignees")]
+        [Authorize]
+        public async Task<ActionResult<List<UserDto>>> GetBugAssignees(Guid id)
+        {
+            return Ok(await Mediator.Send(new GetBugAssignees.Query { BugId = id }));
+        }
     }
 }
