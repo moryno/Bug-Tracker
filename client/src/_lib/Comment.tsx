@@ -1,43 +1,26 @@
-import { commentType, IComment } from 'interfaces'
+import { IComment } from 'interfaces'
 import { StyledComment, StyledInfoText, StyledUserIcon } from './StyledComponents'
 import {  StyledCommentContainer, StyledDateContainer, StyledDateText, StyledEditText, StyledDot, StyledUserContainer } from './index.styled'
-import { useCallback } from 'react';
-import { useAuthUser, useDeleteRecord } from '_hooks';
-import { AxiosResponse } from 'axios';
+import { useContext } from 'react';
+import { useAuthUser } from '_hooks';
+import { formatTodayDate, getAbbreviation } from '_helpers';
+import { CommentContext } from '_context';
+import DOMPurify from "dompurify"
 
-interface IProps{
-  comments: IComment[];
-  loading: boolean;
-  deleteService: (id: string) => Promise<AxiosResponse<any, any>>;
-  queryString: string;
-  onEditChange: (comment: commentType) => void;
-}
 
-const Comment = ({ comments, deleteService, queryString, onEditChange } : IProps) => {
-  const deleteComment = useDeleteRecord(deleteService, queryString);
+const Comment = () => {
+  const { comments, onDelete, onEditChange } = useContext(CommentContext)
   const { user } = useAuthUser();
 
-  const onDelete = useCallback(async (id: string) => {
-    if(id){
-      try {
-        await deleteComment.mutateAsync(id)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }, [deleteComment]);
-
   return <>
-    { comments?.map(comment => 
+    { comments?.data?.map((comment: IComment) => 
       <StyledCommentContainer key={comment?.id}>
-      <StyledUserIcon>MN</StyledUserIcon>
+      <StyledUserIcon>{getAbbreviation(comment?.fullName!)}</StyledUserIcon>
       <StyledUserContainer>
         <StyledInfoText>{ comment?.fullName }</StyledInfoText>
-        <StyledComment>{ comment?.description }</StyledComment>
+        <StyledComment dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(comment?.description ) }} />
         <StyledDateContainer>
-          <StyledDateText>Today</StyledDateText>
-          <StyledDateText>@</StyledDateText>
-          <StyledDateText>03:30 PM</StyledDateText>
+          <StyledDateText>{formatTodayDate(comment.createdAt!)}</StyledDateText>
           {user?.userName === comment?.userName &&
           <>
           <StyledDot />
