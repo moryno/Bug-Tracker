@@ -19,12 +19,15 @@ using Infrastructure.Photos;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 using Infrastructure;
+using Application.Events;
+using API.SignalR;
+using Application.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var environment = builder.Environment.EnvironmentName.ToLower();
-builder.Configuration.AddSystemsManager($"/{environment}/Bugtracker");
+//builder.Configuration.AddSystemsManager($"/{environment}/Bugtracker");
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,8 +35,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 /*****************************  START OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
 //var token = builder.Configuration["Client:URL"];
-//Console.WriteLine($"Token: {token}"); 
-//Console.WriteLine($"Token: {token}"); 
+//Console.WriteLine($"Client: {token}");
+//Console.WriteLine($"Token: {builder.Configuration.GetSection("AppSettings:Token").Value}");
 
 builder.Services.AddDbContext<DataContext>(option =>
 {
@@ -46,7 +49,11 @@ builder.Services.AddCors(option =>
 {
     option.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(
+        policy
+         .AllowAnyHeader()
+         .AllowAnyMethod()
+         .AllowCredentials()
+         .WithOrigins(
             environment == "production" ? builder.Configuration["Client:URL"]! : "http://localhost:3000");
     });
 });
@@ -84,7 +91,8 @@ var identityBuilder = builder.Services.AddIdentityCore<AppUser>(options =>
 .AddSignInManager<SignInManager<AppUser>>(); // Add SignInManager to manage sign-in functionalities
 identityBuilder.AddRoleManager<RoleManager<AppRole>>(); // Add the role manager for managing roles
 identityBuilder.AddUserManager<UserManager<AppUser>>();
-builder.Services.TryAddSingleton<ISystemClock, SystemClock>(); // Add ISystemClock singleton for token and lockout functionality
+builder.Services.TryAddSingleton<TimeProvider>(TimeProvider.System);
+// Add ISystemClock singleton for token and lockout functionality
 
 
 // Add Authentication
@@ -99,6 +107,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
             ValidateIssuer = false,
             RoleClaimType = ClaimTypes.Role
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/events"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 builder.Services.AddAuthorization(opt =>
@@ -117,7 +139,10 @@ builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<EventEmailService>();
+builder.Services.AddScoped<CreateEntityEmailService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddSignalR();
 
 
 /*****************************  END OF CONFIGURATIONS BY AUTHOR: MAURICE ***************************/
@@ -132,5 +157,6 @@ app.UseAuthorization();
 app.UseCors("CorsPolicy");
 
 app.MapControllers();
+app.MapHub<NotificationHub>("/events");
 
 app.Run();
