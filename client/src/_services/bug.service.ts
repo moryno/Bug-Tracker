@@ -1,4 +1,5 @@
 import { BUGS_API } from "_constants";
+import { PaginationResult } from "_lib";
 import { commentType, IBug } from "interfaces";
 import { request } from "utils";
 
@@ -22,16 +23,24 @@ const editBug = (payload: IBug) => {
 
   return request.put(`${BUGS_API}/${id}`, res);
 };
-const getBugs = () => {
-  return request.get(`${BUGS_API}/GetAll`);
+const getBugs = (params?: object) => {
+  return request.get<PaginationResult<IBug[]>>(`${BUGS_API}/GetAll`, {
+    params,
+  });
+};
+const getBugsStatus = () => {
+  return request.get(`${BUGS_API}/status`);
 };
 const getBug = (id: string) => {
   return request.get(`${BUGS_API}/${id}`);
 };
+const getBugAssinees = (id: string) => {
+  return request.get(`${BUGS_API}/${id}/assignees`);
+};
 const getBugProjects = () => {
   return request.get(`${BUGS_API}/projects`);
 };
-const createBugComment = (data: IBug) => {
+const createBugComment = (data: commentType) => {
   return request.post(`${BUGS_API}/comment`, data);
 };
 const getBugComments = (id: string) => {
@@ -56,4 +65,6 @@ export const BugService = {
   getBugComments,
   deleteBugComment,
   editBugComment,
+  getBugAssinees,
+  getBugsStatus,
 };
