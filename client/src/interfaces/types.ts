@@ -1,5 +1,5 @@
 import { MenuProps } from "antd";
-import { IBug, IProject, IRole } from "./domain";
+import { IBug, IEvent, IProject, IRole } from "./domain";
 
 export type drawerType = {
   onClose: () => void;
@@ -9,6 +9,11 @@ export type drawerType = {
 
 export type projectFormType = drawerType & {
   editedRecord: IProject | null;
+};
+export type eventFormType = drawerType & {
+  editedRecord: IEvent | null;
+  refetchEvent: () => void;
+  showDetails: boolean;
 };
 export type bugFormType = drawerType & {
   editedRecord: IBug | null;
@@ -38,8 +43,8 @@ export type InviteUserType = {
   firstName: string;
   lastName: string;
   email: string;
-  userName: string;
-  role: string;
+  userName?: string;
+  roleName: string;
   message: string;
 };
 
@@ -57,4 +62,17 @@ type Photo = {
   Id?: string;
   url: string;
   isMain: boolean;
+};
+
+export type calendarType = {
+  id: string;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+};
+
+export type emailType = {
+  recipientId: string;
+  subject: string;
+  customMessage: Date;
 };
