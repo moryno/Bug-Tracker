@@ -10,11 +10,17 @@ export const DASHBOARD_API = "/dashboard";
 
 // USERS
 export const USER_API = "/user";
+
+export const INVITE_API = "/user/invite";
 // USERS
 export const PHOTO_API = "/photos";
 
 // PROJECTS
 export const PROJECTS_API = "/projects";
+
+export const EVENT_API = "/events";
+
+export const NOTIFICATIONS_API = "/notifications";
 // PROJECTS
 export const ROLES_API = "/roles";
 // BUGS
