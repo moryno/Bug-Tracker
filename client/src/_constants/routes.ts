@@ -5,6 +5,8 @@ export const REGISTER_SUCCESS_ROUTE = "/auth/registerSuccess";
 export const VERIFY_EMAIL_ROUTE = "/auth/verifyEmail";
 // Home Routes
 export const HOME_ROUTE = "/home";
+export const CALENDAR_ROUTE = "/myCalendar";
+export const EVENT_ROUTE = "/events";
 export const LANDING_PAGE_ROUTE = "/";
 
 export const PROJECT_ROUTE = "/projects";
