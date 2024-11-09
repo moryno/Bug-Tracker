@@ -8,6 +8,6 @@
         public string Image { get; set; } = string.Empty;
         public string CompanyName { get; set; } = string.Empty;
         public Guid CompanyId { get; set; }
-        public ICollection<Photo> photos { get; set; }
+        public ICollection<Photo>? photos { get; set; }
     }
 }
