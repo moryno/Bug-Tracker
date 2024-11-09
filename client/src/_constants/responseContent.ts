@@ -1,11 +1,14 @@
 import {
   BUG_COMMENTS_API,
   BUGS_API,
+  EVENT_API,
+  INVITE_API,
   PHOTO_API,
   PROJECT_COMMENTS_API,
   PROJECTS_API,
   REGISTER_API,
 } from "./api";
+
 interface SuccessResponseContent {
   [key: string]: {
     message: string;
@@ -36,5 +39,13 @@ export const successResponseContent: SuccessResponseContent = {
   [PHOTO_API]: {
     message: "Success",
     description: "Saving photo was successful",
+  },
+  [INVITE_API]: {
+    message: "Success",
+    description: "Invite sent successfully",
+  },
+  [EVENT_API]: {
+    message: "Success",
+    description: "Event scheduled successfully",
   },
 };
