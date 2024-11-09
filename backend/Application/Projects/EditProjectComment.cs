@@ -41,13 +41,13 @@ namespace Application.Projects
 
             public async Task<CommentDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                ProjectComment comment = await _context.ProjectComments.FindAsync(request.Id);
+                var comment = await _context.ProjectComments.FindAsync(request.Id);
                 if (comment == null)
                     throw new RestException(HttpStatusCode.NotFound, new { comment = "Not found." });
-                Project project = await _context.Projects.FindAsync(request.ProjectId);
+                var project = await _context.Projects.FindAsync(request.ProjectId);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 comment.Project = project;
                 comment.Author = user;
