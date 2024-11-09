@@ -1,8 +1,9 @@
-import React, { ReactNode, Suspense } from 'react'
+import AppLoader from '_lib/AppLoader'
+import { ReactNode, Suspense } from 'react'
 
 const AppSuspense = ({ children } : { children: ReactNode}) => {
   return (
-    <Suspense fallback={<p>Loading...</p>}>{ children }</Suspense>
+    <Suspense fallback={<AppLoader />}>{ children }</Suspense>
   )
 }
 
