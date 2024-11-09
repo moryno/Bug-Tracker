@@ -11,17 +11,25 @@ namespace Infrastructure
 {
     public class EmailSender : IEmailSender
     {
-        private readonly IConfiguration _configuration;
+        private readonly string _emailSender;
+        private readonly string _displayName;
+        private readonly string _host;
+        private readonly int _port;
+        private readonly string _password;
 
         public EmailSender(IConfiguration configuration)
         {
-            _configuration = configuration;
+            _emailSender = configuration["EmailSettings:Email"]!;
+            _displayName = configuration["EmailSettings:DisplayName"]!;
+            _host = configuration["EmailSettings:Host"]!;
+            _port = int.Parse(configuration["EmailSettings:Port"]!);
+            _password = configuration["EmailSettings:Password"]!;
         }
 
         public async Task SendMailAsync(MailSettings request)
         {
-            string emailSender = request.Email ?? _configuration["EmailSettings:Email"]!;
-            string displayName = request.DisplayName ?? _configuration["EmailSettings:DisplayName"]!;
+            string emailSender = request.Email ?? _emailSender;
+            string displayName = request.DisplayName ?? _displayName;
 
             MimeMessage email = new()
             {
@@ -42,20 +50,32 @@ namespace Infrastructure
 
             try
             {
-                string host = request.Host ?? _configuration["EmailSettings:Host"]!;
-                int port = request.Port ?? int.Parse(_configuration["EmailSettings:Port"]!);
-                string password = request.Password ?? _configuration["EmailSettings:Password"]!;
+                string host = request.Host ?? _host;
+                int port = request.Port ?? _port;
+                string password = request.Password ?? _password;
 
                 smtpClient.Connect(host, port, SecureSocketOptions.StartTls);
                 smtpClient.Authenticate(emailSender, password);
 
                 await smtpClient.SendAsync(email);
 
-                smtpClient.Disconnect(true);
+                
             }
-            catch (Exception)
+            catch (SmtpCommandException ex)
             {
-                throw new RestException(HttpStatusCode.BadRequest, new { error = $"Failed to send email to {request.ToEmail}!" });
+                throw new RestException(HttpStatusCode.BadRequest, new { error = $"SMTP command failed: {ex.Message}" });
+            }
+            catch (SmtpProtocolException ex)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, new { error = $"SMTP protocol error: {ex.Message}" });
+            }
+            catch (Exception ex)
+            {
+                throw new RestException(HttpStatusCode.BadRequest, new { error = $"Failed to send email: {ex.Message}" });
+            }
+            finally
+            {
+                smtpClient.Disconnect(true);
             }
         }
     }
