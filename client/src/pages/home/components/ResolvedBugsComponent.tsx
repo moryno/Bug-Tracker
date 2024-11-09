@@ -1,9 +1,17 @@
 import { getMonthName } from '_helpers';
 import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledMiddleChartCardWrapper } from '../index.styled';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { BUG_ROUTE } from '_constants';
 
 const ResolvedBugsComponent = ({ resolvedSubmittedBugs } : { resolvedSubmittedBugs : any[]}) => {
+  const navigate = useNavigate();
 
+  const handleNavigate = useCallback(() => {
+    navigate(BUG_ROUTE)
+  }, [navigate])
+  
   const transformedBugs = resolvedSubmittedBugs?.map(bug => ({
     ...bug,
     name: getMonthName(bug.name)
@@ -13,7 +21,7 @@ const ResolvedBugsComponent = ({ resolvedSubmittedBugs } : { resolvedSubmittedBu
     <StyledMiddleChartCardWrapper>
     <StyledChartCardHeaderWrapper>
      <StyledChartCardHeaderTitle>Submitted vs Resolved Bugs</StyledChartCardHeaderTitle>
-     <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
+     <StyledChartCardHeaderImg onClick={handleNavigate} src="/img/moreDark.png" alt="this is an elipses" />
    </StyledChartCardHeaderWrapper> 
    <ResponsiveContainer height="90%">
         <LineChart
