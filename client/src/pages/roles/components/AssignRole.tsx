@@ -106,8 +106,8 @@ const AssignRole = ({ onClose, open, userName  }: { onClose: () => void, open: b
              placeholder="Please select role"
              loading={isRolesLoading}
              >
-            {rolesData?.data && 
-                rolesData?.data?.map( (role: any) => (
+            {rolesData?.data?.data && 
+                rolesData?.data?.data?.map( (role: any) => (
                   <Option key={role?.id} value={role?.id}>{ role?.name}</Option>
             ))}
             </Select>
