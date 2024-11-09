@@ -1,4 +1,4 @@
-import React, {  useMemo } from 'react'
+import {  useMemo } from 'react'
 import AppHeader from './AppHeader'
 import AppSidebar from './AppSidebar'
 import { StyledAppLayout, StyledAppLayoutMain } from './index.styled'
@@ -6,7 +6,7 @@ import { defaultTheme, HOME_ROUTE } from '_constants'
 import { useLocation } from 'react-router-dom'
 import AppContentView from '_lib/AppContentView'
 
-const Layout = ({ routes }: { routes: any}) => {
+const Layout = ({ routes }: { routes: any }) => {
   const { pathname } = useLocation();
 
   const layoutBackground = useMemo(() => {
