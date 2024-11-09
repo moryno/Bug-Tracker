@@ -1,4 +1,4 @@
-import { Col, Collapse, Row } from "antd";
+import { Col, Collapse, Row, Tag } from "antd";
 import {
   StyledStatusDot,
   StyledStatusWrapper,
@@ -43,8 +43,8 @@ const BugInformation = ({ bug }: { bug: IBug }) => {
               </Col>
               <Col span={12}>
                 <StyledStatusWrapper>
-                  <StyledStatusDot />
-                  <StyledInfoText>Open</StyledInfoText>
+                  <StyledStatusDot color={bug?.bugStatus === "Open" ? "active" : bug?.bugStatus === "InProgress" ? "inProgress" : "completed"}  />
+                  <StyledInfoText>{ bug?.bugStatus }</StyledInfoText>
                 </StyledStatusWrapper>
               </Col>
             </StyledInfoDivWrapper>
@@ -67,7 +67,7 @@ const BugInformation = ({ bug }: { bug: IBug }) => {
                 <StyledInfoLabel>Severity</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>{bug?.severity}</StyledInfoText>
+              <Tag color={`${bug?.severity === "Minor" ? "#2CC8BA" : bug?.severity === "Major" ? "#08AEEA" : bug?.severity === "Critical" ? "#FFBB28" : "#EF476F"}`}>{bug?.severity}</Tag>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
@@ -79,17 +79,7 @@ const BugInformation = ({ bug }: { bug: IBug }) => {
                 <StyledInfoLabel>Classification</StyledInfoLabel>
               </Col>
               <Col span={12}>
-                <StyledInfoText>{bug?.classification}</StyledInfoText>
-              </Col>
-            </StyledInfoDivWrapper>
-          </StyledInfoDivContainer>
-          <StyledInfoDivContainer span={12}>
-            <StyledInfoDivWrapper>
-              <Col span={12}>
-                <StyledInfoLabel>Status</StyledInfoLabel>
-              </Col>
-              <Col span={12}>
-                <StyledInfoText>{bug?.bugStatus}</StyledInfoText>
+                <Tag color="#2CC8BA">{bug?.classification}</Tag>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
