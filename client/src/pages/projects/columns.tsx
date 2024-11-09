@@ -1,5 +1,5 @@
 
-import { Tag, Tooltip } from "antd";
+import { Progress, Tag, Tooltip } from "antd";
 import { IFollowerDto, IProject } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
@@ -55,6 +55,46 @@ export const projectColumns = [
       width: 200
     },
     {
+      title: 'Status',
+      dataIndex: 'currentStatus',
+      key: 'currentStatus',
+      width: 120,
+      render: (currentStatus : string) => 
+        currentStatus ?
+      <Tag color={`${currentStatus === "Active" ? "#2CC8BA" : 
+        currentStatus === "InProgress" ? "#08AEEA" :
+        currentStatus === "OnTrack" ? "#74CB80" :
+        currentStatus === "Delayed" ? "#C5A070" :
+        currentStatus === "InTesting" ? "#F6A96D" :
+        "#FBC11E"
+      }`}>
+        {currentStatus}</Tag> : null,
+    },
+    {
+      title: 'Bugs',
+      key: 'projectStatus',
+      dataIndex: "projectStatus",
+      // align: "center",
+      render: (status : number) => (
+        <>
+        <Progress
+          percent={+Math.round(status).toFixed(0)}
+          percentPosition={{ align: 'center', type: 'inner' }}
+          size={[150, 15]}
+          strokeColor={
+            `${status === 0 ? "#F56B62" :
+              status <= 20 ? "#F6A96D" :
+              status > 20 && status < 50 ? "#08AEEA" :
+              status >=50 && status <=75 ? "#2CC8BA" :
+              "#4ED3E5"
+            }`
+          }
+        />
+        </>
+      ),
+      width: 180
+    },
+    {
       title: 'Start Date',
       dataIndex: 'startDate',
       key: 'startDate',
@@ -68,21 +108,14 @@ export const projectColumns = [
       render: (date: string) => moment(date).format('YYYY-MM-DD'),
       width: 150
     },
-
+  
     {
       title: 'Project Group',
       dataIndex: 'projectGroup',
       key: 'projectGroup',
       width: 150,
-      ellipsis: true,
+      render: (group: string) => group || 'Not Specified',
     },
-    // {
-    //   title: 'Private',
-    //   dataIndex: 'private',
-    //   key: 'private',
-    //   render: (isPrivate : boolean) => (isPrivate ? 'Yes' : 'No'),
-    // },
-
     {
       title: 'Created By',
       dataIndex: 'createdUser',
