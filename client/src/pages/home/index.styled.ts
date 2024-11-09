@@ -88,7 +88,7 @@ export const StyledMiddleChartCardWrapper = styled.article`
   height: 400px;
   overflow-y: auto;
   background-color: white;
-  padding: 16px;
+  padding: 16px 0;
   position: relative;
   border-radius: 8px;
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.06),
@@ -99,6 +99,7 @@ export const StyledChartCardHeaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 16px;
   // position: sticky;
   // top: 0;
   // left: 0;
@@ -163,7 +164,7 @@ export const StyledCardIcon = styled.img`
 export const StyledWorkItemWrapper = styled.article`
   display: flex;
   justify-content: space-between;
-  padding: 10px 3px;
+  padding: 12px 19px;
   cursor: pointer;
   border-bottom: 1px solid
     ${({ theme }) => theme.palette.grey["Cool Grey"][200]};
@@ -217,19 +218,35 @@ export const StyledWorkItemProfileIcon = styled(BsPersonCircle).attrs({
 export const StyledNotificationContainer = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 `;
 export const StyledNotificationWrapper = styled.div<StyledHomeCardProps>`
   border-radius: 8px;
   padding: 16px;
   cursor: pointer;
   background-color: ${({ bg }) =>
-    bg === "blue"
+    bg === "0"
       ? "#edf9fd"
-      : bg === "green"
+      : bg === "1"
       ? "#f1f0ff"
-      : bg === "greenLight"
+      : bg === "2"
       ? "#fefce8"
+      : bg === "3"
+      ? "#F4F6F9"
+      : bg === "4"
+      ? "#ffe4e6"
+      : bg === "5"
+      ? "#bae6fd"
+      : bg === "6"
+      ? "#dbeafe"
+      : bg === "7"
+      ? "#CAF7E6"
+      : bg === "8"
+      ? "#f3e8ff"
+      : bg === "9"
+      ? "#fce7f3"
+      : bg === "10"
+      ? "#e0e7ff"
       : "#F0FDF4"};
 `;
 export const StyledNotificationHeaderDiv = styled.div`
