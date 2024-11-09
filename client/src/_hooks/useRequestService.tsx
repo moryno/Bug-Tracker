@@ -2,10 +2,19 @@ import { useMutation, useQuery, useQueryClient, UseQueryResult } from "@tanstack
 import { dashboardService } from "_services";
 import { message } from "antd";
 
-export const useGetAll = (service : () => void, queryKey : string) => {
+export const useGetAll = (service : (params?: object) => void, queryKey : string, params?: object) => {
   const response: UseQueryResult<any> = useQuery({
     queryKey: [queryKey],
-    queryFn: () => service(),
+    queryFn: () => service(params),
+  });
+
+  return response;
+};
+export const useGetAllParams = (service : (params?: object) => void, queryKey : string, params: object) => {
+  const response: UseQueryResult<any> = useQuery({
+    queryKey: [queryKey, params],
+    queryFn: () => service(params),
+    enabled: !!params
   });
 
   return response;
