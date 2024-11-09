@@ -1,13 +1,10 @@
-﻿using Application.Interfaces;
+﻿using Application.Errors;
+using Application.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 
 namespace Application.Dashboard
 {
@@ -27,6 +24,9 @@ namespace Application.Dashboard
             public async Task<DashboardGridStatsResult> Handle(Query request, CancellationToken cancellationToken)
             {
                 var currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                if (currentUser == null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = $"User not found" });
+
                 var companyId = currentUser.CompanyId;
                 var today = DateTime.UtcNow;
                 var currentYear = DateTime.UtcNow.Year;
@@ -73,6 +73,7 @@ namespace Application.Dashboard
                        SubmittedCount = g.Count()
                    })
                    .ToListAsync();
+
                 var bugsResolved = await _context.Bugs
                     .Where(b => b.CompanyId == companyId && b.CompletedDate.Year == currentYear)
                     .GroupBy(b => b.CompletedDate.Month)
