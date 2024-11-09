@@ -6,13 +6,13 @@ export const roleColumns = [
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      ellipsis: true
+      ellipsis: true,
+      width: 200,
     }, 
     {
         title: 'Description',
         dataIndex: 'description',
         key: 'description',
-        width: 200,
         ellipsis: {
           showTitle: false,
         },
