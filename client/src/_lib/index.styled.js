@@ -46,12 +46,11 @@ export const StyledCommentContainer = styled.section`
 export const StyledCommentWrapper = styled.article`
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 100%;
 `;
 export const StyledUserContainer = styled.article`
   display: flex;
   flex-direction: column;
-  gap: 10px;
 `;
 
 export const StyledDateContainer = styled.article`
@@ -123,6 +122,6 @@ export const StyledGroupFilterLeftWrapper = styled.article``;
 export const StyledGroupTableTitle = styled.h3`
   margin: 0;
   padding: 0;
-  color: ${defaultTheme.theme.palette.gray[900]};
+  color: ${defaultTheme.theme.palette.gray[600]};
 `;
 export const StyledGroupFilterRightWrapper = styled.article``;
