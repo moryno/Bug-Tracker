@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 import { drawerType, InviteUserType } from "interfaces"
 import { DomianEnum } from "_constants";
-import { useCreateService } from "_hooks";
+import { useCreateService, useGetAll } from "_hooks";
 import { ContainerDrawer } from "_lib";
-import { ProjectService } from "_services";
-import { Col, Form, Input, Row, Select } from "antd";
+import { RoleService, UserService } from "_services";
+import { Col, Form, Input, message, Row, Select } from "antd";
 
 const { Option } = Select
 const initialData: InviteUserType = {
@@ -12,14 +12,14 @@ const initialData: InviteUserType = {
   lastName: "",
   message: "",
   email: "",
-  role: "",
-  userName: ""
+  roleName: "",
 }
 
-const InviteForm:React.FC<drawerType> = ({ onClose, open, statusMode }) => {
+const InviteForm:React.FC<drawerType> = ({ onClose, open }) => {
   const [formData, setFormData] = useState(initialData);
   const [loading, setLoading] = useState(false);
-  const createProject = useCreateService(ProjectService.createProject, DomianEnum.PROJECTS);
+  const sendInivte = useCreateService(UserService.inviteUser, DomianEnum.USERS);
+  const { isLoading: isRolesLoading, data: rolesData } = useGetAll(RoleService.getRoles, `${DomianEnum.ROLES}-roles`);
   const [form] = Form.useForm();
 
   const handleValueChange = useCallback((e: any) => {
@@ -35,10 +35,15 @@ const InviteForm:React.FC<drawerType> = ({ onClose, open, statusMode }) => {
   }, [form, onClose]);
 
   const onFinish = useCallback(async () => {
-    // if(!formData?.projectName)
-    //   return message.warning("Project name is required.");
-    // if(!formData?.description)
-    //   return message.warning("Project description is required.");
+    if(!formData?.firstName)
+      return message.warning("First name is required.");
+    if(!formData?.lastName)
+      return message.warning("Last name is required.");
+    if(!formData?.email)
+      return message.warning("Email is required.");
+    if(!formData?.roleName)
+      return message.warning("Role description is required.");
+
 
    setLoading(true);
     try {
@@ -46,14 +51,13 @@ const InviteForm:React.FC<drawerType> = ({ onClose, open, statusMode }) => {
       const params = {
         ...formData
       }
-        await createProject.mutateAsync(params);
-
-      onClear()
+        await sendInivte.mutateAsync(params);
+        onClear()
     } catch (error) {
       console.log(error);
       setLoading(false);
     }
-  }, [createProject, formData, onClear]);
+  }, [formData, onClear, sendInivte]);
   
   return (
     <ContainerDrawer 
@@ -107,15 +111,18 @@ const InviteForm:React.FC<drawerType> = ({ onClose, open, statusMode }) => {
         <Row gutter={16}>
         <Col span={24}>
           <Form.Item
-            name="role"
+            name="roleName"
             label="Role"
             rules={[{ required: true, message: "Please select a role" }]}
           >
-            <Select
-             placeholder="Please select a role"
+           <Select
+             placeholder="Please select role"
+             loading={isRolesLoading}
              >
-              <Option value={"Project Manager"}>Project Manager</Option>
-              <Option value={"Developer"}>Developer</Option>
+              {rolesData?.data?.data && 
+                  rolesData?.data?.data?.map( (role: any) => (
+                    <Option key={role?.id} value={role?.name}>{ role?.name}</Option>
+              ))}
             </Select>
           </Form.Item>
         </Col>
@@ -135,7 +142,7 @@ const InviteForm:React.FC<drawerType> = ({ onClose, open, statusMode }) => {
             >
               <Input.TextArea
                 rows={4}
-                placeholder="please enter message"
+                placeholder="Please enter message"
               />
             </Form.Item>
           </Col>
