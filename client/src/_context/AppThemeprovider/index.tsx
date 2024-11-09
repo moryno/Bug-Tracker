@@ -1,4 +1,4 @@
-import React, { memo, ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from '_constants';
