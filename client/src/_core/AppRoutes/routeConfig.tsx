@@ -1,16 +1,16 @@
 import { GoHomeFill } from "react-icons/go";
-import { FaBriefcase, FaBug, FaRegUserCircle, FaUserCog  } from "react-icons/fa";
+import { FaBriefcase, FaBug, FaCalendarAlt, FaRegUserCircle, FaUserCog  } from "react-icons/fa";
 import { FaUsersGear } from "react-icons/fa6";
-import { MdPeople } from "react-icons/md";
+import { MdEvent, MdPeople } from "react-icons/md";
 
-import { HOME_ROUTE, PROJECT_ROUTE, BUG_ROUTE, USER_ROUTE, PROFILE_ROUTE, ROLES_ROUTE } from "_constants";
+import { HOME_ROUTE, PROJECT_ROUTE, BUG_ROUTE, USER_ROUTE, PROFILE_ROUTE, ROLES_ROUTE, CALENDAR_ROUTE, EVENT_ROUTE } from "_constants";
 
 export const routeConfig = [
     {
         id: "home",
         title: "Home",
         messageId: "sidebar.home",
-        icon: <GoHomeFill size={18} />,
+        icon: <GoHomeFill size={16} />,
         mobileOnly: true,
         path: HOME_ROUTE,
     },
@@ -18,7 +18,7 @@ export const routeConfig = [
         id: "projects",
         title: "Projects",
         messageId: "sidebar.projects",
-        icon: <FaBriefcase size={18} />,
+        icon: <FaBriefcase size={16} />,
         mobileOnly: true,
         path: PROJECT_ROUTE,
     },
@@ -26,15 +26,31 @@ export const routeConfig = [
         id: "bugs",
         title: "Bugs",
         messageId: "sidebar.bugs",
-        icon: <FaBug size={18} />,
+        icon: <FaBug size={16} />,
         mobileOnly: true,
         path: BUG_ROUTE,
+    },
+    {
+        id: "calendar",
+        title: "Calendar",
+        messageId: "sidebar.calendar",
+        icon: <FaCalendarAlt size={16} />,
+        mobileOnly: true,
+        path: CALENDAR_ROUTE,
+    },
+    {
+        id: "events",
+        title: "Events",
+        messageId: "sidebar.events",
+        icon: <MdEvent size={20} />,
+        mobileOnly: true,
+        path: EVENT_ROUTE,
     },
     {
         id: "users",
         title: "User Management",
         messageId: "sidebar.users",
-        icon: <FaUsersGear  size={18} />,
+        icon: <FaUsersGear  size={16} />,
         type: "collapse",
         children: [
             {
