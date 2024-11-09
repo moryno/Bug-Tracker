@@ -40,10 +40,10 @@ namespace Application.Bugs
 
             public async Task<CommentDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                Bug bug = await _context.Bugs.FindAsync(request.BugId);
+                var bug = await _context.Bugs.FindAsync(request.BugId);
                 if (bug == null)
                     throw new RestException(HttpStatusCode.NotFound, new { bug = "Not found." });
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 BugComment comment = new()
                 {
