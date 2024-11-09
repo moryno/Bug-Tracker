@@ -1,12 +1,13 @@
 import { successResponseContent } from "_constants";
 import { LOGIN_API } from "_constants/api";
 import { getAccessToken, notify } from "_helpers";
-import axios from "axios";
+import { PaginationResult } from "_lib";
+import axios, { AxiosResponse } from "axios";
 
 const request = axios.create({
-  baseURL:
-    // "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
-    "http://localhost:5000/api",
+  baseURL: process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION,
+  // "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
+  // "http://localhost:5000/api",
 });
 
 const handleSuccessResponse = (response: any) => {
@@ -14,6 +15,7 @@ const handleSuccessResponse = (response: any) => {
     status,
     config: { url, method },
   } = response;
+
   if (status === 200 || status === 201) {
     if (
       successResponseContent[url] &&
@@ -25,6 +27,14 @@ const handleSuccessResponse = (response: any) => {
       });
     }
   }
+
+  const pagination = response.headers["pagination"];
+
+  if (pagination) {
+    response.data = new PaginationResult(response.data, JSON.parse(pagination));
+    return response as AxiosResponse<PaginationResult<any>>;
+  }
+
   return response;
 };
 
