@@ -1,4 +1,4 @@
-import { Col, Collapse, Row } from "antd";
+import { Col, Collapse, Row, Tag } from "antd";
 import {
   StyledAssigneeContainer,
   StyledAssigneeImage,
@@ -23,6 +23,8 @@ import moment from "moment";
 const { Panel } = Collapse;
 
 const ProjectInformation= ({ project } : { project : IProject}) => {
+  const status = project.currentStatus!;
+
   return (
     <StyledCardWrapper>
       <Collapse defaultActiveKey={["1"]} ghost>
@@ -60,9 +62,31 @@ const ProjectInformation= ({ project } : { project : IProject}) => {
               </Col>
               <Col span={12}>
                 <StyledStatusWrapper>
-                  <StyledStatusDot />
-                  <StyledInfoText>Completed</StyledInfoText>
+                  <StyledStatusDot color={status === "Delayed"  ? "delayed" : status === "Active" ? "active" : status === "InProgress" ? "inProgress" : status === "OnTrack" ? "onTrack" : status === "InTesting" ? "inTesting" : "onHold"} />
+                  <StyledInfoText>{status}</StyledInfoText>
                 </StyledStatusWrapper>
+              </Col>
+            </StyledInfoDivWrapper>
+          </StyledInfoDivContainer>
+        </Row>
+        <Row gutter={16}>
+          <StyledInfoDivContainer span={12}>
+            <StyledInfoDivWrapper>
+              <Col span={12}>
+                <StyledInfoLabel>Priority</StyledInfoLabel>
+              </Col>
+              <Col span={12}>
+                <Tag color={`${project?.priority === "High" ? "#EF476F" : project?.priority === "Low" ? "#2CC8BA" : "#08AEEA"}`}>{project?.priority}</Tag>
+              </Col>
+            </StyledInfoDivWrapper>
+          </StyledInfoDivContainer>
+          <StyledInfoDivContainer span={12}>
+            <StyledInfoDivWrapper>
+              <Col span={12}>
+                <StyledInfoLabel>Project Group</StyledInfoLabel>
+              </Col>
+              <Col span={12}>
+                <StyledInfoText>{project?.projectGroup || "No Grouping"}</StyledInfoText>
               </Col>
             </StyledInfoDivWrapper>
           </StyledInfoDivContainer>
