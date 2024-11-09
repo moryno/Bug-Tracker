@@ -1,9 +1,9 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { REGISTER_SUCCESS_ROUTE } from "_constants";
+import { LANDING_PAGE_ROUTE, REGISTER_SUCCESS_ROUTE } from "_constants";
 import { setAccessToken } from "_helpers";
-import { loginFailure, loginStart, loginStop, loginSuccess } from "_redux/slices/userSlice";
+import { loginFailure, loginStart, loginStop, loginSuccess, logout } from "_redux/slices/userSlice";
 import { authService } from "_services";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 type registerType = {
     email: string;
@@ -29,6 +29,7 @@ export const login = async (dispatch: Dispatch, user: loginType) => {
     console.log(error);
   }
 };
+
 export const register = async (dispatch: Dispatch, user: registerType, navigate: ReturnType<typeof useNavigate>) => {
   try {
      dispatch(loginStart())
@@ -40,3 +41,8 @@ export const register = async (dispatch: Dispatch, user: registerType, navigate:
     dispatch(loginFailure())
   }
 };
+
+export const logoutFn = (dispatch: Dispatch, navigate: NavigateFunction) => {
+    dispatch(logout());
+    navigate(LANDING_PAGE_ROUTE);
+}
