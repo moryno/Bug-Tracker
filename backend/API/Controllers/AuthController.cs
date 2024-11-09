@@ -19,12 +19,12 @@ namespace API.Controllers
             return Ok(await Mediator.Send(command));
         }
         [HttpPost("verifyEmail")]
-        public async Task<ActionResult<Unit>> VerifyEmail([FromQuery] VerifyEmail.Command command)
+        public async Task<ActionResult<Unit>> VerifyEmail([FromQuery]VerifyEmail.Command command)
         {
             return Ok(await Mediator.Send(command));
         } 
         [HttpGet("resendEmailConfirmationLink")]
-        public async Task<ActionResult<string>> ResendEmailConfirmationLink([FromQuery] string email)
+        public async Task<ActionResult<string>> ResendEmailConfirmationLink([FromQuery]string email)
         {
             return Ok(await Mediator.Send(new ResendEmailConfirmationLink.Query { Email = email }));
         }
