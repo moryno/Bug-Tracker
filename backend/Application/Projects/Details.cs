@@ -30,7 +30,7 @@ namespace Application.Projects
                     .FindAsync(request.Id);
 
                 if (project == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Not found." });
 
                 return _mapper.Map<Project, ProjectDto>(project);
             }
