@@ -23,7 +23,7 @@ namespace Application.Bugs
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                BugComment comment = await _context.BugComments.FindAsync(request.Id);
+                var comment = await _context.BugComments.FindAsync(request.Id);
                 if (comment == null)
                     throw new RestException(HttpStatusCode.NotFound, new { comment = "Not found." });
 
