@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { removeAccessToken } from "_helpers";
 import { IUser } from "interfaces";
 // import { logoutFunc } from "../helpers/auth.js";
 
@@ -33,7 +34,7 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.currentUser = null;
-      //   logoutFunc();
+      removeAccessToken();
     },
     // updateUserProfile: (state, action) => {
     //   state.currentUser = {
