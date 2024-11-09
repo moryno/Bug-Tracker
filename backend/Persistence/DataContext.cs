@@ -1,6 +1,7 @@
 ﻿using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Persistence;
 public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
@@ -17,6 +18,10 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
     public DbSet<ProjectComment> ProjectComments { get; set; }
     public DbSet<BugAssignee> BugAssignees { get; set; }
     public DbSet<Photo> Photos { get; set; }
+    public DbSet<Event> Events { get; set; }
+    public DbSet<EventAttendee> EventAttendees { get; set; }
+    public DbSet<EventComment> EventComments { get; set; }
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -48,16 +53,51 @@ public class DataContext : IdentityDbContext<AppUser, AppRole, Guid>
             .HasForeignKey(ur => ur.RoleId)
             .IsRequired();
 
-        // Configure the one-to-one relationship between AppRole and Company
         builder.Entity<AppRole>()
             .HasOne(r => r.Company)
             .WithMany(o => o.Roles)
             .HasForeignKey(r => r.CompanyId);
 
-        // Configure the one-to-many relationship between AppUser and Company
         builder.Entity<AppUser>()
             .HasOne(u => u.Company)
             .WithMany(o => o.Users)
             .HasForeignKey(u => u.CompanyId);
+
+        builder.Entity<EventAttendee>()
+            .HasKey(ea => new { ea.EventId, ea.AppUserId });
+
+        builder.Entity<EventAttendee>()
+            .HasOne(ea => ea.Event)
+            .WithMany(e => e.Attendees)
+            .HasForeignKey(ea => ea.EventId);
+
+        builder.Entity<Event>()
+            .HasOne(ea => ea.Company)
+            .WithMany(au => au.Events)
+            .HasForeignKey(ea => ea.CompanyId); 
+
+        builder.Entity<EventAttendee>()
+            .HasOne(ea => ea.AppUser)
+            .WithMany(au => au.Events)
+            .HasForeignKey(ea => ea.AppUserId);
+
+        builder.Entity<Notification>()
+        .HasOne(n => n.Recipient)
+        .WithMany(u => u.NotificationsReceived)
+        .HasForeignKey(n => n.RecipientId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Notification>()
+            .HasOne(n => n.Sender)
+            .WithMany(u => u.NotificationsSent)
+            .HasForeignKey(n => n.SenderId)
+            .OnDelete(DeleteBehavior.Restrict); 
+
+        builder.Entity<Notification>()
+            .HasOne(n => n.Event)
+            .WithMany(e => e.Notifications)
+            .HasForeignKey(n => n.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
+
     }
 }
