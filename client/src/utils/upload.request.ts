@@ -3,8 +3,8 @@ import { getAccessToken, notify } from "_helpers";
 import axios from "axios";
 
 const uploadRequest = axios.create({
-  baseURL:
-    "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
+  baseURL: process.env.REACT_APP_BASE_URL + process.env.REACT_APP_API_VERSION,
+  // "http://bug-tracker-ebs-env.eba-bmrgva3p.eu-north-1.elasticbeanstalk.com/api",
 });
 
 const handleSuccessResponse = (response: any) => {
