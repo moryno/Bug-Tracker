@@ -5,12 +5,7 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Bugs
 {
@@ -32,7 +27,7 @@ namespace Application.Bugs
 
             public async Task<List<BugDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
                 if (user == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
 
