@@ -32,11 +32,11 @@ const Performance = ({ performance, fullName} : { performance: any[], fullName: 
       </StyledPerfomanceChartDetails>
       <ProgressDetailContainer>
         <ProgressDetailWrapper>
-            <Circle color='#00C49F' />
+            <Circle color='green' />
             <PercentageText>Completed</PercentageText>
         </ProgressDetailWrapper>
         <ProgressDetailWrapper>
-            <Circle color='#FFBB28' />
+            <Circle color='orange' />
             <PercentageText>InComplete</PercentageText>
         </ProgressDetailWrapper>
       </ProgressDetailContainer>
