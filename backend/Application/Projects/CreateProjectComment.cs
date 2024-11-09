@@ -40,10 +40,10 @@ namespace Application.Projects
 
             public async Task<CommentDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                Project project = await _context.Projects.FindAsync(request.ProjectId);
+                var project = await _context.Projects.FindAsync(request.ProjectId);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 ProjectComment comment = new()
                 {
