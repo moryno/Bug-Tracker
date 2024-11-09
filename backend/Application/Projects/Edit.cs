@@ -23,9 +23,8 @@ namespace Application.Projects
             public DateTime UpdatedDate { get; set; }
             public string? UpdatedUser { get; set; } = string.Empty;
             public string? Priority { get; set; } = string.Empty;
-
             public string? Owner { get; set; } = string.Empty;
-
+            public string CurrentStatus { get; set; } = string.Empty;
             public string Description { get; set; } = string.Empty;
             public string ProjectGroup { get; set; } = string.Empty;
             public bool Private { get; set; }
@@ -54,7 +53,7 @@ namespace Application.Projects
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Project project = await _context.Projects.FindAsync(request.Id);
+                var project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "Not found." });
                 var user = await _context.Users.SingleOrDefaultAsync(x =>
@@ -65,6 +64,7 @@ namespace Application.Projects
                 project.StartDate = request.StartDate ?? project.StartDate;
                 project.EndDate = request.EndDate ?? project.EndDate;
                 project.Description = request.Description ?? project.Description;
+                project.CurrentStatus = request.CurrentStatus ?? project.CurrentStatus;
                 project.Owner = user;
                 project.Private = request.Private;
                 project.Priority = request.Priority ?? project.Priority;
