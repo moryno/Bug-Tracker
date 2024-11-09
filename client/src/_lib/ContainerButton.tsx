@@ -17,8 +17,14 @@ interface IProps{
   innerRef?: RefObject<HTMLButtonElement> | ((instance: HTMLButtonElement | null) => void);  
   disabled?: boolean;
   isAccent?: boolean;
+  color?: string;
   danger?: boolean; 
 }
+interface ButtonProps{
+  width: string;
+  primary_background_color?: string;
+}
+
 const ContainerButton: React.FC<IProps> = ({ 
     title, 
     type = "default", 
@@ -33,7 +39,8 @@ const ContainerButton: React.FC<IProps> = ({
     disabled = false, 
     danger, 
     isAccent = false, 
-    shape = "default"
+    shape = "default",
+    color = ""
 }) => {
   return (
     <StyledButton
@@ -46,8 +53,11 @@ const ContainerButton: React.FC<IProps> = ({
       ref={innerRef}
       disabled={disabled}
       danger={danger}
+      style={{ backgroundColor: color }}
       primary_background_color={
-        isAccent ? defaultTheme.theme.palette.primary.accentColor : undefined
+        isAccent ? defaultTheme.theme.palette.primary.accentColor 
+        : color ? color
+        : undefined
       }
       shape={shape}
       onClick={onClick}
@@ -57,10 +67,7 @@ const ContainerButton: React.FC<IProps> = ({
   )
 };
 
-const StyledButton = styled(Button)<{
-    width: string;
-    primary_background_color?: string;
-  }>`
+const StyledButton = styled(Button)<ButtonProps>`
     width: ${({ width }) => width};
     font-weight: 500;
     border-radius: 8px;
