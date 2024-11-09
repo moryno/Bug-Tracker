@@ -24,12 +24,13 @@ import { TeamMembersComponent } from './components/TeamMembersComponent'
 import ResolvedBugsComponent from './components/ResolvedBugsComponent'
 import NotificationComponent from './components/NotificationComponent'
 import { useAuthUser, useGetDashboardStats } from '_hooks'
+import { AppLoader } from '_lib'
 
 const Home = () => {
   const { user } = useAuthUser();
   const dashboardStats = useGetDashboardStats();
   if (dashboardStats.isLoading) {
-    return <div>Hello...</div>;
+    return <AppLoader />;
   }
 
   if (dashboardStats.error) {
@@ -57,11 +58,11 @@ const Home = () => {
       </StyledHomeTopContainer>
       <StyledHomeBottomContainer>
         <StyledHomeCardContainers>
-          <Card title={dashCardType.activeProjects} count={dashboardCount?.activeProjectsCount[0]?.["Active"]} />
-          <Card title={dashCardType.completedProjects} count={dashboardCount?.completedProjectsCount[0]?.["CompletedProjects"]} />
-          <Card title={dashCardType.openTickets} count={dashboardCount?.openBugsCount[0]?.["OpenBugs"]} />
-          <Card title={dashCardType.unassignedTickets} count={dashboardCount?.unassignedBugsCount[0]?.["UnassignedBugs"]} />
-          <Card title={dashCardType.teamMembers} count={dashboardCount?.teamCount[0]?.["teamMembers"]} />
+          <Card title={dashCardType.activeProjects} count={dashboardCount?.activeProjectsCount[0]?.["Active"]} type="project" />
+          <Card title={dashCardType.completedProjects} count={dashboardCount?.completedProjectsCount[0]?.["CompletedProjects"]} type="project" />
+          <Card title={dashCardType.openTickets} count={dashboardCount?.openBugsCount[0]?.["OpenBugs"]} type="bug" />
+          <Card title={dashCardType.unassignedTickets} count={dashboardCount?.unassignedBugsCount[0]?.["UnassignedBugs"]} type="bug" />
+          <Card title={dashCardType.teamMembers} count={dashboardCount?.teamCount[0]?.["teamMembers"]} type="team" />
         </StyledHomeCardContainers>
       <StyledHomeChartSections>
         <StyledHomeChartRightSections>
