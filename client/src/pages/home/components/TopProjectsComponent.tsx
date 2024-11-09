@@ -1,14 +1,29 @@
 import { StyledTable } from '_lib';
 import { StyledChartCardHeaderImg, StyledChartCardHeaderTitle, StyledChartCardHeaderWrapper, StyledMiddleChartCardWrapper } from '../index.styled';
 import { topProjectColumns } from './columns';
+import { useCallback } from 'react';
+import { IProject } from 'interfaces';
+import { useNavigate } from 'react-router-dom';
+import { PROJECT_ROUTE } from '_constants';
 
-const TopProjectsComponent = ({ projects } : { projects : any[]}) => {
+const TopProjectsComponent = ({ projects } : { projects : IProject[]}) => {
+  const navigate = useNavigate();
+
+  const onRowClick = useCallback((record: IProject) => {
+    if(record){
+      navigate(`${PROJECT_ROUTE}/${record.id}`)
+    }
+  }, [navigate]);
+
+  const handleNavigate = useCallback(() => {
+    navigate(PROJECT_ROUTE)
+  }, [navigate])
 
   return (
-    <StyledMiddleChartCardWrapper>
+    <StyledMiddleChartCardWrapper className='scrollbar-hide'>
      <StyledChartCardHeaderWrapper className='mb-2'>
       <StyledChartCardHeaderTitle>Projects</StyledChartCardHeaderTitle>
-       <StyledChartCardHeaderImg src="/img/moreDark.png" alt="this is an elipses" />
+       <StyledChartCardHeaderImg onClick={handleNavigate} src="/img/moreDark.png" alt="this is an elipses" />
      </StyledChartCardHeaderWrapper> 
           <StyledTable 
            pagination={false}
@@ -17,6 +32,7 @@ const TopProjectsComponent = ({ projects } : { projects : any[]}) => {
            rowKey={(record: any) => record?.id}
            onRow={(record: any, rowIndex) => {
             return {
+              onClick: (event) => onRowClick(record),
             //   onDoubleClick: (event) => onRowDoubleClick(record),
               onContextMenu: (event) => {},
             };
