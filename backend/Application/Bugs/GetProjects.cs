@@ -26,18 +26,14 @@ namespace Application.Bugs
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
                 if (user == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
-                var company = await _context.Companies.FindAsync(user.CompanyId);
-                if (company == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { error = "Company not found." });
 
                 List<BugProjectDto> projects = await _context.Projects
-                    .Where(x => x.CompanyId == company.Id)
+                    .Where(x => x.CompanyId == user.CompanyId)
                     .Select(project => new BugProjectDto
                     {
                         Id = project.Id,
                         ProjectName =  project.ProjectName
-                    })
-                    
+                    })        
                     .ToListAsync(cancellationToken).ConfigureAwait(false);
 
                 return projects;
