@@ -47,7 +47,7 @@ export const userColumns = [
       title: 'Date Added',
       key: 'dateAdded',
       dataIndex: 'dateAdded',
-      render: (date: Date) => moment(date).format('YYYY-MM-DD HH:mm:ss'),
+      render: (date: Date) => moment(date).fromNow(),
       width: "15%",
     },
   ];
