@@ -21,7 +21,12 @@ namespace Application.Bugs
         public string UpdatedUser { get; set; } = string.Empty;
         [JsonPropertyName("assignees")]
         public ICollection<AssigneeDto> BugAssignees { get; set; } = new List<AssigneeDto>();
-        [JsonPropertyName("comments")]
-        public ICollection<CommentDto> BugComments { get; set; } = new List<CommentDto>(); 
+ 
+    }
+
+    public class BugGroupDto
+    {
+        public Dictionary<string, double>? BugsStatus { get; set; }
+        public List<Dictionary<string, int>>? BugsPerProject { get; set; }
     }
 }
