@@ -4,8 +4,10 @@ import { IBug, IUser } from "interfaces";
 import moment from "moment";
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
-import { BUG_ROUTE } from "_constants";
+import { BUG_ROUTE, PROFILE_ROUTE } from "_constants";
 import { PopoverComponent } from "_lib";
+import { StyledAssigneeContainer, StyledAssigneeImage, StyledAssigneeName } from "./index.styled";
+import { StyledWorkItemInfoDesc, StyledWorkItemInfoTitle, StyledWorkItemLeftDiv } from "pages/home/index.styled";
 
  export const assigneeColumns = [
   {
@@ -25,7 +27,10 @@ import { PopoverComponent } from "_lib";
       title: 'Bug Name',
       dataIndex: 'bugName',
       key: 'bugName',
-      render: (text: string, row: IBug) => <StyledLink to={`${BUG_ROUTE}/${row.id}`}>{ text }</StyledLink>,
+      render: (text: string, record: unknown) => {
+        const row = record as IBug;
+        return <StyledLink to={`${BUG_ROUTE}/${row.id}`}>{text}</StyledLink>;
+      },
       width: 200,
       ellipsis: true
     },
@@ -55,11 +60,11 @@ import { PopoverComponent } from "_lib";
       dataIndex: 'bugStatus',
       key: 'bugStatus',
       render: (status: any) => {
-        let color = status === 'Open' ? '#2CC8BA' : status === "InProgress" ? "#08AEEA" : '#F56B62';
+        let color = status === 'Open' ? '#2CC8BA' : status === "InProgress" ? "#08AEEA" : '#4ED3E5';
         return <Tag color={color}>{status}</Tag>;
       },
       width: 100,
-      align: "center",
+      align: "center" as "center",
     },
     {
       title: 'Assignee',
@@ -68,7 +73,12 @@ import { PopoverComponent } from "_lib";
       width: 200,
       render: (assignees : IUser[]) => {
         const followers = assignees?.map(assinee => ({ userName: assinee?.userName, fullName: assinee?.fullName}));
-          return assignees.length > 0 ? <PopoverComponent dataSource={followers} columns={assigneeColumns} /> : null
+          return assignees.length > 0 ?
+           <PopoverComponent dataSource={followers} columns={assigneeColumns} /> :
+            <StyledAssigneeContainer>
+              <StyledAssigneeImage src={"/img/noavatar.jpg"} alt="not assigned" />
+              <StyledAssigneeName>Not Assigned</StyledAssigneeName>
+            </StyledAssigneeContainer>
     },
     },
     {
@@ -83,7 +93,7 @@ import { PopoverComponent } from "_lib";
       dataIndex: 'severity',
       key: 'severity',
       width: 100,
-      align: "center",
+      align: "center" as "center",
       render: (severity: string) => {
         let color;
         switch (severity) {
@@ -95,6 +105,9 @@ import { PopoverComponent } from "_lib";
             break;
           case 'Critical':
             color = '#F56B62';
+            break;
+          case 'ShowStopper':
+            color = '#EF476F';
             break;
           default:
             color = '#08AEEA';
@@ -144,3 +157,47 @@ const StyledLink = styled(Link)`
   }
 `;
  
+export const userColumns = [
+  {
+    title: 'Name',
+    key: 'name',
+    render: (record: IUser) => (
+      <StyledWorkItemLeftDiv>
+        <StyledImage
+          src={record?.image || "/img/noavatar.jpg"}
+          alt={record?.fullName || "No name provided"}
+        />
+        <StyledInfoWrapper>
+          <StyledWorkItemInfoTitle>{record?.fullName || "Unknown Owner"}</StyledWorkItemInfoTitle>
+          <Link to={`${PROFILE_ROUTE}/${record?.userName}`}>{ record?.email }</Link>
+          </StyledInfoWrapper>
+      </StyledWorkItemLeftDiv>
+    ),
+    width: "30%",
+  },
+  {
+    title: 'Roles',
+    key: 'roles',
+    dataIndex: 'roles',
+    render: (roles: any[]) => roles ? roles.join(', ') : 'No roles assigned',
+    width: "30%",
+  },
+  {
+    title: 'Last Active',
+    key: 'lastActive',
+    dataIndex: 'lastActive',
+    render: (date: Date) => date ? moment(date).fromNow() : 'No activity recorded',
+    width: "15%",
+  }
+];
+export const StyledImage = styled.img`
+width: 38px;
+height: 38px;
+border-radius: 50%;
+object-fit: cover;
+`;
+export const StyledInfoWrapper = styled.div`
+display: flex;
+flex-direction: column;
+
+`;
