@@ -36,6 +36,14 @@ export const StyledProfileHeaderInfoWrapper = styled.div`
   align-items: center;
   gap: 30px;
 `;
+export const StyledProfileIconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 50%;
+`;
 export const StyledProfileHeaderInfoTitle = styled.h2`
   margin: 0;
   font-size: 22px;
@@ -114,10 +122,18 @@ export const PercentageText = styled.h2`
   font-size: 0.75rem;
   color: ${({ theme }) => theme.palette.grey[300] || "#d1d5db"};
 `;
+export const StyledTableHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 export const StyledTableTitle = styled.h2`
   padding: 16px;
   margin: 0;
   font-size: 20px;
   font-weight: 500;
   color: ${defaultTheme.theme.palette.gray[600]};
+`;
+export const StyledFilterRightWrapper = styled.article`
+  padding: 0 30px;
 `;
