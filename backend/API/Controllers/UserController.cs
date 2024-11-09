@@ -1,5 +1,8 @@
-﻿using Application.Users;
+﻿using Application.Core;
+using Application.Projects;
+using Application.Users;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +18,12 @@ namespace API.Controllers
         {
             return Ok(await Mediator.Send(new CurrentUser.Query()));
         }
+        [HttpPost("invite")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<string>> SendInvite(SendInvite.Command command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
         [HttpGet("GetAll")]
         [Authorize]
         public async Task<ActionResult<List<Application.Users.UserDto>>> GetAll()
@@ -23,9 +32,9 @@ namespace API.Controllers
         }       
         [HttpGet()]
         [Authorize]
-        public async Task<ActionResult<List<Domain.UserDto>>> GetTeamMembers()
+        public async Task<ActionResult<PagedList<Domain.UserDto>>> GetTeamMembers([FromQuery] UserParams param)
         {
-            return await Mediator.Send(new GetTeamMembers.Query());
+            return HandlePagedResult(await Mediator.Send(new GetTeamMembers.Query { Params = param }));
         }
     }
 }
