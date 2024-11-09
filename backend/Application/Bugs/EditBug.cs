@@ -17,7 +17,7 @@ namespace Application.Bugs
             public Guid ProjectId { get; set; }
             public string Description { get; set; } = string.Empty;
             public string BugName { get; set; } = string.Empty;
-            public virtual ICollection<BugAssignee> BugAssignees { get; set; }
+            public virtual ICollection<BugAssignee>? BugAssignees { get; set; }
             public string Severity { get; set; } = string.Empty;
             public string Classification { get; set; } = string.Empty;
             public DateTime? DueDate { get; set; }
@@ -47,12 +47,12 @@ namespace Application.Bugs
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Bug bug = await _context.Bugs.FindAsync(request.Id);
+                var bug = await _context.Bugs.FindAsync(request.Id);
                 if (bug == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { bug = "Not found." });
-                Project project = await _context.Projects.FindAsync(request.ProjectId);
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Not bug found." });
+                var project = await _context.Projects.FindAsync(request.ProjectId);
                 if (project == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { project = "Not found." });
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "Not project found." });
 
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
@@ -62,32 +62,50 @@ namespace Application.Bugs
                 bug.Severity = request.Severity ?? bug.Severity;
                 bug.Classification = request.Classification ?? bug.Classification;
                 bug.BugStatus = request.BugStatus ?? bug.BugStatus;
-                bug.BugAssignees = request.BugAssignees ?? bug.BugAssignees;
                 bug.CreatedDate = bug.CreatedDate;
                 bug.UpdatedDate = DateTime.Now;
                 bug.CreatedUser = bug.CreatedUser;
                 bug.UpdatedUser = user.DisplayName;
 
+                if (request.BugAssignees != null)
+                {
+                    var existingAssignees = bug.BugAssignees.Select(ba => ba.UserName).ToList();
+
+                    foreach (var assignee in request.BugAssignees)
+                    {
+                  
+                        if (!existingAssignees.Contains(assignee.UserName))
+                        {
+                            bug.BugAssignees.Add(new BugAssignee 
+                            {
+                                UserName = assignee.UserName, 
+                                FullName = assignee.FullName,
+                                Image =  assignee.Image,
+                                Bug = bug 
+                            });
+                        }
+                    }
+                }
+
                 if (request.BugStatus == "Completed")
                 {
-                    // Recalculate the project status (percentage of completed bugs)
+        
                     int totalBugs = project.Bugs.Count;
                     int completedBugs = project.Bugs.Count(b => b.BugStatus == "Completed");
 
-                    // Calculate project status as percentage
                     double projectStatus = totalBugs > 0 ? (double)completedBugs / totalBugs * 100 : 0;
 
-                    // Update project status
                     project.ProjectStatus = projectStatus;
                     project.UpdatedDate = DateTime.Now;
                     project.UpdatedUser = user.DisplayName;
                     bug.CompletedDate = DateTime.Now;
-                    // Mark project as updated
+
                     _context.Projects.Update(project);
                 }
 
                 var success = await _context.SaveChangesAsync() > 0;
                 if (success) return Unit.Value;
+
                 throw new Exception("Problem saving bug");
 
             }
