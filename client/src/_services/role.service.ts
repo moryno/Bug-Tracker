@@ -12,8 +12,8 @@ const editRole = (payload: IRole) => {
 
   return request.put(`${ROLES_API}/${id}`, res);
 };
-const getRoles = () => {
-  return request.get(ROLES_API);
+const getRoles = (params?: object) => {
+  return request.get(ROLES_API, { params });
 };
 const assignRole = (data: { userName: string; roleIds: string[] }) => {
   return request.post(`${ROLES_API}/assign`, data);
