@@ -12,8 +12,8 @@ namespace Application.Users
     {
         public class Command: IRequest 
         {
-            public string Email { get; set; }
-            public string Token { get; set; }
+            public string Email { get; set; } = string.Empty;
+            public string Token { get; set; } = string.Empty;
         }
 
         public class Handler : IRequestHandler<Command>
@@ -31,9 +31,13 @@ namespace Application.Users
                 if (user == null)
                     throw new RestException(HttpStatusCode.Unauthorized);
 
+
+                user.ConcurrencyStamp = null;
+
                 var decodedTokenBytes = WebEncoders.Base64UrlDecode(request.Token);
                 var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
                 var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
 
                 if (!result.Succeeded) throw new RestException(HttpStatusCode.BadRequest, new { error = "Could not verify email address." });
 
