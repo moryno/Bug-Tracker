@@ -24,7 +24,7 @@ namespace Application.Projects
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Project project = await _context.Projects.FindAsync(request.Id);
+                var project = await _context.Projects.FindAsync(request.Id);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "Not found." });
 
