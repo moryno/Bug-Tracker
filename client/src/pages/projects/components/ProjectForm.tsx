@@ -161,6 +161,26 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
             </Form.Item>
           </Col>
         </Row>
+        <Row>
+        <Col span={12}>
+          <Form.Item
+            name="currentStatus"
+            label="Current Status"
+            rules={[
+              { required: false, message: "Please choose status" },
+            ]}
+          >
+            <Select placeholder="Please select status">
+              <Option value="Active">Active</Option>
+              <Option value="InProgress">In Progress</Option>
+              <Option value="OnTrack">On Track</Option>
+              <Option value="Delayed">Delayed</Option>
+              <Option value="InTesting">In Testing</Option>
+              <Option value="OnHold">On Hold</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        </Row>
         <Row gutter={16}>
           <Col span={24}>
             <Form.Item
@@ -175,7 +195,7 @@ const ProjectForm:React.FC<projectFormType> = ({ onClose, open, editedRecord, st
             >
               <Input.TextArea
                 rows={4}
-                placeholder="please enter description"
+                placeholder="Please enter description"
               />
             </Form.Item>
           </Col>
