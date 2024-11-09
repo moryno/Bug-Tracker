@@ -59,5 +59,42 @@ const monthNames = [
 ];
 
 export const getMonthName = (monthNumber: number) => {
-  return monthNames[monthNumber - 1]; // Adjust because array index starts at 0, but months start at 1
+  return monthNames[monthNumber - 1];
+};
+
+export const formatTodayDate = (date: Date) => {
+  const now = moment();
+  const givenDate = moment(date);
+
+  if (givenDate.isSame(now, "day")) {
+    return `Today @ ${givenDate.format("hh:mm A")}`;
+  } else {
+    return givenDate.format("MMMM Do YYYY @ hh:mm A"); // Fallback for non-today dates
+  }
+};
+
+export const getYearMonthDate = (dateInput: Date) => {
+  const date = moment(dateInput);
+
+  const year = date.format("YYYY");
+  const monthName = date.format("MMM");
+  const day = date.format("DD");
+
+  return {
+    year,
+    monthName,
+    day,
+  };
+};
+export const getParams = (location: any) => {
+  let searchParams = new URLSearchParams(location.search);
+  return {
+    query: searchParams.get("query") || "",
+  };
+};
+
+export const setParams = (key: string, value: string) => {
+  let searchParams = new URLSearchParams();
+  searchParams.append(key, value || "");
+  return searchParams.toString();
 };
