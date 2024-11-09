@@ -9,7 +9,6 @@ import { defaultTheme } from "_constants";
 const { Header } = Layout;
 
 export const StyledAppHeader = styled(Header)`
-  ${"" /* width: 100%; */}
   position: sticky;
   left: 0;
   top: 0;
@@ -71,16 +70,44 @@ export const StyledAppHeaderNotification = styled(
   IoIosNotificationsOutline
 ).attrs({
   size: "22px",
-})``;
+})`
+  cursor: pointer;
+`;
 
 export const StyledAppHeaderAvatar = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
-export const StyledMenu = styled(Menu)``;
+export const StyledMenu = styled(Menu)`
+  background-color: ${defaultTheme.theme.palette.gray[50]};
+`;
+export const StyledMenuHeader = styled.section`
+  position: relative;
+  height: 40px;
+  background-color: ${defaultTheme.theme.palette.gray[100]};
+`;
+export const StyledAppHeaderProfileAvatar = styled.img`
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+export const StyledMenuInfoWrapper = styled.article`
+  margin-top: 55px;
+  text-align: center;
+`;
+export const StyledMenuItemWrapper = styled.section`
+  margin-top: 20px;
+`;
 export const StyledMenuItem = styled(Menu.Item)`
   display: flex;
   align-items: center;
@@ -90,10 +117,16 @@ export const StyledMenuItem = styled(Menu.Item)`
 export const StyledMenuItemAction = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 `;
 export const StyledMenuItemLabel = styled.span`
   color: ${defaultTheme.theme.palette.gray[500]};
   font-size: 13px;
+  font-weight: 500;
+`;
+
+export const StyledMenuInfoTitle = styled.p`
+  color: ${defaultTheme.theme.palette.gray[500]};
+  font-size: 20px;
   font-weight: 500;
 `;
