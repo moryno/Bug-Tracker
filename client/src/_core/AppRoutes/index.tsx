@@ -1,4 +1,4 @@
-import { LANDING_PAGE_ROUTE, LOGIN_ROUTE } from "_constants";
+import { HOME_ROUTE, LANDING_PAGE_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE } from "_constants";
 import { Navigate } from "react-router-dom";
 import { projectRoutes } from "./ProjectRoutes";
 import { bugRoutes } from "./BugRoutes";
@@ -10,6 +10,8 @@ import { profileRoutes } from "./ProfileRoute";
 import { roleRoutes } from "./RoleRoutes";
 import { registerSuccessPageRoutes } from "./RegisterSuccessRoute";
 import { verifyPageRoutes } from "./VerifyEmailRoute";
+import { calendarRoutes } from "./CalendarRoute";
+import { eventRoutes } from "./EventRoute";
 
 const authorizedStructure = {
     fallbackPath: LOGIN_ROUTE,
@@ -19,12 +21,14 @@ const authorizedStructure = {
         ...bugRoutes,
         ...userRoutes,
         ...profileRoutes,
-        ...roleRoutes
+        ...roleRoutes,
+        ...calendarRoutes,
+        ...eventRoutes
     ]
 };
 
 const unAuthorizedStructure = {
-    fallbackPath: LANDING_PAGE_ROUTE,
+    fallbackPath: HOME_ROUTE,
     redirectPath: "",
     routes: [...authRoutes]
 };
@@ -38,10 +42,11 @@ const anonymousStructure = {
 
 
 const alwaysStructure = {
+    fallbackPath: PROFILE_ROUTE,
     routes: [
       ...landingPageRoutes,
       ...registerSuccessPageRoutes,
-      ...verifyPageRoutes
+      ...verifyPageRoutes,
     ],
   };
 
