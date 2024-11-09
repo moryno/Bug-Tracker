@@ -1,4 +1,5 @@
-﻿using Application.Roles;
+﻿using Application.Core;
+using Application.Roles;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +23,9 @@ namespace API.Controllers
         } 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<List<Role>>> Get()
+        public async Task<ActionResult<PagedList<Role>>> Get([FromQuery] PagingParams param)
         {
-            return Ok(await Mediator.Send(new GetRoles.Query()));
+            return HandlePagedResult(await Mediator.Send(new GetRoles.Query { Params = param }));
         }   
         [HttpGet("{userName}")]
         [Authorize]
