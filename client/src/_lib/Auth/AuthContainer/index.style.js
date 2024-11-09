@@ -15,17 +15,18 @@ export const StyledAuthContainerMain = styled.div`
   }
 `;
 export const StyledAuthContainerContent = styled.div`
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
 `;
 
 export const StyledAuthContainerForm = styled(Form)``;
 export const StyledAuthFormTitle = styled.h3`
   color: ${({ theme }) => theme.palette.primary.accentColor};
   font-size: 24px;
+  margin: 0;
 `;
 
 export const StyledRedirectButton = styled.span`
