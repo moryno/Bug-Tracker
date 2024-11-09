@@ -4,3 +4,6 @@ export * from "./bug.service";
 export * from "./user.service";
 export * from "./dashboard.service";
 export * from "./role.service";
+export * from "./event.service";
+export * from "./notification.service";
+export * from "./search.service";
