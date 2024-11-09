@@ -1,8 +1,10 @@
-﻿using Application.Interfaces;
+﻿using Application.Errors;
+using Application.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using System.Net;
 
 namespace Application.Dashboard
 {
@@ -22,52 +24,60 @@ namespace Application.Dashboard
             public async Task<DashboardCountDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                if (currentUser is null)
+                    throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
+
                 var companyId = currentUser.CompanyId;
                 var today = DateTime.UtcNow.Date;
-                var endOfWeek = today.AddDays(5 - (int)today.DayOfWeek);
+                var endOfWeek = today.AddDays(5 - (int)today.DayOfWeek).AddDays(1).AddTicks(-1);
 
-                var activeProjectsCount = await _context.Projects
-                    .Where(p => p.CompanyId == companyId && p.StartDate <= today && p.EndDate >= today)
-                    .CountAsync();
+                var projects = await _context.Projects
+                    .Where(p => p.CompanyId == companyId)
+                    .ToListAsync();
 
-                var inActiveProjects = await _context.Projects
-                    .Where(p => p.CompanyId == companyId && (p.EndDate < today || p.StartDate > today))
-                    .CountAsync();
+                var bugs = await _context.Bugs
+                    .Where(b => b.CompanyId == companyId)
+                    .ToListAsync();
 
-                var completedProjectsCount = await _context.Projects
-                    .Where(p => p.CompanyId == companyId && p.ProjectStatus == (double)100)
-                    .CountAsync();
+                var activeProjectsCount = projects
+                    .Count(p => p.StartDate <= today && p.EndDate >= today);
 
-                var openBugsCount = await _context.Bugs
-                    .Where(b => b.CompanyId == companyId && b.BugStatus == "Open")
-                    .CountAsync();
+                var inActiveProjectsCount = projects
+                    .Count(p => p.EndDate < today || p.StartDate > today);
 
-                var unassignedTicketsCount = await _context.Bugs
-                    .Where(b => b.CompanyId == companyId && !b.BugAssignees.Any())
-                    .CountAsync();
+                var completedProjectsCount = projects
+                    .Count(p => p.ProjectStatus == (double)100);
+
+                // Perform in-memory operations on bugs
+                var openBugsCount = bugs
+                    .Count(b => b.BugStatus == "Open");
+
+                var unassignedTicketsCount = bugs
+                    .Count(b => !b.BugAssignees.Any());
+
+                var bugSeverityCounts = bugs
+                    .GroupBy(b => b.Severity)
+                    .Select(g => new { Name = g.Key, Value = g.Count() })
+                    .ToDictionary(x => x.Name, x => x.Value);
+
+                var weeklyBugs = bugs
+                    .Where(b => b.BugAssignees.Any(a => a.UserName == currentUser.UserName)
+                                && b.DueDate >= today
+                                && b.DueDate <= endOfWeek)
+                    .Select(b => new WeeklyBugDto
+                    {
+                        Id = b.Id,
+                        BugName = b.BugName,
+                        Description = b.Description,
+                        DueDate = b.DueDate
+                    })
+                    .ToList();
 
                 var usersCount = await _context.Users
                     .Where(u => u.CompanyId == companyId)
                     .CountAsync();
 
-                var bugSeverityCounts = await _context.Bugs
-                    .Where(b => b.CompanyId == companyId)
-                    .GroupBy(b  => b.Severity)
-                    .Select(g => new { Name = g.Key, Value = g.Count() })
-                    .ToListAsync();
-
-                var severityCounts = bugSeverityCounts.ToDictionary(x => x.Name, x => x.Value);
-
-                var weeklyBugs = await _context.Bugs
-                    .Where(b => b.CompanyId == companyId && b.BugAssignees.Any(a => a.UserName == currentUser.UserName) && b.DueDate.Date >= today && b.DueDate.Date <= endOfWeek)
-                       .Select(b => new WeeklyBugDto
-                       {
-                           Id = b.Id,
-                           BugName = b.BugName,
-                           Description = b.Description,
-                           DueDate = b.DueDate
-                       })
-                    .ToListAsync();
+                
 
                 var dashboardInfo = new Dictionary<string, List<Dictionary<string, int>>>
                 { 
@@ -78,7 +88,7 @@ namespace Application.Dashboard
                     ["projectStatusCount"] = new List<Dictionary<string, int>>
                     {
                         new Dictionary<string, int> { { "Active", activeProjectsCount } },
-                        new Dictionary<string, int> { { "Inactive", inActiveProjects } }
+                        new Dictionary<string, int> { { "Inactive", inActiveProjectsCount } }
                     },
                     ["completedProjectsCount"] = new List<Dictionary<string, int>>
                     {
@@ -96,7 +106,7 @@ namespace Application.Dashboard
                     {
                         new Dictionary<string, int> { { "teamMembers", usersCount } }
                     },
-                    ["bugSeverityCounts"] = severityCounts
+                    ["bugSeverityCounts"] = bugSeverityCounts
                     .Select(sc => new Dictionary<string, int> { { sc.Key, sc.Value } })
                     .ToList(),
                     
