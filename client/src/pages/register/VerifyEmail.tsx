@@ -32,6 +32,11 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     const confirmEmail = async () => {
+      if (!email || !token) {
+        setStatus(Status.Failed);
+        return;
+      }
+      
         try {
           await authService.verifyEmail(email, token);
           setStatus(Status.Success)
