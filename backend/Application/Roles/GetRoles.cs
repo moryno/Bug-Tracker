@@ -1,14 +1,17 @@
-﻿using Domain;
+﻿using Application.Core;
+using Domain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Roles
 {
     public class GetRoles
     {
-        public class Query : IRequest<List<Role>> { }
-        public class Handler : IRequestHandler<Query, List<Role>>
+        public class Query : IRequest<PagedList<Role>>
+        { 
+            public PagingParams? Params { get; set; }
+        }
+        public class Handler : IRequestHandler<Query, PagedList<Role>>
         {
             private readonly DataContext _context;
 
@@ -17,22 +20,22 @@ namespace Application.Roles
                 _context = context;
             }
 
-            public async Task<List<Role>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<PagedList<Role>> Handle(Query request, CancellationToken cancellationToken)
             {
-                List<Role> roles = await _context.Roles
-                                        .Select(role => new Role
-                                        {
-                                            Name = role.Name,
-                                            Description = role.Description,
-                                            Id = role.Id,
-                                            CompanyId = role.CompanyId,
-                                            CreatedUser = role.CreatedUser,
-                                            UpdatedUser = role.UpdatedUser,
-                                            UpdatedDate = role.UpdatedDate,
-                                        })
-                    .ToListAsync(cancellationToken).ConfigureAwait(false);
+                var query =  _context.Roles
+                                 .Select(role => new Role
+                                 {
+                                      Name = role.Name,
+                                      Description = role.Description,
+                                      Id = role.Id,
+                                      CompanyId = role.CompanyId,
+                                      CreatedUser = role.CreatedUser,
+                                      UpdatedUser = role.UpdatedUser,
+                                      UpdatedDate = role.UpdatedDate,
+                                  })
+                    .AsQueryable();
 
-                return roles;
+                return await PagedList<Role>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize);
             }
         }
     }
