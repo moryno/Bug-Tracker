@@ -43,7 +43,6 @@ namespace Application.Users
             private readonly DataContext _context;
             private readonly UserManager<AppUser> _userManager;
             private readonly RoleManager<AppRole> _roleManager;
-            private readonly IJwtGenerator _jwtGenerator;
             private readonly IEmailSender _emailSender;
             private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -59,7 +58,6 @@ namespace Application.Users
                 _context = context;
                 _userManager = userManager;
                 _roleManager = roleManager;
-                _jwtGenerator = jwtGenerator;
                 _emailSender = emailSender;
                 _httpContextAccessor = httpContextAccessor;
             }
