@@ -1,10 +1,11 @@
-import React from 'react'
 import {  Form, Input } from "antd";
 import { StyledAuthContainerForm, StyledRedirectButton } from './index.style'
 import ContainerButton from '_lib/ContainerButton';
 import { LOGIN_ROUTE, REGISTER_ROUTE } from '_constants';
 import { useSelector } from 'react-redux';
 import { RootState } from '_redux';
+import { useModal } from '_hooks';
+import AppDemoLogin from "_lib/AppDemoLogin";
 
 interface IProps{
     isRegisterRoute: boolean;
@@ -14,14 +15,13 @@ interface IProps{
 
 const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFinish }) => {
   const isLoading = useSelector((store: RootState) => store.user?.isFetching);
+  const { open, toggle } = useModal();
 
   return (
     <StyledAuthContainerForm 
       onFinish={onFinish}
       name="basic"
       layout="vertical"
-    //   initialValues={initialValues}
-    //   onFinish={onFinish}
       autoComplete="off"
     >
         {isRegisterRoute &&
@@ -37,7 +37,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           ]}
         >
           <Input
-            // disabled={loading || disablePhoneNumber}
             size="large"
             placeholder="Full name"
           />
@@ -53,7 +52,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           ]}
         >
           <Input
-            // disabled={loading || disablePhoneNumber}
             size="large"
             placeholder="Username"
           />
@@ -69,7 +67,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           ]}
         >
           <Input
-            // disabled={loading || disablePhoneNumber}
             size="large"
             placeholder="Company name"
           />
@@ -87,7 +84,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           ]}
         >
           <Input
-            // disabled={loading || disablePhoneNumber}
             size="large"
             placeholder="Email"
           />
@@ -103,7 +99,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           ]}
         >
           <Input.Password
-            // disabled={loading}
             size="large"
             placeholder="Enter Password"
           />
@@ -116,7 +111,6 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           size="large"
           loading={isLoading}
           fullWidth
-        //   loading={loading}
         />
       </Form.Item>
       <Form.Item>
@@ -127,7 +121,18 @@ const AuthContainerForm:React.FC<IProps> = ({ isRegisterRoute, onRedirect, onFin
           <StyledRedirectButton onClick={() => onRedirect(isRegisterRoute ? LOGIN_ROUTE : REGISTER_ROUTE)}>
             { isRegisterRoute ? "Sign In" : "Sign Up" }
           </StyledRedirectButton>
-        </Form.Item>
+      </Form.Item>
+      <>
+          <Form.Item noStyle>
+            Sign In as 
+          </Form.Item>
+            <StyledRedirectButton onClick={toggle}>
+              Demo User
+            </StyledRedirectButton>
+      </>
+      {open &&
+      <AppDemoLogin open={open} onClose={toggle} />
+      }
     </StyledAuthContainerForm>
   )
 }
