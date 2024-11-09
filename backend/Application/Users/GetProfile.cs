@@ -38,19 +38,6 @@ namespace Application.Users
                   .Include(b => b.Project)
                   .ToListAsync();
 
-                var bugs = userBugs.Select(b => new ProfileBug
-                {
-                    Id = b.Id,
-                    Description = b.Description,
-                    BugName = b.BugName,
-                    BugStatus = b.BugStatus,
-                    Severity = b.Severity,
-                    Classification = b.Classification,
-                    DueDate = b.DueDate,
-                    CreatedUser = b.CreatedUser,
-                }).ToList();
-
-
                 var projects = userBugs
                     .Select(b => b.Project)
                     .Distinct()
@@ -81,7 +68,6 @@ namespace Application.Users
                 return new ProfileDto
                 {
                     Profile = user,
-                    Bugs = bugs,
                     Projects = projects,
                     Progress = progress
                 };
