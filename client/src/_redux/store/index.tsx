@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "../slices/userSlice";
+import notificationReducer from "../slices/notificationSlice"
 
 import {
   persistStore,
@@ -17,11 +18,14 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["notification"]
 };
 
 const rootReducer = combineReducers({
   user: userReducer,
+  notification: notificationReducer
 });
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
