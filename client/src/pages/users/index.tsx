@@ -1,9 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
-import { Dropdown, MenuProps, Space } from 'antd';
-import { useGetAll } from "_hooks";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Dropdown, MenuProps, Space, TablePaginationConfig } from 'antd';
+import { useAuthUser, useGetAllParams } from "_hooks";
 import { IBug, IProject, IUser } from "interfaces";
-import { FaPlus } from "react-icons/fa6";
-import { ContainerButton, StyledPageCard, StyledTable, StyledTableCardWrapper } from "_lib";
+import {  ContainerTooltip, StyledFilterIcon, StyledIconWrapper, StyledNewIcon, StyledPageCard, StyledTable, StyledTableCardWrapper } from "_lib";
 import {  
    StyledBottomContainer,
   StyledGroupFilterLeftWrapper,
@@ -13,7 +12,6 @@ import {
   StyledGroupTableTitle,
   StyledGroupTitle,
   StyledGroupTitleWrapper, } from "_lib/index.styled";
-import { StyledAppHeaderSearch } from "_lib/Layout/AppHeader/index.styled";
 import InviteForm from "./components/InviteForm";
 import { UserService } from "_services";
 import { userColumns } from "./columns";
@@ -30,16 +28,40 @@ import {
 import { useNavigate } from "react-router-dom";
 import AssignRole from "pages/roles/components/AssignRole";
 import { DomianEnum } from "_constants";
+import UserFilter, { UserFilterValues } from "./components/UserFilter";
 
 
 const Users = () => {
+  const { user: currentUser } = useAuthUser();
+  const defaultParams = useMemo(() => ({ pageNumber: 1, pageSize: 10 }), []);
+  const [searchParams, setSearchParams] = useState(defaultParams);
   const [open, setOpen] = useState(false);
+  const [openFilter, setOpenFilter] = useState(false);
   const [openAssigne, setOpenAssigne] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState<IProject | IBug | null>(null);
   const [selectedUsername, setUsername] = useState<string | null>(null);
   const [statusMode, setStatusMode] = useState("CreateMode");
-  const { isLoading, data } = useGetAll(UserService.getTeamMembers, DomianEnum.TEAM);
-  const navigate = useNavigate()
+  const { isLoading, data } = useGetAllParams(UserService.getTeamMembers, DomianEnum.TEAM, searchParams);
+  const navigate = useNavigate();
+  const [pagination, setPagination] = useState({
+    ...defaultParams,
+     totalPages: 1,
+     totalElements: 1
+});
+
+useEffect(() => {
+  if(!isLoading && data.data){
+    const { pagination } = data?.data;
+    setPagination({
+      totalPages: pagination?.totalPages,
+      pageSize: pagination?.itemsPerPage,
+      pageNumber: pagination?.currentPage,
+      totalElements: pagination?.totalItems,
+    });
+    setOpenFilter(false);
+  }
+}, [data?.data, isLoading])
+
   // const deleteRecord = useDeleteRecord(deleteService, title)
 
   
@@ -54,7 +76,13 @@ const Users = () => {
   //   }
   // }, [deleteRecord, selectedRecords]);
 
+  const showFilter = useCallback(() => {
+    setOpenFilter(true);
+  }, []);
 
+  const onCloseFilter = useCallback(() => {
+    setOpenFilter(false);
+  }, []);
   const showDrawer = useCallback(() => {
       setOpen(true);
   }, []);
@@ -66,9 +94,11 @@ const Users = () => {
     setUsername(null);
     setOpenAssigne(false)
   }, []);
+
   const onCloseAssigneForm = useCallback(() => {
     onClose()
   }, [onClose]);
+  
   const onChangePermission = useCallback((userName: string) => {
     onClose()
     setUsername(userName)
@@ -102,7 +132,7 @@ const Users = () => {
         ),
         onClick: (e) => handleMenuClick(row, e),
       },
-      {
+      ...(currentUser?.userName === row.userName ? [{
         key: 'edit',
         label: (
           <StyledMenuItemActions>
@@ -110,8 +140,8 @@ const Users = () => {
             <StyledActionTitle>Edit details</StyledActionTitle>
           </StyledMenuItemActions>
         ),
-        onClick: (e) => handleMenuClick(row, e),
-      },
+        onClick: (e: any) => handleMenuClick(row, e),
+      }] : []),
       {
         key: 'permission',
         label: (
@@ -133,7 +163,7 @@ const Users = () => {
         onClick: (e) => handleMenuClick(row, e),
       },
     ];
-  }, [handleMenuClick]);
+  }, [currentUser?.userName, handleMenuClick]);
 
   const columns = useMemo(() => (
     [
@@ -151,38 +181,70 @@ const Users = () => {
         )
       }
     ]
-  ), [menuItems]) 
+  ), [menuItems]);
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current = 1, pageSize = 10, total = 1 } = pagination;
+    const page = {
+      pageNumber: current,
+      pageSize
+    }
+    setSearchParams(prev => ({
+      ...prev,
+      ...page!
+    }));
+    setPagination(prev => ({
+      ...prev,
+      totalElements: total,
+      ...page
+    }))
+  };
+  const onFilterChange = useCallback(( filterValues: UserFilterValues) => {
+    const filterParams = {
+      ...filterValues,
+      fullName: filterValues?.fullName || null,
+      role: filterValues?.role || null,
+      status: filterValues?.status || null
+    };
+    setSearchParams(prev => ({
+      ...searchParams,
+      ...filterParams
+    }));
+  } , [searchParams])
   return (
     <StyledPageCard>
     <StyledGroupTitleWrapper>
-      <StyledGroupTitle>Team management</StyledGroupTitle>
-      <StyledGroupSubTitle>Manage your team members and their account permissions and roles here.</StyledGroupSubTitle>
+      <StyledGroupTitle>User Management</StyledGroupTitle>
+      <StyledGroupSubTitle>Manage users of the company. This page allows you to invite, edit, view, and assign roles to users, as well as monitor their activity and permissions.</StyledGroupSubTitle>
     </StyledGroupTitleWrapper>
     <StyledGroupFilterWrapper>
     <StyledGroupFilterLeftWrapper>
-      <StyledGroupTableTitle>All users 44</StyledGroupTableTitle>
+      <StyledGroupTableTitle>All Users ({ data?.data?.data?.length || 0 })</StyledGroupTableTitle>
     </StyledGroupFilterLeftWrapper>
     <StyledGroupFilterRightWrapper>
     <Space wrap>
-       <StyledAppHeaderSearch />
-       <ContainerButton
-        title={`Invite User`}
-        size="middle"
-        icon={<FaPlus size={16} /> }
-        onClick={showDrawer}
-        type="primary"
-       />
-    </Space>
+          <ContainerTooltip title="New" color="#12CC1B">
+            <StyledIconWrapper><StyledNewIcon onClick={showDrawer} /></StyledIconWrapper>
+          </ContainerTooltip>
+          <ContainerTooltip title="Filter record" color="#FBC11E">
+            <StyledIconWrapper><StyledFilterIcon onClick={showFilter} /></StyledIconWrapper>
+          </ContainerTooltip>
+        </Space>
     </StyledGroupFilterRightWrapper>
   </StyledGroupFilterWrapper>
   <StyledBottomContainer>
     <StyledTableCardWrapper>
       <StyledTable 
        loading={isLoading} 
-       dataSource={data?.data || []} 
+       dataSource={data?.data?.data || []} 
        columns={columns} 
        rowKey={(record: any) => record?.id}
+       pagination = {{
+        current: pagination.pageNumber,
+        pageSize: pagination.pageSize,
+        total: pagination.totalElements
+       }}
+       onChange={(pagination) => handleTableChange(pagination)}
       />
     </StyledTableCardWrapper>
     {open &&
@@ -201,6 +263,13 @@ const Users = () => {
         userName={selectedUsername}
        />
      }
+    {openFilter &&
+          <UserFilter 
+            open={openFilter} 
+            onClose={onCloseFilter} 
+            onFilterChange={onFilterChange}
+           />
+    }
   </StyledBottomContainer>
 </StyledPageCard>
   )
