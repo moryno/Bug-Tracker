@@ -14,6 +14,7 @@ export interface IProject {
   image?: string;
   priority?: string;
   projectStatus?: number;
+  currentStatus?: string;
   owner?: string;
   description: string;
   projectGroup?: string;
@@ -79,4 +80,39 @@ export interface IRole {
   createdUser?: string;
   updatedDate?: Date;
   updatedUser?: string;
+}
+export interface IEvent {
+  id?: string;
+  title?: string;
+  projectId?: string;
+  projectName?: string;
+  location?: string;
+  startDate?: any;
+  endDate?: any;
+  initialComment?: string | null;
+  companyId?: string;
+  createdDate?: Date;
+  createdUser?: string;
+  updatedDate?: Date;
+  updatedUser?: string;
+  attendeeIds?: string[];
+  attendees?: IUser[];
+  comments?: any[];
+}
+
+export interface INotification {
+  id?: string;
+  message: string;
+  senderImage?: string;
+  isRead: boolean;
+  createdAt: Date;
+  readAt?: Date;
+  eventTitle: string;
+  recepientName: string;
+  senderName: string;
+  eventStartDate: Date;
+  eventId: string;
+  recepientUserName: string;
+  senderEmail: string;
+  senderUserName: string;
 }
