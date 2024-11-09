@@ -1,4 +1,4 @@
-import { REGISTER_ROUTE } from "_constants";
+import { LANDING_PAGE_ROUTE, REGISTER_ROUTE } from "_constants";
 import { Navigate } from "react-router-dom";
 
 type structureType = {
@@ -101,7 +101,12 @@ const generatedRoutes: object[] = [];
           );
         }
         if (isAlways) {
-          generatedRoutes.push(route);
+          generatedRoutes.push(
+            !isAuthenticated ? route 
+          : {
+            path: route.path,
+            element: <Navigate to={fallbackPath} replace />,
+          });
         }
       });
     }
@@ -113,4 +118,7 @@ const generatedRoutes: object[] = [];
 
 export const getIsRegisterRoute = (pathname : string, search : string) => {
   return `${pathname}${search}`.includes(REGISTER_ROUTE);
+};
+export const getIsLandingPageRoute = (pathname : string ) => {
+  return pathname === (LANDING_PAGE_ROUTE);
 };
