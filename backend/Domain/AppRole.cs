@@ -10,8 +10,8 @@ namespace Domain
         public string UpdatedUser { get; set; } = string.Empty;
         public DateTime? UpdatedDate { get; set; } 
         public Guid? CompanyId { get; set; }
-        public virtual Company Company { get; set; }
-        public virtual ICollection<AppUserRole> UserRoles { get; set; }
+        public virtual Company? Company { get; set; }
+        public virtual ICollection<AppUserRole>? UserRoles { get; set; }
 
     }
 }
