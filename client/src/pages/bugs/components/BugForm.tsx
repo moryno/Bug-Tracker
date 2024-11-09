@@ -20,7 +20,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
   const [formData, setFormData] = useState(statusMode === "CreateMode" ? initialData : 
     {...editedRecord,
       bugAssignees: editedRecord?.assignees?.map((user: any) => user.userName),
-     dueDate: moment(editedRecord?.dueDate)
+      dueDate: moment(editedRecord?.dueDate)
     });
     const [loading, setLoading] = useState(false);
     const createBug = useCreateService(BugService.createBug, DomianEnum.BUGS);
@@ -142,7 +142,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
           >
             <Input.TextArea
               rows={4}
-              placeholder="please enter description"
+              placeholder="Please enter description"
             />
           </Form.Item>
         </Col>
@@ -177,7 +177,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
             <Select placeholder="Please select status">
               <Option value="Open">Open</Option>
               <Option value="InProgress">InProgress</Option>
-              <Option value="Closed">Completed</Option>
+              <Option value="Completed">Completed</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -217,7 +217,7 @@ const BugForm:React.FC<bugFormType> = ({ onClose, open, editedRecord, statusMode
               { required: false, message: "Please choose classisication" },
             ]}
           >
-            <Select placeholder="Please select severity">
+            <Select placeholder="Please select classification">
               <Option value="None">None</Option>
               <Option value="Enhancement">Enhancement</Option>
               <Option value="Security">Security</Option>
