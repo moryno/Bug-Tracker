@@ -9,21 +9,20 @@ namespace Application.Users
 {
     public class ProfileDto
     {
-        public Domain.UserProfile Profile { get; set; }
-        public ICollection<ProfileProjectDto> Projects { get; set; }
-        public ICollection<ProfileBug> Bugs { get; set; }
-        public Dictionary<string, List<Dictionary<string, int>>> Progress { get; set; }
+        public Domain.UserProfile? Profile { get; set; }
+        public ICollection<ProfileProjectDto> Projects { get; set; } = new List<ProfileProjectDto>();
+        public Dictionary<string, List<Dictionary<string, int>>>? Progress { get; set; }
     }
 
     public class ProfileProjectDto
     {
         public Guid Id { get; set; }
-        public string Priority { get; set; }
+        public string Priority { get; set; } = string.Empty;
         public DateTime EndDate { get; set; }
-        public string Description { get; set; }
-        public string ProjectName { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string ProjectName { get; set; } = string.Empty;
         public double ProjectStatus { get; set; }
-        public string CreatedUser { get; set; }
+        public string CreatedUser { get; set; } = string.Empty;
     }
     public class ProfileBug
     {
