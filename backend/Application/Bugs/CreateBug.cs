@@ -1,4 +1,5 @@
-﻿using Application.Errors;
+﻿using Application.Core;
+using Application.Errors;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
@@ -38,11 +39,13 @@ namespace Application.Bugs
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
+            private readonly CreateEntityEmailService _createEntityEmailService;
 
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            public Handler(DataContext context, IUserAccessor userAccessor, CreateEntityEmailService createEntityEmailService)
             {
                 _context = context;
                 _userAccessor = userAccessor;
+                _createEntityEmailService = createEntityEmailService;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
@@ -50,14 +53,12 @@ namespace Application.Bugs
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
                 if (user == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "User not found." });
-                var company = await _context.Companies.FindAsync(user.CompanyId);
-                if (company == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { error = "Company not found." });
-                Project project = await _context.Projects.SingleOrDefaultAsync(x => x.Id == request.ProjectId && x.CompanyId == user.CompanyId);
+ 
+                var project = await _context.Projects.SingleOrDefaultAsync(x => x.Id == request.ProjectId && x.CompanyId == user.CompanyId);
                 if (project == null)
                     throw new RestException(HttpStatusCode.NotFound, new { error = "Project Not found." });
 
-                Bug existingBug = await _context.Bugs.SingleOrDefaultAsync(x => x.BugName == request.BugName && x.CompanyId == user.CompanyId);
+                var existingBug = await _context.Bugs.SingleOrDefaultAsync(x => x.BugName == request.BugName && x.CompanyId == user.CompanyId);
                 if(existingBug != null)
                     throw new RestException(HttpStatusCode.BadRequest, new { error = "Bug with the same bug name exists." });
 
@@ -75,7 +76,7 @@ namespace Application.Bugs
                     CreatedUser = user.DisplayName,
                     UpdatedDate = DateTime.Now,
                     UpdatedUser = user.DisplayName,
-                    CompanyId = company.Id
+                    CompanyId = user.CompanyId
                 };
 
                 if (request.BugStatus == "Completed")
@@ -99,9 +100,21 @@ namespace Application.Bugs
                 _context.Bugs.Add(bug);
 
                 var success = await _context.SaveChangesAsync() > 0;
+                if (!success) throw new Exception("Problem saving project");
 
-                if (success) return Unit.Value;
-                throw new Exception("Problem saving bug");
+                if(request.BugAssignees != null && request.BugAssignees.Any())
+                {
+                    var userNames = request.BugAssignees.Select(ba => ba.UserName).ToList();
+                    var assignees = await _context.Users
+                            .Where(u => userNames.Contains(u.UserName))
+                            .ToListAsync();
+
+                    await _createEntityEmailService.SendEntityCreationAsync(bug, assignees, user);
+                }
+
+                
+
+                return Unit.Value;
             }
         }
     }
