@@ -1,8 +1,4 @@
-﻿using Application.Bugs;
-using Domain;
-using System.Text.Json.Serialization;
-
-namespace Application.Projects
+﻿namespace Application.Projects
 {
     public class ProjectDto
     {
@@ -14,6 +10,7 @@ namespace Application.Projects
         public string CreatedUser { get; set; } = string.Empty;
         public DateTime UpdatedDate { get; set; }
         public double ProjectStatus { get; set; }
+        public string CurrentStatus { get; set; } = string.Empty;
         public string UpdatedUser { get; set; } = string.Empty;
         public string Priority { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
