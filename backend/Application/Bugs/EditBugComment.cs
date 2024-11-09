@@ -6,12 +6,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Bugs
 {
@@ -46,13 +41,13 @@ namespace Application.Bugs
 
             public async Task<CommentDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                BugComment comment = await _context.BugComments.FindAsync(request.Id);
+                var comment = await _context.BugComments.FindAsync(request.Id);
                 if (comment == null)
                     throw new RestException(HttpStatusCode.NotFound, new { comment = "Not found." });
-                Bug bug = await _context.Bugs.FindAsync(request.BugId);
+                var bug = await _context.Bugs.FindAsync(request.BugId);
                 if (bug == null)
                     throw new RestException(HttpStatusCode.NotFound, new { bug = "Not found." });
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUserName());
 
                 comment.Bug = bug;
                 comment.Author = user;
